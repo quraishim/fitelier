@@ -17,4 +17,43 @@
 <div id="hero-root"><section class="hero-v3"><div class="hero-v3-side"><div class="hero-side-copy"><h1>Made for the way you live.</h1><div class="hero-sub-actions"><a href="#/collection">Wear it your way <span aria-hidden="true">↗</span></a><a href="#/consultation">Book a consultation <span aria-hidden="true">↗</span></a></div></div></div><div class="hero-v3-photo"><img src="/assets/fitelier-hero-nocturne.jpg" alt="Charcoal tailoring emerging from the shadows of a dark stone atelier"></div></section></div>
 </main>
 <footer id="footer"></footer><dialog id="modal" aria-labelledby="modal-title"></dialog><div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+<script>
+/* Keep mobile navigation and calls to action typographically clean. */
+(() => {
+  const mobile = window.matchMedia('(max-width: 767px)');
+  const arrows = /[↗↖↘↙→←↑↓➡⬅➜➔➝➞➤➳➙]/g;
+  const originals = new Map();
+  let queued = false;
+  const observer = new MutationObserver(schedule);
+  function update() {
+    observer.disconnect();
+    if (mobile.matches) {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!node.parentElement || node.parentElement.closest('script,style')) continue;
+        if (!arrows.test(node.nodeValue)) { arrows.lastIndex = 0; continue; }
+        arrows.lastIndex = 0;
+        if (!originals.has(node)) originals.set(node, node.nodeValue);
+        const parent = node.parentElement;
+        if (parent.matches('[data-month="-1"]')) node.nodeValue = '‹';
+        else if (parent.matches('[data-month="1"]')) node.nodeValue = '›';
+        else node.nodeValue = node.nodeValue.replace(arrows, '').replace(/\s+$/, '');
+      }
+    } else {
+      for (const [node, value] of originals) if (node.isConnected) node.nodeValue = value;
+      originals.clear();
+    }
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    queueMicrotask(() => { queued = false; update(); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', update, { once: true });
+  else update();
+  mobile.addEventListener('change', schedule);
+})();
+</script>
 </body></html>
