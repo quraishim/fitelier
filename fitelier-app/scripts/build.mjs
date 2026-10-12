@@ -1,0 +1,14 @@
+import {bundleUI} from './bundle-ui.mjs';
+await bundleUI();
+import { rm,cp,mkdir,readFile } from 'node:fs/promises';
+await rm('dist',{recursive:true,force:true});
+await mkdir('dist/server',{recursive:true});
+await cp('public','dist/client',{recursive:true});
+await cp('src/worker.js','dist/server/index.js');
+await mkdir('dist/.openai',{recursive:true});
+await cp('.openai/hosting.json','dist/.openai/hosting.json');
+await cp('drizzle','dist/.openai/drizzle',{recursive:true});
+const worker=await import('../dist/server/index.js');
+if(typeof worker.default?.fetch!=='function')throw Error('Missing Worker fetch handler');
+await readFile('dist/client/index.html');
+console.log('Built Fitelier with consultation storage.');

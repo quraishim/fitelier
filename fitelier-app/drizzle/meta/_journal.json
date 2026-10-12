@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789681016232,
+      "tag": "0000_certain_warbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789681289519,
+      "tag": "0001_certain_orphan",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789736242653,
+      "tag": "0002_round_red_ghost",
+      "breakpoints": true
+    }
+  ]
+}

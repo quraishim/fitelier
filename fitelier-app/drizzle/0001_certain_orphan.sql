@@ -1,0 +1,1 @@
+ALTER TABLE `consultation_requests` ADD `garment` text DEFAULT 'Suit' NOT NULL;

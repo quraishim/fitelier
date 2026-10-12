@@ -1,0 +1,58 @@
+:root{--brand-gold:#a27d4b;--gold-deep:#916c39}
+.hero-v3{display:grid;grid-template-columns:44% 56%;min-height:690px;height:calc(100svh - 90px);max-height:1000px;background:#f7f4ef;isolation:isolate;overflow:hidden}
+.hero-v3-side{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:42px 12%;text-align:center;min-width:0}.hero-brand-wrap{width:100%;max-width:350px;margin:auto 0 22px}.brand-original{width:100%;height:auto;overflow:visible;color:var(--brand-gold);display:block}.brand-trace{opacity:0}.hero-side-copy{margin:0 0 auto}.hero-side-copy h1{font-size:clamp(38px,3.5vw,57px);font-weight:400;letter-spacing:-.035em;line-height:1.04;color:var(--gold-deep);margin:14px 0 22px}.hero-side-copy p{font-size:9px;letter-spacing:.19em;color:#6b665a;margin:0 0 28px}.hero-v3-actions{display:flex;align-items:center;flex-direction:column;gap:22px}.hero-v3-actions .button{min-width:220px}.hero-v3-actions .text-link{font-size:12px}.hero-v3-photo{position:relative;overflow:hidden;background:#d4cbbb;transform-origin:center;perspective:1000px;min-height:0}.hero-v3-photo img,.hero-drift-image{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 37%}.hero-image-caption{position:absolute;bottom:25px;right:30px;font-size:9px;letter-spacing:.2em;color:#f7f4ef;text-shadow:0 1px 5px #302d29}.hero-drift-image img{height:100%}.hero-depth .hero-v3-photo{margin:18px 18px 18px 0}.hero-depth{perspective:1600px}.motion-controls{padding:38px 5% 25px;background:var(--olive-pale)}.motion-controls h1{font-size:44px;margin:10px 0 20px}.motion-options{display:flex;gap:12px;flex-wrap:wrap}.motion-options button{border:1px solid #adb09e;background:transparent;padding:11px 20px;color:var(--ink);font-size:13px}.motion-options button[aria-pressed=true]{background:var(--olive);color:white;border-color:var(--olive)}.motion-description{font-size:13px;margin:18px 0 0}.motion-description span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding-left:16px;color:var(--muted)}.motion-return{padding:25px 5%;text-align:right}.motion-controls+.hero-v3{height:720px;min-height:620px}.fabric-image.individual{background-size:cover!important;background-repeat:no-repeat}.swatch-switcher{flex-wrap:wrap}.home-fabrics .fabric-image.individual{background-size:cover}.collection-grid.expanded{grid-template-columns:repeat(3,minmax(0,1fr));gap:45px 28px}.expanded .category-image{height:440px}.category-image.knitwear,.category-image.knitted-polo,.category-image.cardigan{background-image:url('/assets/fitelier-knits.jpg');background-size:cover}.category-image.knitwear{background-position:center}.category-image.knitted-polo{background-position:15% center;background-size:150%}.category-image.cardigan{background-position:right bottom;background-size:190%}.collection-disclaimer{font-size:12px;color:var(--muted);margin:32px 0 0}.appointment-panel .exact-time{margin-top:18px}.exact-time select{width:100%;min-height:56px;background:#e6e8de;border:1px solid #b5b9a6;color:var(--ink);padding:12px 16px;font-size:17px}.appointment-panel .advisor-preference{margin:18px 0}.advisor-preference input{margin-top:8px}.receipt-advisor{font-size:13px}
+@media(min-width:1600px){.hero-brand-wrap{max-width:410px}.hero-v3-side{padding:55px 14%}}
+@media(max-width:1000px){.hero-v3{grid-template-columns:45% 55%;min-height:660px}.hero-v3-side{padding:38px 9%}.hero-brand-wrap{max-width:300px}.expanded .category-image{height:330px}}
+@media(max-width:700px){.hero-v3{height:auto;min-height:0;max-height:none;grid-template-columns:1fr}.hero-v3-side{padding:32px 7% 36px;display:grid;grid-template-columns:.85fr 1fr;gap:25px;align-items:center;text-align:left}.hero-brand-wrap{margin:0;max-width:210px}.hero-side-copy{margin:0}.hero-side-copy h1{font-size:31px;margin:0 0 15px}.hero-side-copy p{display:none}.hero-v3-actions{align-items:stretch;gap:13px}.hero-v3-actions .button{min-width:0;padding:12px 13px;font-size:11px;gap:12px}.hero-v3-actions .text-link{font-size:10px;align-self:flex-start}.hero-v3-photo{height:560px;min-height:0}.hero-v3-photo img{object-position:center 25%}.hero-image-caption{font-size:8px;bottom:18px;right:20px}.hero-depth .hero-v3-photo{margin:0 12px 12px}.motion-controls{padding:30px 6% 22px}.motion-controls h1{font-size:37px}.motion-options{gap:7px}.motion-options button{padding:10px 12px;font-size:11px}.motion-description{font-size:12px}.motion-description span{display:block;padding:8px 0 0}.motion-controls+.hero-v3{height:auto;min-height:0}.collection-grid.expanded{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 15px}.expanded .category-image{height:285px}.expanded .card-title h3{font-size:25px}.expanded .collection-card>p{font-size:12px}}
+@media(max-width:400px){.hero-v3-side{gap:18px;padding:28px 6%}.hero-side-copy h1{font-size:29px}.hero-v3-photo{height:500px}.expanded .category-image{height:235px}}
+@media(prefers-reduced-motion:reduce){.hero-v3-photo,.hero-v3-side,.hero-drift-image{transform:none!important;opacity:1!important}.brand-trace{display:none}.brand-ink{opacity:1!important}}
+.brand-original{overflow:hidden}.hero-v3-photo img{object-position:center top}.home-fabrics .fabric-card{display:block!important}
+
+/* The wardrobe opening: photographic, warm gold, and the original brand lockup. */
+:root{--olive:#786044;--olive-dark:#342d27;--olive-pale:#eee8df;--ink:#332f2a;--muted:#70695f;--line:#ddd5ca}
+.site-header .wordmark{color:var(--brand-gold)}
+.text-link{border-color:#ad9475}.eyebrow{color:#786044}
+.personal-section{background:#ece6dd}.invitation{background:#342f29}.invitation .eyebrow{color:#d9c4a4}.invitation .button{border-color:#bba586}
+.hero-v3{position:relative;display:block;height:calc(100svh - 90px);min-height:730px;max-height:1040px;background:#111110}
+.hero-v3-photo{position:absolute;inset:0;z-index:-2;height:100%;margin:0!important;background:#111110}
+.hero-v3-photo picture,.hero-v3-photo img,.hero-drift-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-v3:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(10,10,10,.38),rgba(10,10,10,.12) 45%,transparent 72%)}
+.hero-v3-side{position:relative;display:flex;align-items:flex-start;justify-content:center;width:58%;height:100%;padding:46px 0 62px 6%;text-align:left;gap:30px}
+.hero-brand-wrap{width:158px;max-width:none;margin:0 0 0 2px}.brand-original{color:#e4c89a}
+.hero-side-copy{margin:0;width:100%}.hero-side-copy .hero-kicker{color:#e4d6be;font-size:12px;letter-spacing:.17em;margin:0 0 20px}
+.hero-side-copy h1{font-size:clamp(54px,5.65vw,92px);font-weight:400;line-height:1.04;letter-spacing:-.045em;color:#e4c89a;margin:0 0 25px}.hero-side-copy h1 em{white-space:nowrap}
+.hero-side-copy .hero-description{font-size:17px;line-height:1.7;letter-spacing:0;color:#f4ede3;margin:0 0 32px;max-width:470px}.mobile-copy-break{display:none}
+.hero-v3-actions{flex-direction:row;align-items:center;gap:30px;flex-wrap:wrap}.hero-v3-actions .button{background:#e4c89a;color:#30281f;border-color:#e4c89a;min-width:0;font-size:14px;padding:16px 24px}.hero-v3-actions .button:hover{background:#f0dcb9;border-color:#f0dcb9}.hero-v3-actions .text-link{font-size:14px;color:#faf4ea;border-color:#cfb992}.hero-v3 a:focus-visible{outline-color:#f8e4ba}
+.hero-image-caption{right:5%;bottom:30px;font-size:12px;color:#fff9ef;letter-spacing:.16em;text-shadow:0 1px 8px #16130e}
+.hero-depth{perspective:1600px}.motion-controls+.hero-v3{height:810px;min-height:730px}
+.colour-filter[aria-pressed=true]{background:#eee8df;border-color:#bca68a}.exact-time select{background:#eee8df;border-color:#bdad98}.calendar-day{background:#eee9e1}
+@media(min-width:1700px){.hero-brand-wrap{width:180px}.hero-v3-side{gap:40px}}
+@media(min-width:701px) and (max-width:1050px){.hero-v3-side{width:64%;padding-left:5%;gap:26px}.hero-side-copy h1{font-size:59px}.hero-v3-actions{gap:21px}.hero-v3-photo img{object-position:62% top}.hero-v3:after{background:linear-gradient(90deg,#0c0c0c66,#0c0c0c20 48%,transparent 78%)}}
+@media(max-width:700px){
+.hero-v3,.motion-controls+.hero-v3{height:auto;min-height:850px;max-height:none}
+.hero-v3-photo{height:100%;min-height:0}.hero-v3-photo img{object-position:76% top}.hero-v3:after{background:linear-gradient(180deg,rgba(10,10,10,.12) 0%,transparent 30%,rgba(10,10,10,.55) 52%,rgba(10,10,10,.94) 82%)}
+.hero-v3-side{display:flex;justify-content:space-between;align-items:flex-start;gap:220px;width:100%;min-height:850px;padding:28px 7% 42px}
+.hero-brand-wrap{width:112px;max-width:none;margin:0}.hero-side-copy{margin:0}.hero-side-copy .hero-kicker{display:block;font-size:12px;letter-spacing:.13em;margin-bottom:16px}.hero-side-copy h1{font-size:clamp(42px,10.6vw,66px);line-height:1.06;margin:0 0 22px}.hero-side-copy .hero-description{display:block;font-size:16px;margin-bottom:26px;line-height:1.65}.mobile-copy-break{display:block}
+.hero-v3-actions{align-items:flex-start;flex-direction:column;gap:21px}.hero-v3-actions .button{padding:14px 21px;font-size:14px}.hero-v3-actions .text-link{font-size:14px;align-self:auto}.hero-image-caption{display:none}
+}
+@media(prefers-reduced-motion:reduce){.hero-v3-photo,.hero-v3-side{transform:none!important}}
+
+.wardrobe-introduction{display:grid;grid-template-columns:1fr 1.3fr 1fr;background:#eee8df;padding:62px 5%;gap:32px;border-bottom:1px solid #ddd3c5;text-align:center}
+.wardrobe-introduction>div{padding:0 24px}.wardrobe-introduction>div+div{border-left:1px solid #cfc0ac}
+.wardrobe-introduction h2{font-size:clamp(29px,2.5vw,39px);letter-spacing:-.025em;color:#785b35;margin:0 0 14px}
+.wardrobe-introduction p{font-size:16px;line-height:1.65;color:#645d53;max-width:365px;margin:0 auto}
+@media(max-width:700px){.wardrobe-introduction{grid-template-columns:1fr;padding:44px 8%;gap:28px}.wardrobe-introduction>div{padding:0 0 28px}.wardrobe-introduction>div+div{border-left:0}.wardrobe-introduction>div:not(:last-child){border-bottom:1px solid #d3c7b7}.wardrobe-introduction>div:last-child{padding-bottom:0}.wardrobe-introduction h2{font-size:32px;margin-bottom:10px}}
+
+/* Mid-tone stone surfaces bridge the nocturne photograph and warm gold. */
+:root{--ivory:#d2c7b8;--stone:#c5b7a3;--taupe:#b8a78f;--ink:#302b25;--muted:#585147;--line:#aa9c87;--olive:#695034;--olive-dark:#342d27;--olive-pale:#c5b7a3}
+body,.cloth-section{background:var(--ivory);color:var(--ink)}
+.site-header,#footer,#mobile-menu,.builder-bottom{background:#c9bdad;border-color:var(--line)}
+.site-header .wordmark,.footer-wordmark,.monogram{color:#72552f;border-color:#8b7251}
+.eyebrow{color:#674d2e}.fineprint,.cloth-section>.fineprint{color:var(--muted)}
+.personal-section{background:#c3b5a1}.wardrobe-introduction{background:#bfb19d;border-color:#aa987e}.wardrobe-introduction>div+div{border-color:#a99478}.wardrobe-introduction h2{color:#60451f}.wardrobe-introduction p{color:#4f473c}
+.notice,.choice:hover,.choice.is-selected,.monogram-preview,.fabric-select.selected,.fabric-select:hover,.colour-filter[aria-pressed=true],.calendar-day,.exact-time select{background:#c5b7a3}
+.choice.is-selected i{border-color:#c5b7a3}.colour-filter[aria-pressed=true],.exact-time select{border-color:#948066}
+.calendar-day[aria-pressed=true]{background:var(--olive);color:#fff}.calendar-day:disabled{background:transparent;color:#766d60}
+.appointment-panel input:not([type=checkbox]):not([type=radio]),.appointment-panel textarea,.input-label input,.input-label textarea,.input-label select{border-color:#95846c}
+.swatch-inspect{background:#d2c7b8ed}.text-link{border-color:#957c5a}
+@media(max-width:700px){.wardrobe-introduction>div:not(:last-child){border-bottom-color:#a99478}}
