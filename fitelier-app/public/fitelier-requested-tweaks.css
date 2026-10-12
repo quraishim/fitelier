@@ -1,0 +1,13 @@
+/* October final refinements */
+.wardrobe-introduction{align-items:stretch}
+.wardrobe-introduction>div{display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:flex-start}
+.wardrobe-introduction .wardrobe-panel-icon{display:flex;align-items:center;justify-content:center;margin:0 auto 20px;min-height:72px}
+.wardrobe-introduction h2{margin:0 auto 14px;text-align:center}
+.wardrobe-introduction p{margin:0 auto;max-width:370px;text-align:center}
+.founders-heading h2{max-width:790px}
+.founders-heading h2 br{display:block}
+/* Trim the gap on the approach page between the introductory photo and process */
+body:has(.page-heading) .intro{padding-bottom:clamp(24px,3vw,48px)}
+body:has(.page-heading) .intro+.process{padding-top:clamp(30px,4vw,65px)}
+.process-lead{margin-top:14px;color:#726b61;font-size:17px}
+@media(max-width:700px){.wardrobe-introduction>div{padding-block:20px}.wardrobe-introduction p{max-width:400px}}

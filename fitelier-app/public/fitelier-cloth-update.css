@@ -1,0 +1,9 @@
+.home-cloth-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}.home-cloth-card{min-width:0;text-align:center}.home-cloth-card img{display:block;width:100%;height:clamp(250px,28vw,440px);object-fit:cover}.home-cloth-card h3{font:400 clamp(19px,1.65vw,28px)/1.25 Georgia,serif;margin:24px 0 14px}.home-cloth-card p{font-size:14px;line-height:1.65;min-height:74px;margin:0 auto 20px;max-width:29ch}.home-cloth-card .text-link{font-size:11px;letter-spacing:.12em}@media(max-width:900px){.home-cloth-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.home-cloth-grid{gap:25px 12px}.home-cloth-card img{height:210px}.home-cloth-card h3{font-size:18px}.home-cloth-card p{font-size:12px;min-height:105px}}test
+/* Balanced fabric cards: restrained typography and aligned calls to action */
+.home-cloth-grid{align-items:stretch;gap:clamp(14px,2vw,30px)}
+.home-cloth-card{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}
+.home-cloth-card>a:first-child{display:block;width:100%}
+.home-cloth-card h3{font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important;font-size:clamp(15px,1.25vw,20px)!important;line-height:1.4!important;letter-spacing:0!important;margin:19px 0 12px!important;min-height:2.8em}
+.home-cloth-card p{font-family:inherit!important;font-weight:400!important;font-size:clamp(12px,.9vw,14px)!important;line-height:1.65!important;max-width:32ch;margin:0 auto 22px!important;min-height:0!important}
+.home-cloth-card .text-link{margin-top:auto!important;display:inline-flex;align-items:center;justify-content:center;min-height:34px;font-size:10px!important;letter-spacing:.13em}
+@media(max-width:900px){.home-cloth-card h3{min-height:0}}

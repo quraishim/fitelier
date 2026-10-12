@@ -1,0 +1,8 @@
+/* Offset the fixed header on every non-home content route. */
+body:not(.fitelier-home):not(.builder-page) #main { padding-top:78px; }
+@media(max-width:700px){body:not(.fitelier-home):not(.builder-page) #main{padding-top:68px}}
+/* Same neutral checkbox styling for both consultation choices, including disabled. */
+.appointment-page .flexible-date input[type=checkbox],.appointment-page .attach-design input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:0 0 17px;width:17px;height:17px;margin:0;border:1px solid #8c806f;border-radius:2px;background:#f7f4ef;opacity:1;display:inline-grid;place-content:center}
+.appointment-page .flexible-date input[type=checkbox]:checked,.appointment-page .attach-design input[type=checkbox]:checked{background:#6b563d;border-color:#6b563d}
+.appointment-page .flexible-date input[type=checkbox]:checked::before,.appointment-page .attach-design input[type=checkbox]:checked::before{content:"";width:8px;height:5px;border-left:2px solid white;border-bottom:2px solid white;transform:translateY(-1px) rotate(-45deg)}
+.appointment-page .attach-design input[type=checkbox]:disabled{cursor:not-allowed}

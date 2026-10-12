@@ -1,0 +1,12 @@
+/* Founder headshots blend into the same warm paper tone as their section.
+   Multiply removes the stark white background; feathered circular masking
+   hides the original circular-photo boundary without cropping the person. */
+.founders-section .founder-portrait,
+.founders-section .founder-profile>img {background:#f7f4ef!important}
+.founders-section .founder-portrait img,
+.founders-section .founder-profile>img {
+  mix-blend-mode:multiply;
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,#000 65%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 50%,#000 0%,#000 65%,transparent 72%);
+}
+.founders-section .founder-portrait img {transform-origin:center}

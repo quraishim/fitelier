@@ -1,0 +1,27 @@
+/* Fitelier: editorial hero composition and full-height navigation */
+.fitelier-home .hero-v3{min-height:100svh!important;height:100svh!important;position:relative;overflow:hidden}
+.fitelier-home .hero-v3-photo{height:100%!important;min-height:100%!important}
+.fitelier-home .hero-v3-side{height:100%!important;min-height:100%!important}
+.fitelier-home .hero-side-copy{top:auto!important;bottom:clamp(38px,7.5vh,92px)!important;left:50%!important;transform:translateX(-50%)!important;width:min(760px,90vw)!important;gap:clamp(18px,3vh,34px)!important;z-index:4}
+.fitelier-home .hero-side-copy h1{font-family:Quiet,Arial,sans-serif!important;font-style:normal!important;font-weight:400!important;font-size:clamp(11px,1.05vw,14px)!important;letter-spacing:.22em!important;line-height:1.6!important;text-transform:uppercase!important;text-align:center!important;max-width:none!important}
+.fitelier-home .hero-sub-actions{display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(14px,2.6vw,35px)!important;width:100%;flex-wrap:wrap}
+.fitelier-home .hero-sub-actions a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:20px!important;min-width:185px!important;padding:11px 18px!important;border:1px solid #f6ecdeaa!important;background:transparent!important;font-family:Quiet,Arial,sans-serif!important;font-size:12px!important;letter-spacing:.06em!important;text-transform:none!important;text-decoration:none!important;transition:background .25s,color .25s}
+.fitelier-home .hero-sub-actions a:first-child{background:#ead2ab!important;color:#30271c!important;border-color:#ead2ab!important;text-shadow:none!important}
+.fitelier-home .hero-sub-actions a:hover{background:#f6ecde!important;color:#30271c!important;text-shadow:none!important}
+#mobile-menu{top:78px!important;bottom:0!important;height:calc(100dvh - 78px)!important;max-height:none!important;left:0!important;right:auto!important;width:min(360px,92vw)!important;padding:clamp(25px,4vh,48px) 38px 35px!important;overflow-y:auto!important;overscroll-behavior:contain;box-shadow:10px 15px 35px #0002!important}
+#mobile-menu .menu-heading{font-family:Quiet,Arial,sans-serif!important;font-size:12px!important;font-weight:400!important;letter-spacing:.19em!important;line-height:1.5!important;margin:0 0 15px!important}
+#mobile-menu a{font-family:Quiet,Arial,sans-serif!important;font-size:13px!important;font-weight:400!important;letter-spacing:.13em!important;line-height:1.5!important;padding:8px 0!important;border:0!important}
+#mobile-menu .menu-divider{margin:24px 0 16px!important;background:#c9c0b4!important}
+#mobile-menu .menu-divider~a{padding:12px 0!important}
+#mobile-menu:not([hidden]){animation:fitelier-menu-in .35s cubic-bezier(.22,.8,.22,1) both}
+@keyframes fitelier-menu-in{from{opacity:0;transform:translateX(-15px)}to{opacity:1;transform:translateX(0)}}
+/* Use existing photographic editorial assets until dedicated denim/outerwear photography is supplied. */
+.category-image.denim{background:#706f70 url('/assets/fitelier-knits.jpg') center/cover no-repeat!important}
+.category-image.outerwear{background:#6e6155 url('/assets/fitelier-atelier.webp') 20% center/cover no-repeat!important}
+@media(max-width:700px){#mobile-menu{top:68px!important;height:calc(100dvh - 68px)!important;padding:28px 28px 24px!important}.fitelier-home .hero-side-copy{bottom:clamp(24px,5vh,54px)!important;gap:18px!important}.fitelier-home .hero-side-copy h1{font-size:11px!important;letter-spacing:.14em!important}.fitelier-home .hero-sub-actions{gap:10px!important}.fitelier-home .hero-sub-actions a{min-width:0!important;padding:10px 12px!important;font-size:10px!important;gap:7px!important}}
+@media(prefers-reduced-motion:reduce){#mobile-menu:not([hidden]){animation:none!important}}
+
+/* All-catalogues navigation entry: match existing heading style while enabling navigation */
+#mobile-menu .menu-catalogues-link { display: flex; align-items: center; justify-content: space-between; text-decoration: none; cursor: pointer; }
+#mobile-menu .menu-catalogues-link span { font-size: .8em; opacity: .65; transition: transform .25s ease; }
+#mobile-menu .menu-catalogues-link:hover span, #mobile-menu .menu-catalogues-link:focus-visible span { transform: translate(3px,-3px); }

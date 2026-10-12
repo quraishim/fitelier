@@ -1,0 +1,48 @@
+/* Fitelier editorial home enhancement */
+.site-header{position:fixed!important;top:0;left:0;right:0;z-index:1000;background:transparent!important;border:0!important;color:#fff;transition:background .45s,color .45s,box-shadow .45s}
+.site-header .desktop-nav{display:none!important}.site-header .menu-toggle{display:block!important;color:inherit}.site-header .wordmark{color:inherit!important;opacity:0;transition:opacity .2s}.site-header .header-cta,.site-header .portal-link{color:inherit}
+body.fitelier-scrolled .site-header,body:not(.fitelier-home) .site-header{background:#f8f6f1!important;color:#29251f;box-shadow:0 2px 12px #00000012}
+body:not(.fitelier-home) .site-header .wordmark{opacity:1}
+#mobile-menu{position:fixed;z-index:999;top:82px;right:0;width:min(430px,100%);max-height:calc(100vh - 82px);overflow:auto;background:#f8f6f1!important;box-shadow:0 12px 24px #0002;padding:28px 38px!important}
+#mobile-menu a{font-family:Georgia,serif;font-size:26px;border-bottom:1px solid #ddd6cb;padding:13px 0!important}
+.fitelier-home .hero-v3{height:100svh!important;min-height:690px!important}
+.fitelier-home .hero-brand-wrap{opacity:0!important;pointer-events:none}
+.fitelier-home .hero-v3-photo .fitelier-slides{position:absolute;inset:0}
+.fitelier-slides .fitelier-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:fitelier-cycle 18s infinite}
+.fitelier-slides .fitelier-slide-1{animation-delay:6s}.fitelier-slides .fitelier-slide-2{animation-delay:12s}
+@keyframes fitelier-cycle{0%{opacity:0}5%{opacity:1}30%{opacity:1}38%{opacity:0}100%{opacity:0}}
+.fitelier-floating-logo{position:fixed;z-index:1001;left:50%;top:44%;transform:translate(-50%,-50%);font-family:Georgia,serif;letter-spacing:.25em;font-size:clamp(52px,10vw,150px);font-weight:400;color:#f6e8ce;text-shadow:0 2px 15px #0005;pointer-events:none;white-space:nowrap;will-change:transform,left,top,font-size,color}
+.fitelier-home .hero-v3-side{padding-top:240px!important}.fitelier-home .hero-side-copy{margin-top:auto!important}
+.founders-section{padding:105px 6%;background:#f7f4ef}.founders-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:20px 0 42px}.founders-heading h2{max-width:690px}.founders-heading p{max-width:310px;color:#726b61}.founders-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.founder-portrait{position:relative;aspect-ratio:4/5;overflow:hidden;background:#d6d0c5}.founder-portrait img{height:100%;width:100%;object-fit:cover;transition:transform .6s}.founder-card:hover img,.founder-card:focus-within img{transform:scale(1.035)}.founder-links{position:absolute;inset:auto 0 0;background:linear-gradient(transparent,#161411d9);padding:75px 22px 22px;display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(8px);transition:.3s}.founder-card:hover .founder-links,.founder-card:focus-within .founder-links{opacity:1;transform:none}.founder-links a{color:#fff;border-bottom:1px solid #ffffff80;padding:7px 0;font-size:14px}.founder-card h3{font-size:27px;margin-top:15px}.founder-card>p{font-size:13px;color:#726b61}.about-founders{padding-top:170px}.founder-bio{padding:55px 0;border-bottom:1px solid #d6d0c5;scroll-margin-top:120px}.founder-bio p{margin:12px 0 20px}
+@media(max-width:700px){.site-header .header-cta{display:none}.fitelier-floating-logo{letter-spacing:.12em}.fitelier-home .hero-v3-side{padding-top:260px!important}.founders-heading{display:block}.founders-heading p{margin-top:18px}.founders-grid{gap:8px}.founder-card h3{font-size:18px}.founder-card>p{font-size:10px}.founder-links{opacity:1;transform:none;position:static;background:#3b352f;padding:7px;gap:5px}.founder-links a{font-size:10px}.founders-section{padding:75px 5%}}
+@media(prefers-reduced-motion:reduce){.fitelier-slides .fitelier-slide{animation:none}.fitelier-slides .fitelier-slide:first-child{opacity:1}.founder-links,.founder-portrait img{transition:none}}
+
+/* Header, catalogue and editorial refinements */
+.site-header{position:fixed!important;top:0;left:0;right:0;z-index:200!important;background:transparent!important;border:0!important;display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;min-height:76px;padding:0 5%;transition:background .25s,box-shadow .25s}
+body.fitelier-scrolled .site-header{background:#f7f4ef!important;box-shadow:0 1px 8px #00000012}
+.site-header .menu-toggle{display:block!important;grid-column:1;grid-row:1;justify-self:start;position:relative;z-index:203}
+.site-header .wordmark{grid-column:2;grid-row:1;font-family:Editorial,Georgia,serif;font-weight:400!important;font-size:clamp(18px,2vw,25px)!important;letter-spacing:.16em!important;position:relative;z-index:201}
+.site-header .header-cta{display:block!important;position:absolute;left:50%;transform:translateX(-50%);top:90px;white-space:nowrap;z-index:202}
+.site-header .portal-link{grid-column:3;grid-row:1;justify-self:end;position:relative;z-index:202;white-space:nowrap;font-size:12px}
+#mobile-menu{position:fixed!important;z-index:250!important;top:76px;left:0;width:min(360px,92vw);max-height:calc(100vh - 76px);overflow:auto;background:#f7f4ef!important;padding:30px 38px!important;box-shadow:3px 10px 30px #0002}
+#mobile-menu[hidden]{display:none!important}#mobile-menu a{display:block;padding:8px 0;text-decoration:none}#mobile-menu .menu-heading{font-size:11px;letter-spacing:.2em;opacity:.65}#mobile-menu .menu-divider{height:1px;background:#c7c0b5;margin:22px 0}
+.fitelier-floating-logo{font-weight:400!important;pointer-events:none!important;z-index:150!important}
+.fabric-placeholder{min-height:300px;background:#e9e5de;border:1px solid #d6d0c6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;color:#777064;letter-spacing:.1em}.fabric-placeholder span{font-size:12px}.fabric-placeholder p{font-size:11px;letter-spacing:normal}
+.catalogue-placeholder{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-top:140px}.catalogue-placeholder h1{font-weight:400}.catalogue-placeholder>p:not(.eyebrow){font-size:22px}
+.founder-bio{scroll-margin-top:130px}
+.category-image.denim{background-image:linear-gradient(145deg,#344f68,#8c9ca7)!important}.category-image.outerwear{background-image:linear-gradient(145deg,#7b5d44 0%,#b39a7e 48%,#393c3e 49%,#85878a 100%)!important}
+@media(max-width:700px){.site-header{padding:0 5%!important;min-height:68px}.site-header .wordmark{font-size:18px!important}.site-header .portal-link{font-size:10px}#mobile-menu{top:68px}.site-header .header-cta{top:76px;font-size:11px}}
+
+/* On inner pages the top is transparent, with a readable dark wordmark. */
+body:not(.fitelier-home):not(.fitelier-scrolled) .site-header{background:transparent!important}
+body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
+.site-header .header-cta{top:50%;margin-top:31px}
+@media(max-width:700px){.site-header .header-cta{top:50%;margin-top:27px}}
+
+/* Founder photographs: original uploads with clean white framing. */
+.founder-portrait{background:#fff}
+.founder-portrait img{object-fit:cover;object-position:center}
+.founder-profile{display:grid;grid-template-columns:minmax(180px,290px) 1fr;align-items:center;gap:clamp(25px,5vw,85px)}
+.founder-profile>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;background:#fff}
+.founder-profile h2{font-family:Georgia,serif;font-weight:400}
+@media(max-width:650px){.founder-profile{grid-template-columns:1fr}.founder-profile>img{max-width:240px}}

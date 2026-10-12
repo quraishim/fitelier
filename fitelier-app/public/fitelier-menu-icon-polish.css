@@ -1,0 +1,12 @@
+/* Minimal monochrome icon from supplied reference; no white box. */
+.wardrobe-introduction .wardrobe-panel-icon .seamless-jacket-icon{display:block;width:60px;height:60px;object-fit:contain;opacity:.85}
+/* Dismissible backdrop, underneath the existing full-height left menu. */
+#fitelier-menu-backdrop{position:fixed;inset:0;z-index:245;background:rgba(22,20,17,.26);opacity:1;transition:opacity .32s ease,visibility .32s ease;visibility:visible;cursor:default}
+#fitelier-menu-backdrop[hidden]{display:block!important;opacity:0;visibility:hidden;pointer-events:none}
+#mobile-menu{z-index:251!important;transition:transform .38s cubic-bezier(.22,.8,.22,1),opacity .32s ease,visibility .38s ease!important;animation:none!important;transform:translateX(0)!important;opacity:1!important;visibility:visible!important}
+#mobile-menu[hidden]{display:block!important;transform:translateX(-24px)!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+@media(prefers-reduced-motion:reduce){#mobile-menu,#fitelier-menu-backdrop{transition:none!important}}
+
+/* Solid, full-height menu panel including the former transparent header strip. */
+#mobile-menu{position:fixed!important;top:0!important;bottom:0!important;height:100dvh!important;max-height:100dvh!important;background:#f7f4ef!important;background-image:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding-top:clamp(100px,13vh,126px)!important;box-shadow:8px 0 28px rgba(25,22,19,.12)!important}
+@media(max-width:700px){#mobile-menu{top:0!important;height:100dvh!important;padding-top:92px!important}}
