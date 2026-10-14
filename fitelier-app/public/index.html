@@ -83,26 +83,34 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const rect = track.getBoundingClientRect();
     const p = reduce ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
-    const shift = ease(clamp((p - .18) / .68));
-    const finish = ease(clamp((p - .62) / .38));
-    const dot = i.querySelector('.about-name-i-dot');
+    const t = ease(clamp((p - .15) / .77));
+    const mix = (a,b) => (a + (b-a)*t).toFixed(2);
+    const spine = f.querySelector('.about-name-f-spine');
+    const top = f.querySelector('.about-name-f-top');
+    const middle = f.querySelector('.about-name-f-middle');
     const stem = i.querySelector('.about-name-i-stem');
-    // Clockwise F rotation; the i's stem leans into the open counterform.
-    f.setAttribute('transform', 'translate(' + (13*shift) + ' ' + (-4*shift) + ') rotate(' + (27*shift) + ' 151 82)');
-    i.setAttribute('transform', 'translate(' + (-12*shift) + ' ' + (-5*shift) + ')');
-    if (stem) stem.setAttribute('transform', 'rotate(' + (-28*finish) + ' 190 113) translate(' + (-4*finish) + ' 0)');
-    // The dot tucks down and inward, disappearing into the junction, not hovering above.
-    if (dot) {
-      dot.setAttribute('transform', 'translate(' + (-15*finish) + ' ' + (31*finish) + ')');
-      dot.style.opacity = String(1 - ease(clamp((p - .83) / .16)));
+    const dot = i.querySelector('.about-name-i-dot');
+    // Construct an A stroke by stroke: clockwise inclination of the F's
+    // vertical, while its middle branch rises to a level crossbar.
+    if (spine) spine.setAttribute('d', 'M'+mix(136,136)+' '+mix(113,113)+' L'+mix(136,165)+' '+mix(48,48));
+    if (top) {
+      top.setAttribute('d','M'+mix(136,165)+' 48 L'+mix(181,165)+' '+mix(48,48));
+      top.style.opacity=String(1-ease(clamp((t-.45)/.35)));
     }
-    f.style.fill = p > .13 ? '#9a7450' : '#463a2f';
-    i.style.color = p > .13 ? '#9a7450' : '#463a2f';
-    // Retain the constructed letterforms until the final moments, then settle
-    // into the clean, legible A without disturbing the rest of the word.
-    const settle = ease(clamp((p - .90) / .10));
-    f.style.opacity = i.style.opacity = String(1 - settle);
-    a.style.opacity = String(settle);
+    if (middle) middle.setAttribute('d','M'+mix(136,148)+' '+mix(77,86)+' L'+mix(170,182)+' '+mix(77,86));
+    // The upright lowercase i becomes the opposite diagonal at the same pace.
+    if (stem) stem.setAttribute('d','M'+mix(190,165)+' '+mix(73,48)+' L'+mix(190,194)+' 113');
+    if (dot) {
+      dot.setAttribute('cx',mix(190,165));
+      dot.setAttribute('cy',mix(53,48));
+      dot.style.opacity=String(1-ease(clamp((t-.5)/.4)));
+    }
+    const ink = p > .15 ? '#9a7450' : '#463a2f';
+    f.style.color = ink;
+    i.style.color = ink;
+    // The constructed strokes are the final A; no overlaid replacement glyph.
+    a.style.opacity = '0';
+    f.style.opacity = i.style.opacity = '1';
     // Preserve the exact position and spacing of 'telier' throughout.
     rest.removeAttribute('transform');
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
