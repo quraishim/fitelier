@@ -121,3 +121,9 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 .about-name-i-dot{fill:currentColor}
 .about-name-f,.about-name-i{color:#463a2f}
 .about-name-a{display:none}
+
+/* Keep the resting wordmark in Fitelier's actual Editorial font. */
+.about-name-mark .about-name-original,.about-name-mark .about-name-rest{font-family:Editorial,Georgia,serif;font-size:86px;font-weight:400;letter-spacing:0}
+.about-name-original{opacity:1}
+.about-name-fi,.about-name-rest{opacity:0}
+.about-name-a{display:block;opacity:0;color:#9a7450;stroke-linecap:butt;stroke-linejoin:round}
