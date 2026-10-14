@@ -86,20 +86,25 @@
     const rect = track.getBoundingClientRect();
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const p = reduced ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
-    const t = ease(clamp((p - .14) / .73));
-    const settle = ease(clamp((p - .88) / .11));
-    // Real font outlines from the website's Editorial/Cormorant Garamond.
-    // No change of typeface at any point. Both characters move in sync.
-    f.setAttribute('transform', 'translate(127 113) scale(.086) rotate(' + (22*t) + ' 250 -300) translate(' + (105*t) + ' ' + (-10*t) + ')');
-    i.setAttribute('transform', 'translate(' + (170.774-30*t) + ' 113) scale(.086)');
-    stem.setAttribute('transform', 'rotate(' + (-26*t) + ' 140 -200) translate(' + (-26*t) + ' ' + (-25*t) + ')');
-    dot.setAttribute('transform', 'translate(' + (-65*t) + ' ' + (150*t) + ')');
-    dot.style.opacity = String(1-ease(clamp((t-.72)/.25)));
+    // Keep the authentic glyphs legible while they approach the A.
+    // Resolve to the precise font-outline A before the forms collide.
+    const t = ease(clamp((p - .13) / .57));
+    const settle = ease(clamp((p - .53) / .19));
+    const tint = ease(clamp((p - .10) / .14));
+    const bronze = '#9a7450', ink = '#463a2f';
+    const fX = 127, iX = 170.774;
+    f.setAttribute('transform', 'translate(' + (fX+7*t) + ' 113) scale(.086) rotate(' + (12*t) + ' 210 -290)');
+    i.setAttribute('transform', 'translate(' + (iX-9*t) + ' 113) scale(.086)');
+    stem.setAttribute('transform', 'rotate(' + (-13*t) + ' 140 -200)');
+    dot.setAttribute('transform', 'translate(' + (-42*t) + ' ' + (95*t) + ')');
+    dot.style.opacity = String(1-ease(clamp((t-.5)/.5)));
     assembly.style.opacity = String(1-settle);
     finalA.style.opacity = String(settle);
-    assembly.style.fill = p > .12 ? '#9a7450' : '#463a2f';
-    finalA.style.fill = '#9a7450';
-    rest.setAttribute('x', String(194.252-6.88*ease(clamp((p-.68)/.3))));
+    assembly.style.fill = tint > .02 ? bronze : ink;
+    finalA.style.fill = bronze;
+    // Keep the entire finished word on a single baseline and make room
+    // for the wider A glyph. Never squeeze or overlap 'telier'.
+    rest.setAttribute('x', String(194.252 + 5.8*ease(clamp((p-.49)/.23))));
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
   }
   function schedule() {
