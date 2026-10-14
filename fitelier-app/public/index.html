@@ -84,39 +84,25 @@
     const rect = track.getBoundingClientRect();
     const p = reduce ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
     const original = track.querySelector('.about-name-original');
-    const t = ease(clamp((p - .15) / .77));
-    const mix = (a,b) => (a + (b-a)*t).toFixed(2);
-    const spine = f.querySelector('.about-name-f-spine');
-    const top = f.querySelector('.about-name-f-top');
-    const middle = f.querySelector('.about-name-f-middle');
-    const stem = i.querySelector('.about-name-i-stem');
-    const dot = i.querySelector('.about-name-i-dot');
-    // Construct an A stroke by stroke: clockwise inclination of the F's
-    // vertical, while its middle branch rises to a level crossbar.
-    if (spine) spine.setAttribute('d', 'M'+mix(136,136)+' '+mix(113,113)+' L'+mix(136,165)+' '+mix(48,48));
-    if (top) {
-      top.setAttribute('d','M'+mix(136,165)+' 48 L'+mix(181,165)+' '+mix(48,48));
-      top.style.opacity=String(1-ease(clamp((t-.45)/.35)));
-    }
-    if (middle) middle.setAttribute('d','M'+mix(136,148)+' '+mix(77,86)+' L'+mix(170,182)+' '+mix(77,86));
-    // The upright lowercase i becomes the opposite diagonal at the same pace.
-    if (stem) stem.setAttribute('d','M'+mix(190,165)+' '+mix(73,48)+' L'+mix(190,194)+' 113');
-    if (dot) {
-      dot.setAttribute('cx',mix(190,165));
-      dot.setAttribute('cy',mix(53,48));
-      dot.style.opacity=String(1-ease(clamp((t-.5)/.4)));
-    }
-    const ink = p > .15 ? '#9a7450' : '#463a2f';
-    f.style.color = ink;
-    i.style.color = ink;
-    // The exact logo font is the untouched starting frame; reveal construction
-    // only as motion begins. Settle into a clean A at completion, with no protrusions.
-    const intro = ease(clamp((p - .12) / .12));
-    const settle = ease(clamp((p - .84) / .14));
-    if (original) original.style.opacity = String(1-intro);
+    // Measure the same Editorial glyphs as the original logo; no font substitution.
+    const fWidth = f.getComputedTextLength ? f.getComputedTextLength() : 50;
+    const iWidth = i.getComputedTextLength ? i.getComputedTextLength() : 22;
+    const originX = 127;
+    const ix = originX + fWidth;
+    const restX = ix + iWidth;
+    i.setAttribute('x', ix);
+    rest.setAttribute('x', restX);
+    a.setAttribute('transform', 'translate(' + (originX-136) + ' 0)');
+    const move = ease(clamp((p - .18) / .66));
+    const settle = ease(clamp((p - .81) / .16));
+    const intro = ease(clamp((p - .11) / .12));
     const assembly = track.querySelector('.about-name-fi');
+    // Both real glyphs move simultaneously, retaining font and font size.
+    f.setAttribute('transform', 'translate(' + (13*move) + ' ' + (-2*move) + ') rotate(' + (24*move) + ' ' + (originX+fWidth*.45) + ' 84)');
+    i.setAttribute('transform', 'translate(' + (-17*move) + ' ' + (-6*move) + ') rotate(' + (-24*move) + ' ' + (ix+iWidth*.5) + ' 90)');
+    f.style.fill = i.style.fill = p > .13 ? '#9a7450' : '#463a2f';
+    if (original) original.style.opacity = String(1-intro);
     if (assembly) assembly.style.opacity = String(intro*(1-settle));
-    f.style.opacity = i.style.opacity = '1';
     a.style.opacity = String(settle);
     rest.style.opacity = String(intro);
     // Preserve the exact position and spacing of 'telier' throughout.
