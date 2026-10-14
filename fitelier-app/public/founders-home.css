@@ -65,3 +65,25 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
     margin-top: 3px;
   }
 }
+
+/* About page: one portrait per founder, followed by text-only profiles. */
+.about-introduction{padding:120px 6% 30px;background:#f7f4ef}
+.about-introduction h1{font-size:clamp(42px,5vw,76px);margin:16px 0 18px}
+.about-introduction>p:last-child{color:#726b61}
+.about-page .founders-section{padding-top:35px}
+.founder-stories{padding:85px 6% 120px;background:#eee9e2}
+.founder-stories-heading{margin-bottom:35px}
+.founder-stories-heading h2{margin-top:12px}
+.founder-story{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding:52px 0;border-top:1px solid #c8bfb3;scroll-margin-top:115px}
+.founder-story h2{font-size:clamp(32px,3.3vw,52px);margin:12px 0}
+.founder-story-title{font-size:13px;color:#726b61}
+.founder-story-content{align-self:center;max-width:440px}
+.founder-story-content p{color:#625d56;line-height:1.8;margin-bottom:24px}
+@media(max-width:700px){
+.about-introduction{padding:85px 5% 12px}
+.about-introduction h1{font-size:43px}
+.about-page .founders-section{padding-top:25px}
+.founder-stories{padding:60px 5% 80px}
+.founder-story{grid-template-columns:1fr;gap:20px;padding:35px 0;scroll-margin-top:95px}
+.founder-story h2{font-size:34px}
+}
