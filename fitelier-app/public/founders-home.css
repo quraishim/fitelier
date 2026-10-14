@@ -87,3 +87,31 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 .founder-story{grid-template-columns:1fr;gap:20px;padding:35px 0;scroll-margin-top:95px}
 .founder-story h2{font-size:34px}
 }
+
+/* About editorial story and scroll-controlled wordmark. */
+.about-who{padding:110px 6%;background:#f7f4ef}
+.about-who-grid{display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:start;margin-top:30px}
+.about-who h2,.about-name h2{font:normal clamp(38px,5vw,72px)/1.08 Georgia,serif;letter-spacing:-.035em;margin:0}
+.about-who-grid>div{max-width:520px}
+.about-who-grid>div p,.about-name-copy>p:last-child{font-size:clamp(16px,1.5vw,19px);line-height:1.85;color:#635e57;margin:0 0 20px}
+.about-name{background:#eae4da;color:#463a2f}
+.about-name-copy{padding:105px 6% 20px;max-width:870px}
+.about-name-copy h2{margin:24px 0}
+.about-name-track{height:195vh;position:relative}
+.about-name-sticky{position:sticky;top:0;height:100vh;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.about-name-mark{width:min(86vw,760px);height:auto;overflow:visible}
+.about-name-mark text{font-family:Georgia,serif;font-size:86px;font-weight:400;fill:#463a2f;letter-spacing:0}
+.about-name-fi{color:#9a7450}
+.about-name-f,.about-name-i{fill:#463a2f;transform-box:view-box}
+.about-name-a{color:#9a7450;opacity:0}
+.about-name-scroll-note{font:11px/1.5 Arial,sans-serif;letter-spacing:.22em;color:#776451;margin:4px 0 0}
+@media(max-width:700px){
+.about-who{padding:70px 6%}
+.about-who-grid{grid-template-columns:1fr;gap:25px}
+.about-name-copy{padding:75px 6% 5px}
+.about-name-track{height:160vh}
+.about-name-sticky{height:100svh;min-height:350px}
+.about-name-mark{width:96vw}
+.about-name-mark text{font-size:86px}
+}
+@media(prefers-reduced-motion:reduce){.about-name-track{height:auto;min-height:330px}.about-name-sticky{position:relative;height:330px;min-height:330px}}
