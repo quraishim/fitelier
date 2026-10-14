@@ -77,44 +77,29 @@
     if (!track) return;
     const f = track.querySelector('.about-name-f');
     const i = track.querySelector('.about-name-i');
-    const a = track.querySelector('.about-name-a');
+    const dot = track.querySelector('.about-name-i-dot');
+    const stem = track.querySelector('.about-name-i-stem');
+    const finalA = track.querySelector('.about-name-final-a');
     const rest = track.querySelector('.about-name-rest');
-    if (!f || !i || !a || !rest) return;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const rect = track.getBoundingClientRect();
-    const p = reduce ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
-    const original = track.querySelector('.about-name-original');
-    const t = ease(clamp((p - .17) / .73));
-    const mix = (a,b) => (a + (b-a)*t).toFixed(2);
-    const spine = f.querySelector('.about-name-f-spine');
-    const top = f.querySelector('.about-name-f-top');
-    const middle = f.querySelector('.about-name-f-middle');
-    const stem = i.querySelector('.about-name-i-stem');
-    const dot = i.querySelector('.about-name-i-dot');
-    // The original logo stays intact until the viewer begins the transformation.
-    // Then the F and i's components reshape together, including the moving dot.
-    if (spine) spine.setAttribute('d', 'M136 113 L'+mix(136,165)+' 48');
-    if (top) {
-      top.setAttribute('d','M'+mix(136,165)+' 48 L'+mix(181,165)+' 48');
-      top.style.opacity=String(1-ease(clamp((t-.45)/.35)));
-    }
-    if (middle) middle.setAttribute('d','M'+mix(136,148)+' '+mix(77,86)+' L'+mix(170,182)+' '+mix(77,86));
-    if (stem) stem.setAttribute('d','M'+mix(190,165)+' '+mix(73,48)+' L'+mix(190,194)+' 113');
-    if (dot) {
-      dot.setAttribute('cx',mix(190,165));
-      dot.setAttribute('cy',mix(53,48));
-      dot.style.opacity=String(1-ease(clamp((t-.5)/.4)));
-    }
-    const intro = ease(clamp((p - .15) / .17));
-    const settle = ease(clamp((p - .86) / .12));
     const assembly = track.querySelector('.about-name-fi');
-    if (original) original.style.opacity = String(1-intro);
-    if (assembly) assembly.style.opacity = String(intro*(1-settle));
-    f.style.color = i.style.color = p > .15 ? '#9a7450' : '#463a2f';
-    a.style.opacity = String(settle);
-    rest.style.opacity = String(intro);
-    // Preserve the exact position and spacing of 'telier' throughout.
-    rest.removeAttribute('transform');
+    if (!f || !i || !dot || !stem || !finalA || !rest || !assembly) return;
+    const rect = track.getBoundingClientRect();
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const p = reduced ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
+    const t = ease(clamp((p - .14) / .73));
+    const settle = ease(clamp((p - .88) / .11));
+    // Real font outlines from the website's Editorial/Cormorant Garamond.
+    // No change of typeface at any point. Both characters move in sync.
+    f.setAttribute('transform', 'translate(127 113) scale(.135) rotate(' + (22*t) + ' 250 -300) translate(' + (105*t) + ' ' + (-10*t) + ')');
+    i.setAttribute('transform', 'translate(' + (195.715-30*t) + ' 113) scale(.135)');
+    stem.setAttribute('transform', 'rotate(' + (-26*t) + ' 140 -200) translate(' + (-26*t) + ' ' + (-25*t) + ')');
+    dot.setAttribute('transform', 'translate(' + (-65*t) + ' ' + (150*t) + ')');
+    dot.style.opacity = String(1-ease(clamp((t-.72)/.25)));
+    assembly.style.opacity = String(1-settle);
+    finalA.style.opacity = String(settle);
+    assembly.style.fill = p > .12 ? '#9a7450' : '#463a2f';
+    finalA.style.fill = '#9a7450';
+    rest.setAttribute('x', String(232.57-10.8*ease(clamp((p-.68)/.3))));
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
   }
   function schedule() {
