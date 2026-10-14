@@ -114,7 +114,9 @@
     const intro = ease(clamp((p - .12) / .12));
     const settle = ease(clamp((p - .84) / .14));
     if (original) original.style.opacity = String(1-intro);
-    f.style.opacity = i.style.opacity = String(intro*(1-settle));
+    const assembly = track.querySelector('.about-name-fi');
+    if (assembly) assembly.style.opacity = String(intro*(1-settle));
+    f.style.opacity = i.style.opacity = '1';
     a.style.opacity = String(settle);
     rest.style.opacity = String(intro);
     // Preserve the exact position and spacing of 'telier' throughout.
