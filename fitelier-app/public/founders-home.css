@@ -127,3 +127,6 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 .about-name-original{opacity:1}
 .about-name-fi,.about-name-rest{opacity:0}
 .about-name-a{display:block;opacity:0;color:#9a7450;stroke-linecap:butt;stroke-linejoin:round}
+
+/* Animated glyphs match the original wordmark font, size and baseline. */
+.about-name-mark .about-name-f,.about-name-mark .about-name-i{font-family:Editorial,Georgia,serif;font-size:86px;font-weight:400;letter-spacing:0;stroke:none;fill:#463a2f}
