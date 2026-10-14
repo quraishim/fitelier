@@ -83,6 +83,7 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const rect = track.getBoundingClientRect();
     const p = reduce ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
+    const original = track.querySelector('.about-name-original');
     const t = ease(clamp((p - .15) / .77));
     const mix = (a,b) => (a + (b-a)*t).toFixed(2);
     const spine = f.querySelector('.about-name-f-spine');
@@ -108,9 +109,14 @@
     const ink = p > .15 ? '#9a7450' : '#463a2f';
     f.style.color = ink;
     i.style.color = ink;
-    // The constructed strokes are the final A; no overlaid replacement glyph.
-    a.style.opacity = '0';
-    f.style.opacity = i.style.opacity = '1';
+    // The exact logo font is the untouched starting frame; reveal construction
+    // only as motion begins. Settle into a clean A at completion, with no protrusions.
+    const intro = ease(clamp((p - .12) / .12));
+    const settle = ease(clamp((p - .84) / .14));
+    if (original) original.style.opacity = String(1-intro);
+    f.style.opacity = i.style.opacity = String(intro*(1-settle));
+    a.style.opacity = String(settle);
+    rest.style.opacity = String(intro);
     // Preserve the exact position and spacing of 'telier' throughout.
     rest.removeAttribute('transform');
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
