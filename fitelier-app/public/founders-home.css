@@ -130,3 +130,10 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 
 /* Animated glyphs match the original wordmark font, size and baseline. */
 .about-name-mark .about-name-f,.about-name-mark .about-name-i{font-family:Editorial,Georgia,serif;font-size:86px;font-weight:400;letter-spacing:0;stroke:none;fill:#463a2f}
+
+/* True font-outline animation: keep all contours in the Editorial family. */
+.about-name-mark .about-name-fi{opacity:1;fill:#463a2f}
+.about-name-mark .about-name-f path,.about-name-mark .about-name-i path{stroke:none;fill:inherit}
+.about-name-mark .about-name-i-dot{opacity:1}
+.about-name-mark .about-name-final-a{opacity:0;fill:#9a7450}
+.about-name-mark .about-name-rest{opacity:1;fill:#463a2f}
