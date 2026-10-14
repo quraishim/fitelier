@@ -84,13 +84,25 @@
     const rect = track.getBoundingClientRect();
     const p = reduce ? 1 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
     const shift = ease(clamp((p - .18) / .68));
-    const reveal = ease(clamp((p - .72) / .24));
-    // The F turns clockwise; the i approaches its counterform.
+    const finish = ease(clamp((p - .62) / .38));
+    const dot = i.querySelector('.about-name-i-dot');
+    const stem = i.querySelector('.about-name-i-stem');
+    // Clockwise F rotation; the i's stem leans into the open counterform.
     f.setAttribute('transform', 'translate(' + (13*shift) + ' ' + (-4*shift) + ') rotate(' + (27*shift) + ' 151 82)');
     i.setAttribute('transform', 'translate(' + (-12*shift) + ' ' + (-5*shift) + ')');
-    f.style.fill = i.style.fill = p > .13 ? '#9a7450' : '#463a2f';
-    f.style.opacity = i.style.opacity = String(1 - reveal);
-    a.style.opacity = String(reveal);
+    if (stem) stem.setAttribute('transform', 'rotate(' + (-28*finish) + ' 190 113) translate(' + (-4*finish) + ' 0)');
+    // The dot tucks down and inward, disappearing into the junction, not hovering above.
+    if (dot) {
+      dot.setAttribute('transform', 'translate(' + (-15*finish) + ' ' + (31*finish) + ')');
+      dot.style.opacity = String(1 - ease(clamp((p - .83) / .16)));
+    }
+    f.style.fill = p > .13 ? '#9a7450' : '#463a2f';
+    i.style.color = p > .13 ? '#9a7450' : '#463a2f';
+    // Retain the constructed letterforms until the final moments, then settle
+    // into the clean, legible A without disturbing the rest of the word.
+    const settle = ease(clamp((p - .90) / .10));
+    f.style.opacity = i.style.opacity = String(1 - settle);
+    a.style.opacity = String(settle);
     // Preserve the exact position and spacing of 'telier' throughout.
     rest.removeAttribute('transform');
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
