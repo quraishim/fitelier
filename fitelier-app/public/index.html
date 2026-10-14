@@ -90,8 +90,8 @@
     const settle = ease(clamp((p - .88) / .11));
     // Real font outlines from the website's Editorial/Cormorant Garamond.
     // No change of typeface at any point. Both characters move in sync.
-    f.setAttribute('transform', 'translate(127 113) scale(.135) rotate(' + (22*t) + ' 250 -300) translate(' + (105*t) + ' ' + (-10*t) + ')');
-    i.setAttribute('transform', 'translate(' + (195.715-30*t) + ' 113) scale(.135)');
+    f.setAttribute('transform', 'translate(127 113) scale(.086) rotate(' + (22*t) + ' 250 -300) translate(' + (105*t) + ' ' + (-10*t) + ')');
+    i.setAttribute('transform', 'translate(' + (170.774-30*t) + ' 113) scale(.086)');
     stem.setAttribute('transform', 'rotate(' + (-26*t) + ' 140 -200) translate(' + (-26*t) + ' ' + (-25*t) + ')');
     dot.setAttribute('transform', 'translate(' + (-65*t) + ' ' + (150*t) + ')');
     dot.style.opacity = String(1-ease(clamp((t-.72)/.25)));
@@ -99,7 +99,7 @@
     finalA.style.opacity = String(settle);
     assembly.style.fill = p > .12 ? '#9a7450' : '#463a2f';
     finalA.style.fill = '#9a7450';
-    rest.setAttribute('x', String(232.57-10.8*ease(clamp((p-.68)/.3))));
+    rest.setAttribute('x', String(194.252-6.88*ease(clamp((p-.68)/.3))));
     track.setAttribute('data-complete', p >= .995 ? 'true' : 'false');
   }
   function schedule() {
