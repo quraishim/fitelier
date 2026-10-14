@@ -115,3 +115,9 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 .about-name-mark text{font-size:86px}
 }
 @media(prefers-reduced-motion:reduce){.about-name-track{height:auto;min-height:330px}.about-name-sticky{position:relative;height:330px;min-height:330px}}
+
+/* Constructive wordmark: original F/i strokes morph together into the A. */
+.about-name-f path,.about-name-i-stem{fill:none;stroke:currentColor;stroke-width:7;stroke-linecap:square;stroke-linejoin:miter}
+.about-name-i-dot{fill:currentColor}
+.about-name-f,.about-name-i{color:#463a2f}
+.about-name-a{display:none}
