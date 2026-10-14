@@ -11,3 +11,7 @@ body:not(.fitelier-home):not(.builder-page) #main { padding-top:78px; }
 #footer .footer-top nav { gap: 10px; }
 #footer .footer-top nav .eyebrow { margin: 0 0 2px; }
 #footer .footer-top nav a { margin: 0; }
+
+/* Brand identity: standalone mark is always the circular cursive F. */
+.monogram:has(> img[src="/fitelier-monogram.svg"]){border:0;background:transparent;overflow:visible}
+.monogram > img[src="/fitelier-monogram.svg"]{display:block;width:100%;height:100%;object-fit:contain}
