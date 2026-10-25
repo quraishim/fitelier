@@ -66,6 +66,22 @@
   mobile.addEventListener('change', schedule);
 })();
 </script>
+<script id="fitelier-consultation-route-recovery">
+/* Recover the consultation route if the main application did not initialize. */
+(() => {
+  function recover() {
+    if (location.hash.split('?')[0] !== '#/consultation') return;
+    const main = document.getElementById('main');
+    if (!main || !main.querySelector('#hero-root') || !window.FitelierBooking) return;
+    main.innerHTML = window.FitelierBooking.html();
+    window.FitelierBooking.bind();
+    document.title = 'Consultation — Fitelier';
+    window.scrollTo(0, 0);
+  }
+  addEventListener('DOMContentLoaded', recover);
+  addEventListener('hashchange', () => queueMicrotask(recover));
+})();
+</script>
 <script id="fitelier-about-name-motion">
 (() => {
   const clamp = n => Math.max(0, Math.min(1, n));
