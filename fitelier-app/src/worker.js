@@ -46,4 +46,76 @@ async function consultations(request,env){
     return json({reference:saved.id,status:saved.status,receivedAt:saved.created_at},201);
   }catch(e){console.error('consultation_save_failed',{name:e.name,message:e.message});return json({error:'Your request could not be saved right now. Your details are still here; please try again.'},503)}
 }
-export default {async fetch(request,env){const path=new URL(request.url).pathname;if(path==='/api/consultations')return consultations(request,env);if(path.startsWith('/api/'))return json({error:'Not found.'},404);return env.ASSETS.fetch(request)}};
+
+/* Square hosted checkout: secrets remain server-side. Prices and item names are
+   always determined here, never trusted from the browser. */
+const SQUARE_SUIT_PRICES={
+  'charcoal-wool':'Charcoal Wool Suit',
+  'navy-wool':'Navy Wool Suit',
+  'brown-wool':'Chocolate Brown Wool Suit',
+  'black-wool':'Black Wool Suit'
+};
+const SQUARE_SIZES=new Set([44,46,48,50,52,54,56,58,60]);
+const squareReady=env=>env.SQUARE_CHECKOUT_ENABLED==='true'
+  &&env.SQUARE_TAX_CONFIGURED==='true'
+  &&env.SQUARE_SHIPPING_CONFIGURED==='true'
+  &&Boolean(env.SQUARE_ACCESS_TOKEN&&env.SQUARE_LOCATION_ID);
+function validateSquareCart(body){
+  if(!body||typeof body!=='object'||!Array.isArray(body.items)||!body.items.length||body.items.length>8||body.termsAccepted!==true)return null;
+  let total=0;
+  const items=[];
+  for(const row of body.items){
+    if(!row||typeof row.slug!=='string'||!Object.hasOwn(SQUARE_SUIT_PRICES,row.slug))return null;
+    if(!SQUARE_SIZES.has(row.jacket)||!SQUARE_SIZES.has(row.trousers)||!Number.isInteger(row.qty)||row.qty<1||row.qty>5)return null;
+    total+=row.qty;if(total>20)return null;
+    items.push({
+      name:SQUARE_SUIT_PRICES[row.slug],
+      quantity:String(row.qty),
+      variation_name:'Jacket EU '+row.jacket+' / Trousers EU '+row.trousers,
+      note:'Fitelier made-to-order suit. Size selection: jacket EU '+row.jacket+', trousers EU '+row.trousers+'.',
+      base_price_money:{amount:89500,currency:'CAD'}
+    });
+  }
+  return items;
+}
+async function squareCheckout(request,env){
+  if(request.method!=='POST')return json({error:'Method not allowed.'},405);
+  if(!squareReady(env))return json({error:'Secure payment setup is not yet available.'},503);
+  if(request.headers.get('Origin')!==new URL(request.url).origin)return json({error:'Please begin checkout on the Fitelier website.'},403);
+  if(!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'Please submit valid checkout details.'},415);
+  const key=request.headers.get('Idempotency-Key');
+  if(!key||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(key))return json({error:'Please retry checkout.'},400);
+  let body;
+  try{body=JSON.parse(await boundedBody(request));}catch{return json({error:'Could not read your bag.'},400)}
+  const items=validateSquareCart(body);
+  if(!items)return json({error:'Please review your bag and acknowledge the made-to-order terms.'},400);
+  const endpoint=env.SQUARE_ENVIRONMENT==='sandbox'?'https://connect.squareupsandbox.com/v2/online-checkout/payment-links':'https://connect.squareup.com/v2/online-checkout/payment-links';
+  try{
+    const response=await fetch(endpoint,{
+      method:'POST',
+      headers:{'Square-Version':'2026-09-16','Authorization':'Bearer '+env.SQUARE_ACCESS_TOKEN,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        idempotency_key:key,
+        description:'Fitelier made-to-order suit selection',
+        order:{
+          location_id:env.SQUARE_LOCATION_ID,
+          line_items:items,
+          pricing_options:{auto_apply_taxes:true}
+        },
+        checkout_options:{
+          ask_for_shipping_address:true,
+          allow_tipping:false,
+          merchant_support_email:'info@fitelier.ca'
+        },
+        payment_note:'Made-to-order garments; jacket and trouser sizes appear in line-item details.'
+      })
+    });
+    if(!response.ok){console.error('square_checkout_failed',{status:response.status});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}
+    const body=await response.json(),url=body?.payment_link?.url;
+    let destination;try{destination=new URL(url)}catch{}
+    if(!destination||destination.protocol!=='https:'||!['square.link','sandbox.square.link','checkout.square.site'].includes(destination.hostname))throw Error('Unexpected Square payment destination');
+    return json({url:destination.href},201);
+  }catch(e){console.error('square_checkout_unavailable',{message:e.message});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}
+}
+
+export default {async fetch(request,env){const path=new URL(request.url).pathname;if(path==='/api/consultations')return consultations(request,env);if(path==='/api/square-status')return request.method==='GET'?json({ready:squareReady(env)}):json({error:'Method not allowed.'},405);if(path==='/api/square-checkout')return squareCheckout(request,env);if(path.startsWith('/api/'))return json({error:'Not found.'},404);return env.ASSETS.fetch(request)}};
