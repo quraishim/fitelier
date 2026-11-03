@@ -123,7 +123,7 @@
     });});
     const gallery=document.querySelector(".suit-gallery");
     if(gallery){
-      const p=products.find(function(item){return location.hash.indexOf("/suit/"+item.slug)===2;});
+      const p=products.find(function(item){return location.hash.indexOf("#/suit/"+item.slug)===0;});
       if(p){
         const stage=gallery.querySelector("[data-suit-gallery-stage]");
         const thumbs=Array.from(gallery.querySelectorAll("[data-suit-photo]"));
