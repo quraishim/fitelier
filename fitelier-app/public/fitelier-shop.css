@@ -73,19 +73,68 @@
  .fitelier-bag-summary{padding:22px}
  .fitelier-checkout-terms h2{font-size:32px}
 }
-/* Three real, separate photographs: no CSS zoom, scaling or pan effects.
-   The new lapel-clean.svg image assets contain the trimmed detail photograph. */
-.suit-catalogue .suit-card-photo,
+/* Catalogue thumbnails are an immobile three-layer stack.
+   All photographs have the SAME fixed geometry and fit. We only toggle
+   visibility on the left/right mouse threshold — no zoom, pan or fade. */
+.suit-catalogue .suit-card,
+.suit-catalogue .suit-card-link,
+.suit-catalogue .suit-card-visual {
+  transform:none!important;
+  transition:none!important;
+  animation:none!important;
+}
+.suit-catalogue .suit-card-visual {
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  aspect-ratio:3/4;
+}
+.suit-catalogue .suit-card-visual > .suit-card-photo {
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  max-height:none;
+  object-fit:cover!important;
+  object-position:center center!important;
+  opacity:0!important;
+  visibility:hidden;
+  transform:none!important;
+  transform-origin:center center!important;
+  transition:none!important;
+  animation:none!important;
+  filter:none!important;
+  pointer-events:none;
+  will-change:auto;
+}
+.suit-catalogue .suit-card-visual[data-view="main"] > [data-photo-view="main"],
+.suit-catalogue .suit-card-visual[data-view="fabric"] > [data-photo-view="fabric"],
+.suit-catalogue .suit-card-visual[data-view="lapel"] > [data-photo-view="lapel"] {
+  opacity:1!important;
+  visibility:visible;
+}
+.suit-catalogue .suit-hover-region {
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:50%;
+  z-index:2;
+  cursor:pointer;
+  background:transparent;
+  transition:none!important;
+  animation:none!important;
+}
+.suit-catalogue .suit-hover-region[data-hover-region="fabric"] {left:0}
+.suit-catalogue .suit-hover-region[data-hover-region="lapel"] {right:0}
+@media(hover:none){
+  .suit-catalogue .suit-hover-region{display:none}
+}
 .suit-product-page .suit-gallery-stage img,
 .suit-product-page .suit-gallery-thumbnails img {
   transform:none!important;
-  transform-origin:center center;
+  transition:none!important;
+  animation:none!important;
 }
-.suit-catalogue .suit-card-photo {transition:none!important;opacity:1!important}
-.suit-catalogue .suit-card-photo.is-detail{object-fit:cover}
-.suit-product-page .suit-gallery-stage img.is-detail{object-fit:cover}
-.suit-catalogue .suit-card-visual {position:relative;overflow:hidden}
-.suit-hover-region {position:absolute;top:0;bottom:0;width:50%;z-index:2;cursor:pointer;background:transparent}
-.suit-hover-region[data-hover-region="fabric"] {left:0}
-.suit-hover-region[data-hover-region="lapel"] {right:0}
-@media(hover:none) {.suit-hover-region{display:none}}
+.suit-product-page .suit-gallery-stage img.is-detail {object-fit:cover}
