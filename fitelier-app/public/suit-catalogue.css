@@ -1,0 +1,111 @@
+/* Fitelier suits: isolated catalogue and product layout */
+.suit-catalogue .catalogue-store-header{margin-bottom:42px}
+.suit-catalogue .catalogue-store-layout{grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
+.suit-catalogue .catalogue-filter{display:block!important;position:sticky;top:110px}
+.suit-filter .eyebrow{color:#7b6048;margin-bottom:22px}
+.suit-filter button,.suit-season-details summary{appearance:none;border:0;background:transparent;display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;padding:9px 0;font:13px/1.5 Quiet,Arial,sans-serif;letter-spacing:0;color:#6c675e}
+.suit-filter button span{font-size:11px;color:#969086}
+.suit-filter button:hover,.suit-filter button.is-selected{color:#302d29}
+.suit-filter button.is-selected{font-weight:600}
+.suit-season-details{margin-top:21px;border-top:1px solid #c4b9aa;padding-top:14px}
+.suit-season-details summary{font-weight:600;color:#4d453c;cursor:pointer;list-style:none}
+.suit-season-details summary:after{content:'−';font-size:18px;font-weight:400}
+.suit-season-details:not([open]) summary:after{content:'+'}
+.suit-season-details summary::-webkit-details-marker{display:none}
+.suit-season-options{padding:7px 0 0 12px}
+.suit-season-options button:disabled{opacity:.5;cursor:default}
+.suit-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:38px;align-items:start}
+.suit-card[hidden]{display:none!important}
+.suit-card-link{display:block}
+.suit-card-visual{position:relative;background:#f8f3ed;aspect-ratio:3/4;overflow:hidden;cursor:pointer}
+.suit-card-photo{display:block;width:100%;height:100%;object-fit:contain;transition:opacity .20s ease}
+.suit-card-photo.changing{opacity:.72}
+.suit-hover-hint{pointer-events:none;position:absolute;left:12px;right:12px;bottom:13px;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#564a3f;opacity:0;transition:opacity .2s}
+.suit-card:hover .suit-hover-hint{opacity:.75}
+.suit-card-copy{padding-top:15px}
+.suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em}
+.suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5}
+.suit-catalogue-note{grid-column:1/-1;border-top:1px solid #cfc4b7;padding:27px 0 5px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.suit-catalogue-note p{font:16px/1.6 Editorial,Georgia,serif;max-width:410px}
+.suit-catalogue-note .text-link{white-space:nowrap}
+.suit-product-page{padding-top:145px!important}
+.suit-breadcrumb{font:12px/1.6 Quiet,Arial,sans-serif;color:#82776b;letter-spacing:.03em;margin-bottom:28px}
+.suit-breadcrumb a:hover{text-decoration:underline}
+.suit-product-layout{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(350px,.84fr);gap:clamp(42px,6vw,110px);align-items:start}
+.suit-gallery{min-width:0}
+.suit-gallery-stage{aspect-ratio:4/5;overflow:hidden;background:#eee9e2}
+.suit-gallery-stage img{width:100%;height:100%;object-fit:contain}
+.suit-gallery-thumbnails{margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.suit-gallery-thumbnails button{background:transparent;border:1px solid transparent;padding:0;text-align:left}
+.suit-gallery-thumbnails button.is-active{border-color:#8d7b68}
+.suit-gallery-thumbnails img{width:100%;aspect-ratio:4/5;object-fit:contain;background:#f8f3ed}
+.suit-gallery-thumbnails span{display:block;font-size:11px;color:#625b53;padding:7px}
+.suit-product-details{padding-top:15px}
+.suit-product-details>.eyebrow{color:#927b64;font-size:11px}
+.suit-product-details h1{font-size:clamp(42px,4.6vw,72px);line-height:1.04;margin:15px 0 21px}
+.suit-product-intro{font-size:16px;line-height:1.8;color:#72695f;max-width:46ch}
+.suit-facts{margin:34px 0 31px;border-top:1px solid #cec4b7}
+.suit-facts>div{display:flex;justify-content:space-between;gap:22px;padding:12px 0;border-bottom:1px solid #cec4b7;font-size:13px}
+.suit-facts dt{color:#7f7669}
+.suit-facts dd{margin:0;text-align:right}
+.suit-sizing{border-bottom:1px solid #cec4b7;padding-bottom:24px}
+.suit-sizing>.eyebrow{margin-bottom:14px}
+.suit-size-separates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.suit-size-select{font-size:12px;color:#675e54}
+.suit-size-select select{display:block;margin-top:7px;width:100%;background:#f8f5f0;border:1px solid #b8ab9d;border-radius:0;padding:11px 12px;font-size:13px;color:#302d29}
+.suit-sizeguide-trigger{border:0;border-bottom:1px solid #9c958a;background:none;margin:14px 0 7px;padding:0 0 5px;font-size:13px}
+.suit-sizing>p:last-child{font-size:12px;line-height:1.7;color:#81776d}
+.suit-order-note{margin-top:25px;font-size:13px;line-height:1.7;color:#736a5e}
+.suit-order-note p+p{margin-top:12px}
+.suit-order-note strong{font-weight:600;color:#35302a}
+.suit-consult-cta{margin-top:28px;display:flex;max-width:470px}
+.suit-availability-note{color:#80756a;font-size:12px;margin-top:10px}
+.suit-guidance{margin-top:44px;border-top:1px solid #cfc4b7;padding-top:27px}
+.suit-guidance h2{font-size:clamp(28px,2.5vw,39px)}
+.suit-guidance p{font-size:14px;line-height:1.8;color:#72695d;margin:14px 0 18px}
+.suit-size-dialog{border:0;box-shadow:0 20px 90px #251e1980;padding:35px;max-width:min(960px,95vw);width:100%;max-height:90vh;overflow:auto;background:#f7f4ef;color:#302d29}
+.suit-size-dialog::backdrop{background:#16120e88}
+.suit-dialog-head{display:flex;justify-content:space-between;gap:15px;align-items:start}
+.suit-dialog-head h2{font-size:clamp(34px,3vw,50px);margin:8px 0 20px}
+.suit-dialog-head>button{border:0;background:none;font-size:29px;padding:0 8px}
+.suit-size-dialog>p{font-size:14px;color:#675f55;line-height:1.7}
+.suit-size-switch{display:flex;gap:8px;flex-wrap:wrap;margin:25px 0 15px}
+.suit-size-switch button{border:1px solid #a99d8d;background:transparent;padding:8px 17px;font-size:13px}
+.suit-size-switch button[aria-pressed="true"]{background:#302d29;color:#fff}
+.suit-size-equivalents{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin-bottom:26px}
+.suit-size-equivalents span{display:flex;flex-direction:column;align-items:center;border:1px solid #d0c7bb;padding:8px 2px}
+.suit-size-equivalents b{font-size:13px;font-weight:500}
+.suit-size-equivalents small{font-size:10px;color:#82786e}
+.suit-guide-table-wrap{overflow:auto;margin:20px 0}
+.suit-guide-table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}
+.suit-guide-table caption{text-align:left;font-family:Editorial,serif;font-size:22px;padding:12px 0}
+.suit-guide-table th,.suit-guide-table td{padding:9px 7px;border-bottom:1px solid #d7cdc0;text-align:right}
+.suit-guide-table th:first-child{text-align:left}
+.suit-guide-table thead{background:#eee7dc}
+.suit-guide-disclaimer{margin:23px 0 18px;max-width:85ch}
+.suit-product-missing{padding-top:165px;min-height:70vh}
+@media(max-width:1000px){.suit-product-layout{gap:32px;grid-template-columns:1fr 1fr}.suit-product-details h1{font-size:44px}}
+@media(max-width:700px){
+ .suit-catalogue .catalogue-store-layout{display:block}
+ .suit-catalogue .catalogue-filter{position:static;display:block!important;margin-bottom:26px}
+ .suit-catalogue .suit-season-details{margin-top:10px}
+ .suit-season-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-left:0}
+ .suit-season-options button{font-size:11px;border:1px solid #bcb0a2;padding:8px;min-height:45px}
+ .suit-season-options button span{display:none}
+ .suit-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+ .suit-card-copy h3{font-size:17px}
+ .suit-card-copy p{font-size:11px}
+ .suit-hover-hint{display:none}
+ .suit-catalogue-note{display:block;padding-top:23px}
+ .suit-catalogue-note .text-link{display:inline-block;margin-top:13px;white-space:normal}
+ .suit-product-page{padding-top:107px!important}
+ .suit-product-layout{display:block}
+ .suit-product-details{padding-top:35px}
+ .suit-product-details h1{font-size:clamp(40px,10vw,57px)}
+ .suit-gallery-thumbnails{gap:7px}
+ .suit-gallery-thumbnails span{font-size:10px}
+ .suit-size-dialog{padding:21px}
+ .suit-size-equivalents{grid-template-columns:repeat(5,1fr)}
+}
+@media(hover:none){.suit-hover-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.suit-card-photo{transition:none}}
