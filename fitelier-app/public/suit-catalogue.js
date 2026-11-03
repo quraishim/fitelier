@@ -7,10 +7,7 @@
     {slug:"navy-wool",name:"Navy Wool Suit",season:"Four Seasons",ref:"227730",weight:"260–270 g/m",composition:"100% Wool",description:"A deep navy worsted wool for a considered everyday wardrobe."},
     {slug:"brown-wool",name:"Chocolate Brown Wool Suit",season:"Four Seasons",ref:"227748",weight:"260–270 g/m",composition:"100% Wool",description:"A deep chocolate brown wool with a restrained, clean finish."},
     {slug:"black-wool",name:"Black Wool Suit",season:"Four Seasons",ref:"227796",weight:"370 g/m",composition:"100% Wool",description:"A classic black wool suit with a clean, minimal presentation."},
-    {slug:"glen-check-flannel",name:"Glen Check Flannel Suit",season:"Fall / Winter",ref:"AR 2282 60 / 900",weight:"340 g/m",composition:"100% Wool",description:"A weightier glen check wool with a distinctive structured pattern."},
-    {slug:"grey-flannel",name:"Grey Flannel Suit",season:"Fall / Winter",ref:"AR 2282 80 / 780",weight:"340 g/m",composition:"100% Wool",description:"A softly textured grey wool for cooler months."},
-    {slug:"sand-wool-silk-linen",name:"Sand Wool–Silk–Linen Suit",season:"Spring / Summer",ref:"8801020",weight:"350 g/m",composition:"85% Wool · 10% Linen · 5% Silk",description:"A light sand shade with natural character from its mixed fibre composition."},
-    {slug:"blue-wool-silk-linen",name:"Blue Wool–Silk–Linen Suit",season:"Spring / Summer",ref:"8801022",weight:"310–330 g/m",composition:"85% Wool · 10% Linen · 5% Silk",description:"A textured blue cloth with the visual character of linen and silk."}
+
   ];
   const sizes=[44,46,48,50,52,54,56,58,60];
   const jacketSpecs=[
@@ -46,11 +43,11 @@
       +'<div class="catalogue-store-header"><p class="eyebrow">FITELIER / MADE TO ORDER</p><h1>Suits</h1><p>Your complete silhouette.</p></div>'
       +'<div class="catalogue-store-layout"><aside class="catalogue-filter suit-filter" aria-label="Suit filters">'
       +'<p class="eyebrow">THE COLLECTION</p>'
-      +'<button type="button" class="suit-filter-all is-selected" data-suit-filter="All" aria-pressed="true">All Suits <span>8</span></button>'
+      +'<button type="button" class="suit-filter-all is-selected" data-suit-filter="All" aria-pressed="true">All Suits <span>4</span></button>'
       +'<details class="suit-season-details" open><summary>By season</summary><div class="suit-season-options">'
       +'<button type="button" data-suit-filter="Four Seasons" aria-pressed="false">Four Seasons <span>4</span></button>'
-      +'<button type="button" data-suit-filter="Fall / Winter" aria-pressed="false">Fall / Winter <span>2</span></button>'
-      +'<button type="button" data-suit-filter="Spring / Summer" aria-pressed="false">Spring / Summer <span>2</span></button>'
+      +'<button type="button" disabled title="Seasonal collection coming later">Fall / Winter <span>Soon</span></button>'
+      +'<button type="button" disabled title="Seasonal collection coming later">Spring / Summer <span>Soon</span></button>'
       +'</div></details></aside><div class="catalogue-products suit-products">'
       +products.map(card).join('')
       +'<div class="suit-catalogue-note"><p>A starting point, not the whole collection. Our fabric selection and customization options go far beyond what is shown here.</p><a class="text-link" href="#/consultation">Explore the possibilities with an advisor ↗</a></div>'
