@@ -98,6 +98,7 @@
       function swap(kind){
         if(kind===last)return;
         last=kind;
+        img.classList.toggle("is-detail",kind!=="main");
         img.src=img.dataset[kind];
       }
       // Two fixed regions switch the photograph only when crossing between
@@ -128,6 +129,7 @@
         let active=0;
         function show(i){
           active=(i+types.length)%types.length;
+          stage.classList.toggle("is-detail",types[active]!=="main");
           stage.src=image(p,types[active]);
           stage.alt=p.name+": "+["full suit view","fabric close-up","lapel stitching detail"][active];
           thumbs.forEach(function(b,j){b.classList.toggle("is-active",active===j);b.setAttribute("aria-pressed",String(active===j));});
