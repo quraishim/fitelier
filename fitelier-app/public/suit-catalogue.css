@@ -13,11 +13,12 @@
 .suit-season-details:not([open]) summary:after{content:'+'}
 .suit-season-details summary::-webkit-details-marker{display:none}
 .suit-season-options{padding:7px 0 0 12px}
+.suit-season-options button:disabled{opacity:.5;cursor:default}
 .suit-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:38px;align-items:start}
 .suit-card[hidden]{display:none!important}
 .suit-card-link{display:block}
-.suit-card-visual{position:relative;background:#f0ece6;aspect-ratio:3/4;overflow:hidden;cursor:pointer}
-.suit-card-photo{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .20s ease}
+.suit-card-visual{position:relative;background:#f8f3ed;aspect-ratio:3/4;overflow:hidden;cursor:pointer}
+.suit-card-photo{display:block;width:100%;height:100%;object-fit:contain;transition:opacity .20s ease}
 .suit-card-photo.changing{opacity:.72}
 .suit-hover-hint{pointer-events:none;position:absolute;left:12px;right:12px;bottom:13px;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#564a3f;opacity:0;transition:opacity .2s}
 .suit-card:hover .suit-hover-hint{opacity:.75}
@@ -37,7 +38,7 @@
 .suit-gallery-thumbnails{margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .suit-gallery-thumbnails button{background:transparent;border:1px solid transparent;padding:0;text-align:left}
 .suit-gallery-thumbnails button.is-active{border-color:#8d7b68}
-.suit-gallery-thumbnails img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee9e2}
+.suit-gallery-thumbnails img{width:100%;aspect-ratio:4/5;object-fit:contain;background:#f8f3ed}
 .suit-gallery-thumbnails span{display:block;font-size:11px;color:#625b53;padding:7px}
 .suit-product-details{padding-top:15px}
 .suit-product-details>.eyebrow{color:#927b64;font-size:11px}
