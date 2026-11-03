@@ -1,0 +1,75 @@
+/* Fitelier: catalogue images visually sit on the collection's warm stone background.
+   Darken removes the baked-in light studio rectangle without washing out garment detail. */
+.suit-catalogue{--product-stone:#d2c7b8}
+.suit-catalogue .suit-card-visual{background:var(--product-stone)}
+.suit-catalogue .suit-card-photo{mix-blend-mode:darken}
+.suit-product-page{--product-stone:#d2c7b8}
+.suit-product-page .suit-gallery-stage{background:var(--product-stone)}
+.suit-product-page .suit-gallery-stage img{mix-blend-mode:darken}
+.suit-product-page .suit-gallery-thumbnails button{background:var(--product-stone)}
+.suit-product-page .suit-gallery-thumbnails img{mix-blend-mode:darken}
+.suit-hover-hint,.suit-gallery-thumbnails button span{display:none!important}
+.suit-catalogue .suit-card-price{font-size:13px;color:#3d3329;margin-top:6px;font-weight:600}
+.suit-product-price{font-size:21px;font-weight:500;letter-spacing:.015em;margin:-4px 0 18px}
+.suit-add-to-bag{width:100%;margin-top:25px;max-width:480px;display:flex;text-align:left}
+.suit-add-feedback{font-size:13px;min-height:22px;margin-top:7px;color:#5b4833}
+.suit-add-feedback a{text-decoration:underline;text-underline-offset:4px}
+.suit-product-page .suit-consult-cta{display:inline-block;max-width:none;width:auto;margin-top:22px;color:#44382c}
+.fitelier-bag-count{position:absolute;top:-8px;right:-11px;border-radius:50%;background:#6c5235;color:#fff;font:10px/18px Arial,sans-serif;width:18px;height:18px;text-align:center}
+.site-header .portal-link{position:relative}
+.fitelier-bag-page,.fitelier-checkout-page{min-height:70vh;padding-top:155px!important;padding-bottom:110px!important;background:#d2c7b8}
+.fitelier-bag-heading{border-bottom:1px solid #b8ac9c;padding-bottom:23px;margin-bottom:36px}
+.fitelier-bag-heading h1,.fitelier-checkout-page h1{margin:12px 0 8px}
+.fitelier-bag-layout,.fitelier-checkout-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.72fr);gap:clamp(35px,5vw,90px);align-items:start}
+.fitelier-bag-items{border-top:1px solid #b8ac9c}
+.fitelier-bag-item{display:grid;grid-template-columns:155px minmax(0,1fr) auto;gap:22px;padding:23px 0;border-bottom:1px solid #b8ac9c;align-items:start}
+.fitelier-bag-photo{background:#d2c7b8}
+.fitelier-bag-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;mix-blend-mode:darken}
+.fitelier-bag-description h2{font-size:clamp(23px,2vw,32px);margin:3px 0 14px}
+.fitelier-bag-description p{font-size:13px;margin-top:7px;color:#675d52;line-height:1.6}
+.fitelier-bag-item-price{font-size:14px;font-weight:600;white-space:nowrap}
+.fitelier-bag-controls{display:flex;gap:16px;align-items:end;margin-top:20px}
+.fitelier-bag-controls label{font-size:12px;color:#544739}
+.fitelier-bag-controls select{display:block;background:#f7f4ef;border:1px solid #b7aa99;min-height:39px;padding:6px 18px 6px 9px;margin-top:4px}
+.fitelier-bag-controls button{border:none;border-bottom:1px solid #8a7b6d;background:transparent;font-size:12px;padding:5px 0}
+.fitelier-bag-summary{background:#eae4db;padding:29px;position:sticky;top:120px}
+.fitelier-bag-summary h2{font-size:30px;margin-bottom:25px}
+.fitelier-bag-totals{border-top:1px solid #c2b7a9;padding-top:20px}
+.fitelier-bag-totals>div{display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.fitelier-bag-totals p{font-size:12px;color:#72685c;line-height:1.7;margin-top:13px}
+.fitelier-bag-summary>.button{display:flex;width:100%;margin:25px 0 22px}
+.fitelier-bag-summary>.text-link{display:inline-block}
+.fitelier-empty-bag{background:#eae4db;text-align:center;padding:90px 24px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.fitelier-empty-bag h2{font-size:38px}
+.fitelier-empty-bag p{font-size:15px;color:#6c6257}
+.fitelier-empty-bag a{margin-top:9px}
+.fitelier-checkout-page h1{margin:18px 0 38px}
+.fitelier-checkout-terms h2{font-size:36px;margin-bottom:14px}
+.fitelier-checkout-terms>p{font-size:15px;color:#5f564b;line-height:1.8;margin:0 0 22px}
+.fitelier-check{display:flex;gap:13px;align-items:start;background:#eae4db;border:1px solid #c3b8aa;padding:17px 18px;margin:12px 0;font-size:13px;line-height:1.75;cursor:pointer}
+.fitelier-check input{flex:none;accent-color:#62513e;width:17px;height:17px;margin:4px 0 0}
+.fitelier-checkout-note a{text-decoration:underline;text-underline-offset:3px}
+.fitelier-checkout-terms h3{font-size:27px;margin-top:37px;margin-bottom:10px}
+.fitelier-square-button{display:flex;width:100%;max-width:470px;margin-top:24px}
+.fitelier-square-button:disabled{opacity:.56;cursor:not-allowed}
+.fitelier-checkout-status{font-size:13px;color:#67584b;margin-top:14px;max-width:480px}
+.fitelier-checkout-lines{display:grid;gap:16px;border-top:1px solid #c2b7a9;padding:18px 0}
+.fitelier-checkout-lines>div{display:flex;justify-content:space-between;gap:16px;font-size:13px;line-height:1.5}
+.fitelier-checkout-lines small{display:block;font-size:11px;color:#756c60;margin-top:3px}
+.fitelier-checkout-lines b{font-weight:600;white-space:nowrap}
+.fitelier-checkout-page .fitelier-bag-summary>.text-link{display:inline-block;margin-top:22px}
+@media(max-width:900px){
+ .fitelier-bag-layout,.fitelier-checkout-layout{grid-template-columns:minmax(0,1fr) 280px;gap:25px}
+ .fitelier-bag-item{grid-template-columns:120px minmax(0,1fr);gap:14px}
+ .fitelier-bag-item-price{grid-column:2;justify-self:start}
+}
+@media(max-width:700px){
+ .fitelier-bag-page,.fitelier-checkout-page{padding-top:103px!important;padding-bottom:70px!important}
+ .fitelier-bag-layout,.fitelier-checkout-layout{display:block}
+ .fitelier-bag-summary{position:static;margin-top:30px}
+ .fitelier-bag-item{grid-template-columns:105px minmax(0,1fr)}
+ .fitelier-bag-description h2{font-size:23px;margin-bottom:8px}
+ .fitelier-bag-controls{margin-top:15px}
+ .fitelier-bag-summary{padding:22px}
+ .fitelier-checkout-terms h2{font-size:32px}
+}
