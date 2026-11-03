@@ -28,13 +28,13 @@
     ["Outside leg",[98.4,100.9,103.3,104.8,106.3,107.9,109.4,110.9,112.4]]
   ];
   function esc(v){return String(v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-  function image(p,kind){return base+p.slug+"-"+kind+".webp";}
+  function image(p,kind){return base+p.slug+"-"+(kind==="lapel"?"lapel-clean.svg":kind+".webp");}
   function card(p){
     return '<article class="suit-card" data-season="'+esc(p.season)+'">'
       +'<a class="suit-card-link" href="#/suit/'+p.slug+'" aria-label="Explore '+esc(p.name)+'">'
       +'<div class="suit-card-visual" data-suit-hover>'
       +'<img class="suit-card-photo" src="'+image(p,"main")+'" alt="'+esc(p.name)+' jacket with folded matching trousers" loading="lazy" data-main="'+image(p,"main")+'" data-fabric="'+image(p,"fabric")+'" data-lapel="'+image(p,"lapel")+'">'
-      +'</div>'
+      +'<span class="suit-hover-region" data-hover-region="fabric" aria-hidden="true"></span><span class="suit-hover-region" data-hover-region="lapel" aria-hidden="true"></span></div>'
       +'<div class="suit-card-copy"><h3>'+esc(p.name)+'</h3><p>'+esc(p.season)+' · '+esc(p.composition)+'</p><p class="suit-card-price">$895 CAD</p></div>'
       +'</a></article>';
   }
@@ -98,15 +98,15 @@
       function swap(kind){
         if(kind===last)return;
         last=kind;
-        img.classList.toggle("is-lapel",kind==="lapel");
-        img.classList.add("changing");
         img.src=img.dataset[kind];
-        requestAnimationFrame(function(){requestAnimationFrame(function(){img.classList.remove("changing");});});
       }
-      visual.addEventListener("pointermove",function(e){
-        if(e.pointerType!=="mouse"&&e.pointerType!=="pen")return;
-        const r=visual.getBoundingClientRect();
-        swap(e.clientX-r.left<r.width/2?"fabric":"lapel");
+      // Two fixed regions switch the photograph only when crossing between
+      // halves. Moving within a region never pans, scales or cycles images.
+      visual.querySelectorAll("[data-hover-region]").forEach(function(region){
+        region.addEventListener("pointerenter",function(e){
+          if(e.pointerType!=="mouse"&&e.pointerType!=="pen")return;
+          swap(region.dataset.hoverRegion);
+        });
       });
       visual.addEventListener("pointerleave",function(){swap("main");});
       visual.addEventListener("pointercancel",function(){swap("main");});
@@ -128,7 +128,6 @@
         let active=0;
         function show(i){
           active=(i+types.length)%types.length;
-          stage.classList.toggle("is-lapel",types[active]==="lapel");
           stage.src=image(p,types[active]);
           stage.alt=p.name+": "+["full suit view","fabric close-up","lapel stitching detail"][active];
           thumbs.forEach(function(b,j){b.classList.toggle("is-active",active===j);b.setAttribute("aria-pressed",String(active===j));});
