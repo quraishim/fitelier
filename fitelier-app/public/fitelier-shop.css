@@ -73,3 +73,20 @@
  .fitelier-bag-summary{padding:22px}
  .fitelier-checkout-terms h2{font-size:32px}
 }
+/* The original lapel asset retains a narrow divider from the three-panel reference
+   along its top edge. Crop it on every surface, without changing the other views. */
+.suit-card-visual,.suit-gallery-stage,.suit-gallery-thumbnails button{overflow:hidden}
+.suit-catalogue .suit-card-photo.is-lapel{
+  transform:scale(1.09);
+  transform-origin:center bottom;
+}
+.suit-product-page .suit-gallery-stage img.is-lapel{
+  object-fit:cover;
+  transform:scale(1.09);
+  transform-origin:center bottom;
+}
+.suit-product-page .suit-gallery-thumbnails button:nth-child(3) img{
+  transform:scale(1.09);
+  transform-origin:center bottom;
+}
+/* A single consultation invitation lives beneath the "Looking for something more?" copy. */
