@@ -32,8 +32,10 @@
   function card(p){
     return '<article class="suit-card" data-season="'+esc(p.season)+'">'
       +'<a class="suit-card-link" href="#/suit/'+p.slug+'" aria-label="Explore '+esc(p.name)+'">'
-      +'<div class="suit-card-visual" data-suit-hover>'
-      +'<img class="suit-card-photo" src="'+image(p,"main")+'" alt="'+esc(p.name)+' jacket with folded matching trousers" loading="lazy" data-main="'+image(p,"main")+'" data-fabric="'+image(p,"fabric")+'" data-lapel="'+image(p,"lapel")+'">'
+      +'<div class="suit-card-visual" data-suit-hover data-view="main">'
+      +'<img class="suit-card-photo suit-card-photo--main" data-photo-view="main" src="'+image(p,"main")+'" alt="'+esc(p.name)+' jacket with folded matching trousers" loading="lazy" decoding="async">'
+      +'<img class="suit-card-photo suit-card-photo--fabric" data-photo-view="fabric" src="'+image(p,"fabric")+'" alt="" aria-hidden="true" loading="lazy" decoding="async">'
+      +'<img class="suit-card-photo suit-card-photo--lapel" data-photo-view="lapel" src="'+image(p,"lapel")+'" alt="" aria-hidden="true" loading="lazy" decoding="async">'
       +'<span class="suit-hover-region" data-hover-region="fabric" aria-hidden="true"></span><span class="suit-hover-region" data-hover-region="lapel" aria-hidden="true"></span></div>'
       +'<div class="suit-card-copy"><h3>'+esc(p.name)+'</h3><p>'+esc(p.season)+' · '+esc(p.composition)+'</p><p class="suit-card-price">$895 CAD</p></div>'
       +'</a></article>';
@@ -93,16 +95,11 @@
   function bind(){
     const cards=document.querySelectorAll(".suit-card-visual");
     cards.forEach(function(visual){
-      const img=visual.querySelector("img");
-      let last="main";
+      // All three photographs occupy the same fixed frame. Crossing the
+      // centre line changes visibility only; nothing scales, pans or reloads.
       function swap(kind){
-        if(kind===last)return;
-        last=kind;
-        img.classList.toggle("is-detail",kind!=="main");
-        img.src=img.dataset[kind];
+        if(visual.dataset.view!==kind)visual.dataset.view=kind;
       }
-      // Two fixed regions switch the photograph only when crossing between
-      // halves. Moving within a region never pans, scales or cycles images.
       visual.querySelectorAll("[data-hover-region]").forEach(function(region){
         region.addEventListener("pointerenter",function(e){
           if(e.pointerType!=="mouse"&&e.pointerType!=="pen")return;
@@ -111,7 +108,13 @@
       });
       visual.addEventListener("pointerleave",function(){swap("main");});
       visual.addEventListener("pointercancel",function(){swap("main");});
-      img.addEventListener("error",function(){if(!img.dataset.failed){img.dataset.failed="1";img.src="/assets/suits.webp";}});
+      const main=visual.querySelector('[data-photo-view="main"]');
+      main.addEventListener("error",function(){
+        if(!main.dataset.failed){main.dataset.failed="1";main.src="/assets/suits.webp";}
+      });
+      visual.querySelectorAll('[data-photo-view]:not([data-photo-view="main"])').forEach(function(img){
+        img.addEventListener("error",function(){swap("main");});
+      });
     });
     const buttons=document.querySelectorAll("[data-suit-filter]");
     buttons.forEach(function(b){b.addEventListener("click",function(){
