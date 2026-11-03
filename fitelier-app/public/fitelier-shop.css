@@ -82,6 +82,8 @@
   transform-origin:center center;
 }
 .suit-catalogue .suit-card-photo {transition:none!important;opacity:1!important}
+.suit-catalogue .suit-card-photo.is-detail{object-fit:cover}
+.suit-product-page .suit-gallery-stage img.is-detail{object-fit:cover}
 .suit-catalogue .suit-card-visual {position:relative;overflow:hidden}
 .suit-hover-region {position:absolute;top:0;bottom:0;width:50%;z-index:2;cursor:pointer;background:transparent}
 .suit-hover-region[data-hover-region="fabric"] {left:0}
