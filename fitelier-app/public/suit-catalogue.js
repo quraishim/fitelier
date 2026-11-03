@@ -33,9 +33,9 @@
     return '<article class="suit-card" data-season="'+esc(p.season)+'">'
       +'<a class="suit-card-link" href="#/suit/'+p.slug+'" aria-label="Explore '+esc(p.name)+'">'
       +'<div class="suit-card-visual" data-suit-hover data-view="main">'
-      +'<img class="suit-card-photo suit-card-photo--main" data-photo-view="main" src="'+image(p,"main")+'" alt="'+esc(p.name)+' jacket with folded matching trousers" loading="lazy" decoding="async">'
-      +'<img class="suit-card-photo suit-card-photo--fabric" data-photo-view="fabric" src="'+image(p,"fabric")+'" alt="" aria-hidden="true" loading="lazy" decoding="async">'
-      +'<img class="suit-card-photo suit-card-photo--lapel" data-photo-view="lapel" src="'+image(p,"lapel")+'" alt="" aria-hidden="true" loading="lazy" decoding="async">'
+      +'<img class="suit-card-photo suit-card-photo--main" data-photo-view="main" src="'+image(p,"main")+'" alt="'+esc(p.name)+' jacket with folded matching trousers" loading="eager" decoding="async">'
+      +'<img class="suit-card-photo suit-card-photo--fabric" data-photo-view="fabric" src="'+image(p,"fabric")+'" alt="" aria-hidden="true" loading="eager" decoding="async">'
+      +'<img class="suit-card-photo suit-card-photo--lapel" data-photo-view="lapel" src="'+image(p,"lapel")+'" alt="" aria-hidden="true" loading="eager" decoding="async">'
       +'<span class="suit-hover-region" data-hover-region="fabric" aria-hidden="true"></span><span class="suit-hover-region" data-hover-region="lapel" aria-hidden="true"></span></div>'
       +'<div class="suit-card-copy"><h3>'+esc(p.name)+'</h3><p>'+esc(p.season)+' · '+esc(p.composition)+'</p><p class="suit-card-price">$895 CAD</p></div>'
       +'</a></article>';
