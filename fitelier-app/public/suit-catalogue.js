@@ -85,10 +85,9 @@
       +'<dl class="suit-facts"><div><dt>Mill</dt><dd>Vitale Barberis Canonico</dd></div><div><dt>Fabric origin</dt><dd>Italy</dd></div><div><dt>Composition</dt><dd>'+esc(p.composition)+'</dd></div><div><dt>Weight</dt><dd>'+esc(p.weight)+'</dd></div></dl>'
       +'<div class="suit-sizing"><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div>'
       +'<button type="button" class="suit-sizeguide-trigger" data-suit-open>Unsure about your size? ↗</button><p>Jacket and trouser sizes may be selected separately. Standard sizing may require alterations.</p></div>'
-      +'<div class="suit-order-note"><p><strong>Made specifically for your order.</strong> Every suit is produced after the order is placed. Orders are final sale for changes of mind or size selection, except where required by applicable law. Standard sizes may require alterations.</p><p>For clients local to Edmonton, Fitelier provides complimentary fit alterations within the scope of our alterations policy.</p></div>'
+      +'<div class="suit-order-note"><p>Every suit is produced after the order is placed. Orders are final sale. Standard sizes may require alterations.</p><p>For clients local to Edmonton, Fitelier provides complimentary fit alterations within the scope of our alterations policy.</p></div>'
       +'<button type="button" class="button suit-add-to-bag" data-suit-add="'+esc(p.slug)+'">Add to bag <span aria-hidden="true">↗</span></button><p class="suit-add-feedback" role="status" aria-live="polite" data-suit-add-feedback></p>'
-      +'<a class="text-link suit-consult-cta" href="#/consultation">Explore this suit with an advisor ↗</a>'
-      +'<div class="suit-guidance"><h2>Looking for something more?</h2><p>If &quot;standard&quot; sizing isn&#39;t standard for you, you typically require alterations, or you would simply prefer a more personal approach, we got you covered. Fitelier will work from your measurements and consider cloths/details beyond this selection.</p><a class="text-link" href="#/consultation">Unsure? Ask one of us ↗</a></div>'
+      +'<div class="suit-guidance"><h2>Looking for something more?</h2><p>If &quot;standard&quot; sizing isn&#39;t standard for you, you typically require alterations, or you would simply prefer a more personal approach, we got you covered. Fitelier will work from your measurements and consider cloths/details beyond this selection.</p><a class="text-link" href="#/consultation">Explore this suit with an advisor ↗</a></div>'
       +'</div></div>'+sizeGuide()+'</section>';
   }
   function bind(){
@@ -99,6 +98,7 @@
       function swap(kind){
         if(kind===last)return;
         last=kind;
+        img.classList.toggle("is-lapel",kind==="lapel");
         img.classList.add("changing");
         img.src=img.dataset[kind];
         requestAnimationFrame(function(){requestAnimationFrame(function(){img.classList.remove("changing");});});
@@ -128,6 +128,7 @@
         let active=0;
         function show(i){
           active=(i+types.length)%types.length;
+          stage.classList.toggle("is-lapel",types[active]==="lapel");
           stage.src=image(p,types[active]);
           stage.alt=p.name+": "+["full suit view","fabric close-up","lapel stitching detail"][active];
           thumbs.forEach(function(b,j){b.classList.toggle("is-active",active===j);b.setAttribute("aria-pressed",String(active===j));});
