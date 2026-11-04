@@ -13,3 +13,18 @@
 .jacket-product-page .suit-gallery-thumbnails img{background:transparent;object-fit:contain;mix-blend-mode:multiply}
 .jacket-product-page .suit-gallery-thumbnails button{cursor:pointer}
 @media(max-width:700px){.jacket-catalogue .fitelier-jacket-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}.jacket-catalogue .suit-card-copy h3{font-size:17px}.jacket-catalogue .suit-card-copy p{font-size:11px}}
+
+/* Override suit-only three-layer visibility: jacket cards have one swapping image. */
+.suit-catalogue.jacket-catalogue .suit-card-visual > img[data-jacket-img]{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  display:block!important;opacity:1!important;visibility:visible!important;
+  object-fit:contain!important;object-position:center center!important;
+  mix-blend-mode:multiply!important;pointer-events:none!important;
+}
+/* Keep gallery detail crops clean: hide the incidental adjacent-panel strip. */
+.jacket-product-page .suit-gallery-stage:has(img[data-jacket-kind="fabric"]) img{
+  clip-path:inset(0 0 5% 0);
+}
+.jacket-product-page .suit-gallery-thumbnails button:nth-child(2) img{
+  clip-path:inset(0 0 5% 0);
+}
