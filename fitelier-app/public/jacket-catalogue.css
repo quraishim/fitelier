@@ -1,47 +1,15 @@
-/* Jacket catalogue — match the suit catalogue's grid and image behaviour. */
-.catalogue-store:has(.fitelier-jacket-grid) .catalogue-store-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
-.catalogue-store:has(.fitelier-jacket-grid) .catalogue-filter{display:block!important;position:sticky;top:110px}
-.catalogue-products.fitelier-jacket-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:38px;align-items:start}
-.fitelier-jacket-card{display:block;min-width:0;color:inherit;text-decoration:none}
-.fitelier-jacket-visual{position:relative;width:100%;aspect-ratio:3/4;background:#f1e8de;overflow:hidden;cursor:pointer}
-.fitelier-jacket-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:none!important;transform:none!important;animation:none!important}
-.fitelier-jacket-hover-zone{position:absolute;top:0;bottom:0;width:50%;background:transparent;z-index:1}
-.fitelier-jacket-hover-zone.left{left:0}.fitelier-jacket-hover-zone.right{right:0}
-.fitelier-jacket-card h2{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:15px 0 0}
-.fitelier-jacket-card p{font-size:12px;color:#736c61;margin:6px 0 0;line-height:1.5}
-.fitelier-jacket-detail{padding-top:145px!important}
-.fitelier-jacket-detail-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(350px,.84fr);gap:clamp(42px,6vw,110px);align-items:start;margin-top:28px}
-.fitelier-jacket-hero{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#f1e8de}
-.fitelier-jacket-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
-.fitelier-jacket-thumbs img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#f1e8de;cursor:pointer}
-.fitelier-jacket-detail-grid h1{font-size:clamp(42px,4.6vw,72px);line-height:1.04;margin:15px 0 21px}
-.fitelier-jacket-detail-grid p{line-height:1.8;margin-bottom:15px}
-@media(max-width:850px){.catalogue-store:has(.fitelier-jacket-grid) .catalogue-store-layout{grid-template-columns:1fr}.catalogue-products.fitelier-jacket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fitelier-jacket-detail-grid{grid-template-columns:1fr}}
-@media(max-width:520px){.catalogue-products.fitelier-jacket-grid{gap:24px 12px}.fitelier-jacket-card h2{font-size:20px}}
-
-/* Approved jacket assets are separate full, fabric and lapel WebP images.
-   Use the same fixed, uncropped presentation as the suit catalogue. */
-.jacket-catalogue .fitelier-jacket-visual{
-  aspect-ratio:3/4!important;
-  background:#d1c5b6!important;
-  overflow:hidden!important;
-}
-.jacket-catalogue .fitelier-jacket-visual img{
-  position:static!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  mix-blend-mode:normal!important;
-  transform:none!important;
-  transition:opacity .2s ease!important;
-  animation:none!important;
-}
-.jacket-catalogue .fitelier-jacket-card h3{
-  font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;
-  margin:0;
-}
-.jacket-catalogue .fitelier-jacket-card p{font-size:12px;margin-top:6px;opacity:1}
+/* Jackets share the suits' exact catalogue and product-page layout.
+   The approved renders are never scaled or cropped beyond the fixed frame. */
+.jacket-catalogue .fitelier-jacket-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 20px}
+.jacket-catalogue .fitelier-jacket-card{min-width:0}
+.jacket-catalogue .fitelier-jacket-visual{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
+.jacket-catalogue .fitelier-jacket-visual img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;mix-blend-mode:multiply;transition:opacity .2s ease;transform:none}
 .jacket-catalogue .fitelier-jacket-card[hidden]{display:none!important}
+.jacket-catalogue .suit-card-copy{padding-top:15px}
+.jacket-catalogue .suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:0}
+.jacket-catalogue .suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5;opacity:1}
+.jacket-product-page .suit-gallery-stage{background:transparent}
+.jacket-product-page .suit-gallery-stage img{object-fit:contain;mix-blend-mode:multiply}
+.jacket-product-page .suit-gallery-thumbnails img{background:transparent;object-fit:contain;mix-blend-mode:multiply}
+.jacket-product-page .suit-gallery-thumbnails button{cursor:pointer}
+@media(max-width:700px){.jacket-catalogue .fitelier-jacket-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}.jacket-catalogue .suit-card-copy h3{font-size:17px}.jacket-catalogue .suit-card-copy p{font-size:11px}}
