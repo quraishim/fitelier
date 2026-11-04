@@ -54,3 +54,17 @@
   .jacket-catalogue .suit-card-copy h3{font-size:17px}
   .jacket-catalogue .suit-card-copy p{font-size:11px}
 }
+
+/* The approved fabric exports have a narrow leftover strip at the bottom.
+   Fill the detail frame slightly past its bottom edge, without editing pixels. */
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="fabric"]{
+  height:110%!important;object-fit:cover!important;object-position:center top!important;
+}
+.jacket-product-page .suit-gallery-stage{overflow:hidden!important}
+.jacket-product-page .suit-gallery-stage img[data-jacket-kind="fabric"]{
+  height:110%!important;object-fit:cover!important;object-position:center top!important;
+}
+.jacket-product-page .suit-gallery-thumbnails button{overflow:hidden!important}
+.jacket-product-page .suit-gallery-thumbnails button:nth-child(2) img{
+  object-fit:cover!important;object-position:center top!important;
+}
