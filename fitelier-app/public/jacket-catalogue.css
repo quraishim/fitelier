@@ -19,18 +19,29 @@
 @media(max-width:850px){.catalogue-store:has(.fitelier-jacket-grid) .catalogue-store-layout{grid-template-columns:1fr}.catalogue-products.fitelier-jacket-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fitelier-jacket-detail-grid{grid-template-columns:1fr}}
 @media(max-width:520px){.catalogue-products.fitelier-jacket-grid{gap:24px 12px}.fitelier-jacket-card h2{font-size:20px}}
 
-/* The supplied images are three-panel composite renders. Show only the first
-   (full garment) panel on cards; never squeeze the entire triptych into a card. */
-.jacket-catalogue .fitelier-jacket-visual{background:transparent!important;aspect-ratio:3/4;isolation:isolate}
-.jacket-catalogue .fitelier-jacket-visual img{position:absolute!important;top:0!important;left:0!important;width:300%!important;max-width:none!important;height:100%!important;object-fit:fill!important;object-position:left!important;transform:none!important;mix-blend-mode:multiply}
-.jacket-catalogue .fitelier-jacket-card h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;margin:0}
+/* Approved jacket assets are separate full, fabric and lapel WebP images.
+   Use the same fixed, uncropped presentation as the suit catalogue. */
+.jacket-catalogue .fitelier-jacket-visual{
+  aspect-ratio:3/4!important;
+  background:#d1c5b6!important;
+  overflow:hidden!important;
+}
+.jacket-catalogue .fitelier-jacket-visual img{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  mix-blend-mode:normal!important;
+  transform:none!important;
+  transition:opacity .2s ease!important;
+  animation:none!important;
+}
+.jacket-catalogue .fitelier-jacket-card h3{
+  font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;
+  margin:0;
+}
 .jacket-catalogue .fitelier-jacket-card p{font-size:12px;margin-top:6px;opacity:1}
 .jacket-catalogue .fitelier-jacket-card[hidden]{display:none!important}
-.jacket-catalogue .catalogue-filter{align-self:start}
-
-/* Keep jacket cards fixed like the suits grid. The source images are triptychs:
-   each panel fills exactly one card frame; hover switches panels without scaling. */
-.jacket-catalogue .fitelier-jacket-visual{background:#d1c5b6!important;overflow:hidden!important;aspect-ratio:3/4!important}
-.jacket-catalogue .fitelier-jacket-visual img{position:absolute!important;top:0!important;left:0!important;width:300%!important;height:100%!important;max-width:none!important;object-fit:fill!important;object-position:left top!important;mix-blend-mode:multiply!important;transition:none!important;animation:none!important;transform:none!important}
-.jacket-catalogue .fitelier-jacket-visual img[data-panel="fabric"]{left:-100%!important}
-.jacket-catalogue .fitelier-jacket-visual img[data-panel="lapel"]{left:-200%!important}
