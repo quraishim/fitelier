@@ -1,30 +1,56 @@
-/* Jackets share the suits' exact catalogue and product-page layout.
-   The approved renders are never scaled or cropped beyond the fixed frame. */
-.jacket-catalogue .fitelier-jacket-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 20px}
+/* Jackets use the exact catalogue grid and three-image hover system as suits.
+   Original approved photos remain unchanged; darken blends the light studio
+   backdrop into Fitelier's product-stone background without degrading texture. */
+.suit-catalogue.jacket-catalogue .catalogue-store-layout{grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
+.suit-catalogue.jacket-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:38px;align-items:start}
 .jacket-catalogue .fitelier-jacket-card{min-width:0}
-.jacket-catalogue .fitelier-jacket-visual{position:relative;aspect-ratio:3/4;overflow:hidden;background:transparent}
-.jacket-catalogue .fitelier-jacket-visual img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;mix-blend-mode:multiply;transition:opacity .2s ease;transform:none}
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual{
+  position:relative;aspect-ratio:3/4;overflow:hidden;
+  background:var(--product-stone,#d2c7b8);isolation:isolate;
+}
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > .suit-card-photo{
+  position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;max-width:none!important;
+  display:block!important;object-fit:contain!important;object-position:center!important;
+  mix-blend-mode:darken!important;transform:none!important;
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+  transition:none!important;
+}
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual[data-view="full"] > [data-photo-view="full"],
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"],
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual[data-view="lapel"] > [data-photo-view="lapel"]{
+  opacity:1!important;visibility:visible!important;
+}
+/* Fabric and lapel closeups fill their frame and never reveal the extra strip
+   at the edge of the original panel exports. */
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="fabric"],
+.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="lapel"]{
+  object-fit:cover!important;object-position:center 35%!important;
+}
 .jacket-catalogue .fitelier-jacket-card[hidden]{display:none!important}
 .jacket-catalogue .suit-card-copy{padding-top:15px}
 .jacket-catalogue .suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:0}
-.jacket-catalogue .suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5;opacity:1}
-.jacket-product-page .suit-gallery-stage{background:transparent}
-.jacket-product-page .suit-gallery-stage img{object-fit:contain;mix-blend-mode:multiply}
-.jacket-product-page .suit-gallery-thumbnails img{background:transparent;object-fit:contain;mix-blend-mode:multiply}
-.jacket-product-page .suit-gallery-thumbnails button{cursor:pointer}
-@media(max-width:700px){.jacket-catalogue .fitelier-jacket-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}.jacket-catalogue .suit-card-copy h3{font-size:17px}.jacket-catalogue .suit-card-copy p{font-size:11px}}
-
-/* Override suit-only three-layer visibility: jacket cards have one swapping image. */
-.suit-catalogue.jacket-catalogue .suit-card-visual > img[data-jacket-img]{
-  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
-  display:block!important;opacity:1!important;visibility:visible!important;
-  object-fit:contain!important;object-position:center center!important;
-  mix-blend-mode:multiply!important;pointer-events:none!important;
+.jacket-catalogue .suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5}
+.jacket-product-page{--product-stone:#d2c7b8}
+.jacket-product-page .suit-gallery-stage,.jacket-product-page .suit-gallery-thumbnails button{background:var(--product-stone)!important}
+.jacket-product-page .suit-gallery-stage img{
+  width:100%!important;height:100%!important;
+  max-width:100%!important;object-fit:contain!important;object-position:center!important;
+  mix-blend-mode:darken!important;transform:none!important;
 }
-/* Keep gallery detail crops clean: hide the incidental adjacent-panel strip. */
-.jacket-product-page .suit-gallery-stage:has(img[data-jacket-kind="fabric"]) img{
-  clip-path:inset(0 0 5% 0);
+.jacket-product-page .suit-gallery-thumbnails img{
+  width:100%!important;object-fit:contain!important;
+  mix-blend-mode:darken!important;transform:none!important;
+}
+.jacket-product-page .suit-gallery-stage img[data-jacket-kind="fabric"]{
+  object-fit:cover!important;object-position:center 32%!important;
 }
 .jacket-product-page .suit-gallery-thumbnails button:nth-child(2) img{
-  clip-path:inset(0 0 5% 0);
+  object-fit:cover!important;object-position:center 32%!important;
+}
+@media(max-width:700px){
+  .suit-catalogue.jacket-catalogue .catalogue-store-layout{grid-template-columns:1fr;gap:24px}
+  .suit-catalogue.jacket-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  .jacket-catalogue .suit-card-copy h3{font-size:17px}
+  .jacket-catalogue .suit-card-copy p{font-size:11px}
 }
