@@ -93,7 +93,7 @@
       +'</div></div>'+sizeGuide()+'</section>';
   }
   function bind(){
-    const cards=document.querySelectorAll(".suit-card-visual");
+    const cards=document.querySelectorAll(".suit-catalogue:not(.jacket-catalogue) .suit-card-visual");
     cards.forEach(function(visual){
       // All three photographs occupy the same fixed frame. Crossing the
       // centre line changes visibility only; nothing scales, pans or reloads.
