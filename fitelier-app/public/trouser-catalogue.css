@@ -119,3 +119,12 @@
   transform:scale(1.3);
   transform-origin:center center;
 }
+
+/* Match off-white pocket hover framing to the approved mid-grey pocket scale.
+   Catalogue hover only; leave the mid-grey and product galleries untouched. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="pocket"]{
+  object-fit:contain;
+  object-position:center center;
+  transform:scale(1.3);
+  transform-origin:center center;
+}
