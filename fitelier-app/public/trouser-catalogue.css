@@ -4,7 +4,7 @@
 .trouser-card{min-width:0}
 .trouser-card a{text-decoration:none;color:inherit}
 .trouser-visual{position:relative;aspect-ratio:3/4;overflow:hidden;background:#d2c7b8;isolation:isolate}
-.trouser-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;visibility:hidden;pointer-events:none;mix-blend-mode:darken}
+.trouser-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;visibility:hidden;pointer-events:none;mix-blend-mode:normal}
 .trouser-visual[data-view="main"] img[data-photo-view="main"],.trouser-visual[data-view="pocket"] img[data-photo-view="pocket"],.trouser-visual[data-view="waistband"] img[data-photo-view="waistband"]{opacity:1;visibility:visible}
 .trouser-visual [data-trouser-region]{position:absolute;top:0;bottom:0;width:50%;z-index:2}
 .trouser-visual [data-trouser-region="pocket"]{left:0}
@@ -13,7 +13,7 @@
 .trouser-card .suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:0}
 .trouser-card .suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5}
 .trouser-product-page .suit-gallery-stage,.trouser-product-page .suit-gallery-thumbnails button{background:#d2c7b8!important}
-.trouser-product-page .suit-gallery-stage img,.trouser-product-page .suit-gallery-thumbnails img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;mix-blend-mode:darken!important;transform:none!important}
+.trouser-product-page .suit-gallery-stage img,.trouser-product-page .suit-gallery-thumbnails img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;mix-blend-mode:normal!important;transform:none!important}
 .trouser-size-panel{margin-top:28px;padding-top:20px;border-top:1px solid rgba(40,35,30,.2)}
 .trouser-size-panel h2{font:400 25px Editorial,Georgia,serif}
 .trouser-size-panel p{font-size:13px;line-height:1.6}
