@@ -27,7 +27,7 @@
 
 /* Fine-tune the two pleated styles without changing their image files. */
 .trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="main"]{
-  transform:scale(1.16);
+  transform:scale(1.015);
   transform-origin:center center;
 }
 .trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="main"]{
@@ -77,4 +77,33 @@
 .trouser-product-page .suit-gallery-thumbnails button:not(:first-child) img{
   object-fit:cover!important;
   object-position:center!important;
+}
+
+
+/* Off-white presentation refinements: preserve the full waistband and hems. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="main"]{
+  transform:scale(1.015);
+  object-position:center center;
+}
+/* The detail image is wide: crop evenly from both sides, not from one edge. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="waistband"]{
+  object-fit:cover;
+  object-position:50% 50%;
+  transform:scale(1.025);
+  transform-origin:center;
+}
+/* Hide thin baked-in light borders in detail images without changing the source PNGs. */
+.trouser-product-page .suit-gallery-thumbnails button:not(:first-child) img{
+  transform:scale(1.045)!important;
+  transform-origin:center center!important;
+}
+.trouser-product-page .suit-gallery-thumbnails button:first-child img{
+  transform:scale(1.035)!important;
+}
+/* Main detail stage: trim edge pixels only on close-up views, not full trousers. */
+.trouser-product-page .suit-gallery-stage:has(img[src$="-pocket.png"]) img,
+.trouser-product-page .suit-gallery-stage:has(img[src$="-waistband.png"]) img{
+  object-fit:cover!important;
+  transform:scale(1.025)!important;
+  transform-origin:center!important;
 }
