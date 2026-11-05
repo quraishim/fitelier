@@ -41,3 +41,6 @@
   .jacket-catalogue .suit-card-copy p{font-size:11px}
 }
 
+
+/* The cleaned Cerulean render has wider internal margins than the other jacket renders. Scale only its catalogue full view to match garment height. */
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/cerulean-houndstooth"]) .fitelier-jacket-visual[data-view="full"] > [data-photo-view="full"]{transform:scale(1.15)!important;transform-origin:center center!important}
