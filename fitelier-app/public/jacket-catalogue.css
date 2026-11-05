@@ -48,7 +48,7 @@
 /* Denim fabric source has narrow navy side borders baked into its pixels.
    Crop those edges inside the existing 3:4 frame, without resizing other views. */
 .jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/denim-wool-silk-linen"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
-  transform:scale(1.13)!important;
+  transform:scale(.90)!important;
   transform-origin:center center!important;
 }
 .jacket-product-page[data-jacket-slug="denim-wool-silk-linen"] .suit-gallery-stage img[data-jacket-kind="fabric"]{
