@@ -55,3 +55,18 @@
   transform:scale(1.13)!important;
   transform-origin:center center!important;
 }
+
+/* Jacket-specific optical adjustments: keep the standard card dimensions. */
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/denim-wool-silk-linen"]) .fitelier-jacket-visual[data-view="full"] > [data-photo-view="full"]{
+  transform:scale(.90)!important;
+  transform-origin:center center!important;
+}
+/* The Hopsack and Houndstooth fabric source images have a detached fragment
+   along their lower edge. Mask it rather than changing the garment renders. */
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/navy-hopsack"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"],
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/cerulean-houndstooth"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
+  clip-path:inset(0 0 8% 0)!important;
+}
+.jacket-product-page:has(.suit-product-details h1) .suit-gallery-thumbnails button:nth-child(2) img{
+  clip-path:inset(0 0 8% 0)!important;
+}
