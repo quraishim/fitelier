@@ -1,6 +1,4 @@
-/* Jackets use the exact catalogue grid and three-image hover system as suits.
-   Original approved photos remain unchanged; darken blends the light studio
-   backdrop into Fitelier's product-stone background without degrading texture. */
+/* Jacket catalogue shares the suits grid and three-view hover pattern. Images retain their original proportions without zoom or compensating crops. */
 .suit-catalogue.jacket-catalogue .catalogue-store-layout{grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
 .suit-catalogue.jacket-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:38px;align-items:start}
 .jacket-catalogue .fitelier-jacket-card{min-width:0}
@@ -21,12 +19,6 @@
 .suit-catalogue.jacket-catalogue .fitelier-jacket-visual[data-view="lapel"] > [data-photo-view="lapel"]{
   opacity:1!important;visibility:visible!important;
 }
-/* Fabric and lapel closeups fill their frame and never reveal the extra strip
-   at the edge of the original panel exports. */
-.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="fabric"],
-.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="lapel"]{
-  object-fit:cover!important;object-position:center 35%!important;
-}
 .jacket-catalogue .fitelier-jacket-card[hidden]{display:none!important}
 .jacket-catalogue .suit-card-copy{padding-top:15px}
 .jacket-catalogue .suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:0}
@@ -42,12 +34,6 @@
   width:100%!important;object-fit:contain!important;
   mix-blend-mode:darken!important;transform:none!important;
 }
-.jacket-product-page .suit-gallery-stage img[data-jacket-kind="fabric"]{
-  object-fit:cover!important;object-position:center 32%!important;
-}
-.jacket-product-page .suit-gallery-thumbnails button:nth-child(2) img{
-  object-fit:cover!important;object-position:center 32%!important;
-}
 @media(max-width:700px){
   .suit-catalogue.jacket-catalogue .catalogue-store-layout{grid-template-columns:1fr;gap:24px}
   .suit-catalogue.jacket-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
@@ -55,16 +41,3 @@
   .jacket-catalogue .suit-card-copy p{font-size:11px}
 }
 
-/* The approved fabric exports have a narrow leftover strip at the bottom.
-   Fill the detail frame slightly past its bottom edge, without editing pixels. */
-.suit-catalogue.jacket-catalogue .fitelier-jacket-visual > [data-photo-view="fabric"]{
-  height:110%!important;object-fit:cover!important;object-position:center top!important;
-}
-.jacket-product-page .suit-gallery-stage{overflow:hidden!important}
-.jacket-product-page .suit-gallery-stage img[data-jacket-kind="fabric"]{
-  height:110%!important;object-fit:cover!important;object-position:center top!important;
-}
-.jacket-product-page .suit-gallery-thumbnails button{overflow:hidden!important}
-.jacket-product-page .suit-gallery-thumbnails button:nth-child(2) img{
-  object-fit:cover!important;object-position:center top!important;
-}
