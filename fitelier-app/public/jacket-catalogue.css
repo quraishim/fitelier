@@ -74,6 +74,6 @@
 /* Taupe fabric preview: uniformly enlarge within the existing 3:4 viewport.
    Preserve the original Prince of Wales check proportions (no horizontal stretching). */
 .jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/taupe-pow"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
-  transform:scale(1.21)!important;
+  transform:scale(1.10)!important;
   transform-origin:center center!important;
 }
