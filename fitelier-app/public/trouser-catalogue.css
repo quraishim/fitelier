@@ -108,15 +108,12 @@
   transform-origin:center!important;
 }
 
-/* Align the pleated-trouser hover details across the catalogue. */
-.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="waistband"]{
-  transform:scale(1) !important;
-  transform-origin:center center;
-  object-position:50% 50%;
-}
+/* Pleated trouser hover views: use the approved references as framing guides.
+   Off-white pocket and mid-grey waistband already use the default contained framing. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="waistband"],
 .trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="pocket"]{
-  object-fit:cover;
-  object-position:50% 50%;
-  transform:scale(1.025);
+  object-fit:contain;
+  object-position:center center;
+  transform:none;
   transform-origin:center center;
 }
