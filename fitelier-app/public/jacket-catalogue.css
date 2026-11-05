@@ -51,7 +51,7 @@
   transform:scale(1.13)!important;
   transform-origin:center center!important;
 }
-.jacket-product-page:has(.suit-product-details h1) .suit-gallery-stage img[data-jacket-kind="fabric"]{
+.jacket-product-page[data-jacket-slug="denim-wool-silk-linen"] .suit-gallery-stage img[data-jacket-kind="fabric"]{
   transform:scale(1.13)!important;
   transform-origin:center center!important;
 }
@@ -67,6 +67,6 @@
 .jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/cerulean-houndstooth"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
   clip-path:inset(0 0 8% 0)!important;
 }
-.jacket-product-page:has(.suit-product-details h1) .suit-gallery-thumbnails button:nth-child(2) img{
+.jacket-product-page:is([data-jacket-slug="navy-hopsack"],[data-jacket-slug="cerulean-houndstooth"]) .suit-gallery-thumbnails button:nth-child(2) img{
   clip-path:inset(0 0 8% 0)!important;
 }
