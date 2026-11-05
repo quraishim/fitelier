@@ -117,3 +117,11 @@
   transform:none;
   transform-origin:center center;
 }
+
+/* Match mid-grey pocket hover visual scale to the approved off-white pocket. */
+.trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="pocket"]{
+  object-fit:cover;
+  object-position:center center;
+  transform:scale(1.55);
+  transform-origin:center center;
+}
