@@ -58,3 +58,23 @@
 .trouser-product-page .suit-gallery-thumbnails button:first-child img{
   object-fit:contain!important;
 }
+
+/* Product thumbnails: remove letterboxing and preserve complete garment silhouettes. */
+.trouser-product-page .suit-gallery-thumbnails{
+  align-items:stretch;
+}
+.trouser-product-page .suit-gallery-thumbnails button{
+  position:relative;
+  min-width:0;
+  aspect-ratio:4/5;
+  background:#d2c7b8!important;
+}
+.trouser-product-page .suit-gallery-thumbnails button:first-child img{
+  object-fit:cover!important;
+  object-position:center!important;
+  transform:scale(1.12)!important;
+}
+.trouser-product-page .suit-gallery-thumbnails button:not(:first-child) img{
+  object-fit:cover!important;
+  object-position:center!important;
+}
