@@ -112,10 +112,10 @@
    Off-white pocket and mid-grey waistband already use the default contained framing. */
 .trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="waistband"],
 .trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="pocket"]{
-  /* The source is squarer than the off-white pocket photo. Fill the same
-     3:4 display frame without applying a second zoom that clips the buckle. */
-  object-fit:cover;
+  /* Preserve the full pocket and buckle: the landscape source cannot be
+     cover-cropped into the portrait card without cutting off its details. */
+  object-fit:contain;
   object-position:center center;
-  transform:none;
+  transform:scale(1.3);
   transform-origin:center center;
 }
