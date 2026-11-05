@@ -23,3 +23,15 @@
 .trouser-measurements th,.trouser-measurements td{padding:9px 0;border-bottom:1px solid rgba(40,35,30,.12);text-align:left}
 .trouser-measurements td{text-align:right}
 @media(max-width:700px){.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:1fr;gap:24px}.suit-catalogue.trouser-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.trouser-card .suit-card-copy h3{font-size:17px}.trouser-card .suit-card-copy p{font-size:11px}}
+
+/* Off-white and mid-grey studio renders: tame the overexposure and integrate
+   the lighter photographic paper with the warm catalogue stone. Other trouser
+   images are deliberately unaffected. */
+.trouser-catalogue .trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img,
+.trouser-catalogue .trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img,
+.trouser-product-page:has(.suit-breadcrumb a[href="#/catalogue/trousers"]) .suit-gallery-stage img[src*="/off-white-"],
+.trouser-product-page:has(.suit-breadcrumb a[href="#/catalogue/trousers"]) .suit-gallery-stage img[src*="/mid-grey-"],
+.trouser-product-page .suit-gallery-thumbnails img[src*="/off-white-"],
+.trouser-product-page .suit-gallery-thumbnails img[src*="/mid-grey-"]{
+  filter:brightness(.91) contrast(1.08) saturate(.88)!important;
+}
