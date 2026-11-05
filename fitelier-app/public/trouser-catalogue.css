@@ -1,0 +1,25 @@
+/* Trouser collection: same grid and editorial typography as suits/jackets. */
+.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
+.suit-catalogue.trouser-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 20px}
+.trouser-card{min-width:0}
+.trouser-card a{text-decoration:none;color:inherit}
+.trouser-visual{position:relative;aspect-ratio:3/4;overflow:hidden;background:#d2c7b8;isolation:isolate}
+.trouser-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;visibility:hidden;pointer-events:none;mix-blend-mode:darken}
+.trouser-visual[data-view="main"] img[data-photo-view="main"],.trouser-visual[data-view="pocket"] img[data-photo-view="pocket"],.trouser-visual[data-view="waistband"] img[data-photo-view="waistband"]{opacity:1;visibility:visible}
+.trouser-visual [data-trouser-region]{position:absolute;top:0;bottom:0;width:50%;z-index:2}
+.trouser-visual [data-trouser-region="pocket"]{left:0}
+.trouser-visual [data-trouser-region="waistband"]{right:0}
+.trouser-card .suit-card-copy{padding-top:15px}
+.trouser-card .suit-card-copy h3{font:400 clamp(21px,1.8vw,27px)/1.2 Editorial,Georgia,serif;letter-spacing:-.02em;margin:0}
+.trouser-card .suit-card-copy p{font-size:12px;color:#736c61;margin-top:6px;line-height:1.5}
+.trouser-product-page .suit-gallery-stage,.trouser-product-page .suit-gallery-thumbnails button{background:#d2c7b8!important}
+.trouser-product-page .suit-gallery-stage img,.trouser-product-page .suit-gallery-thumbnails img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;mix-blend-mode:darken!important;transform:none!important}
+.trouser-size-panel{margin-top:28px;padding-top:20px;border-top:1px solid rgba(40,35,30,.2)}
+.trouser-size-panel h2{font:400 25px Editorial,Georgia,serif}
+.trouser-size-panel p{font-size:13px;line-height:1.6}
+.trouser-size-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:15px 0}
+.trouser-size-controls select,.trouser-size-controls button{background:transparent;border:1px solid #9c8f80;padding:9px 13px;color:inherit}
+.trouser-measurements{width:100%;border-collapse:collapse;font-size:13px}
+.trouser-measurements th,.trouser-measurements td{padding:9px 0;border-bottom:1px solid rgba(40,35,30,.12);text-align:left}
+.trouser-measurements td{text-align:right}
+@media(max-width:700px){.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:1fr;gap:24px}.suit-catalogue.trouser-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.trouser-card .suit-card-copy h3{font-size:17px}.trouser-card .suit-card-copy p{font-size:11px}}
