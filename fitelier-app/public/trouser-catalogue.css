@@ -128,3 +128,15 @@
   transform:scale(1);
   transform-origin:center center;
 }
+
+/* Catalogue main-image optical alignment: preserve image aspect ratio and all details.
+   Black remains the baseline; pleated styles are slightly reduced to align their
+   visible waistband and hem positions. Hover details and product pages unaffected. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="main"]{
+  transform:translateY(-5px) scale(.95);
+  transform-origin:center center;
+}
+.trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="main"]{
+  transform:translateY(2px) scale(.95);
+  transform-origin:center center;
+}
