@@ -24,3 +24,37 @@
 .trouser-measurements td{text-align:right}
 @media(max-width:700px){.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:1fr;gap:24px}.suit-catalogue.trouser-catalogue .catalogue-products.suit-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.trouser-card .suit-card-copy h3{font-size:17px}.trouser-card .suit-card-copy p{font-size:11px}}
 
+
+/* Fine-tune the two pleated styles without changing their image files. */
+.trouser-card:has(a[href="#/trouser/off-white"]) .trouser-visual img[data-photo-view="main"]{
+  transform:scale(1.16);
+  transform-origin:center center;
+}
+.trouser-card:has(a[href="#/trouser/mid-grey"]) .trouser-visual img[data-photo-view="main"]{
+  transform:scale(.98);
+  transform-origin:center center;
+}
+/* Detail previews: fill the thumbnail rather than letterboxing the PNG. */
+.trouser-product-page .suit-gallery-thumbnails button{
+  overflow:hidden;
+  aspect-ratio:4/5;
+  border:1px solid transparent;
+  outline:none;
+  box-shadow:none;
+}
+.trouser-product-page .suit-gallery-thumbnails button.is-active{
+  border-color:#8d7b68;
+  outline:none;
+  box-shadow:none;
+}
+.trouser-product-page .suit-gallery-thumbnails img{
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  aspect-ratio:auto;
+}
+.trouser-product-page .suit-gallery-thumbnails button:first-child img{
+  object-fit:contain!important;
+}
