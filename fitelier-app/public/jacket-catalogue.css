@@ -70,3 +70,10 @@
 .jacket-product-page:is([data-jacket-slug="navy-hopsack"],[data-jacket-slug="cerulean-houndstooth"]) .suit-gallery-thumbnails button:nth-child(2) img{
   clip-path:inset(0 0 8% 0)!important;
 }
+
+/* Taupe fabric preview: uniformly enlarge within the existing 3:4 viewport.
+   Preserve the original Prince of Wales check proportions (no horizontal stretching). */
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/taupe-pow"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
+  transform:scale(1.21)!important;
+  transform-origin:center center!important;
+}
