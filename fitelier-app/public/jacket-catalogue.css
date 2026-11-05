@@ -44,3 +44,14 @@
 
 /* The cleaned Cerulean render has wider internal margins than the other jacket renders. Scale only its catalogue full view to match garment height. */
 .jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/cerulean-houndstooth"]) .fitelier-jacket-visual[data-view="full"] > [data-photo-view="full"]{transform:scale(1.15)!important;transform-origin:center center!important}
+
+/* Denim fabric source has narrow navy side borders baked into its pixels.
+   Crop those edges inside the existing 3:4 frame, without resizing other views. */
+.jacket-catalogue .fitelier-jacket-card:has(a[href="#/jacket/denim-wool-silk-linen"]) .fitelier-jacket-visual[data-view="fabric"] > [data-photo-view="fabric"]{
+  transform:scale(1.13)!important;
+  transform-origin:center center!important;
+}
+.jacket-product-page:has(.suit-product-details h1) .suit-gallery-stage img[data-jacket-kind="fabric"]{
+  transform:scale(1.13)!important;
+  transform-origin:center center!important;
+}
