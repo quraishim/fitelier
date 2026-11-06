@@ -62,7 +62,7 @@
       +'<p>These garments are made only after you place your order, not drawn from existing stock. Please review your sizes and the terms below before proceeding to Square.</p>'
       +'<label class="fitelier-check"><input type="checkbox" data-check-final> <span>I understand that made-to-order purchases cannot be returned or exchanged for a change of mind, personal preference or incorrect size selection, except where required by law.</span></label>'
       +'<label class="fitelier-check"><input type="checkbox" data-check-size> <span>I have reviewed the size guide, selected my jacket and trouser sizes, and understand that standard sizing may require alterations. Complimentary fit alterations are available locally in Edmonton, within Fitelier’s alterations policy.</span></label>'
-      +'<p class="fitelier-checkout-note">We would love to help make this easier. If you are unsure about fit, <a href="#/consultation">ask one of us</a> before placing your order.</p>'
+      +'<p class="fitelier-checkout-note">Don’t be a stranger. If you’re unsure about fabric, fit, or styling, <a href="#/consultation">talk to one of us</a> before placing your order.</p>'
       +'<h3>Secure payment</h3><p>Once enabled, your payment will be processed on Square’s secure checkout page. Fitelier does not collect card details on this website.</p>'
       +'<button type="button" class="button fitelier-square-button" data-checkout-square disabled>Connecting Square checkout…</button>'
       +'<p class="fitelier-checkout-status" role="status" aria-live="polite" data-checkout-status>Checking payment availability.</p>'
