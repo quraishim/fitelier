@@ -1,5 +1,5 @@
 /* Trouser collection: same grid and editorial typography as suits/jackets. */
-.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:180px minmax(0,1fr);gap:42px;align-items:start}
+.suit-catalogue.trouser-catalogue .catalogue-store-layout{grid-template-columns:minmax(0,1fr);gap:42px;align-items:start}
 .suit-catalogue.trouser-catalogue .catalogue-products.suit-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 20px}
 .trouser-card{min-width:0}
 .trouser-card a{text-decoration:none;color:inherit}
