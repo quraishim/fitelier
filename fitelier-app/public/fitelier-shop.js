@@ -58,7 +58,7 @@
   function checkoutPage(){
     const bag=read();
     return '<section class="section fitelier-checkout-page"><p class="eyebrow">FITELIER / CHECKOUT</p><h1>Review your order.</h1>'
-      +(bag.length?'<div class="fitelier-checkout-layout"><div class="fitelier-checkout-terms"><h2>Made to order, for you.</h2>'
+      +(bag.length?'<div class="fitelier-checkout-layout"><div class="fitelier-checkout-terms"><h2>Considered in every detail.</h2>'
       +'<p>These garments are made only after you place your order, not drawn from existing stock. Please review your sizes and the terms below before proceeding to Square.</p>'
       +'<label class="fitelier-check"><input type="checkbox" data-check-final> <span>I understand that made-to-order purchases cannot be returned or exchanged for a change of mind, personal preference or incorrect size selection, except where required by law.</span></label>'
       +'<label class="fitelier-check"><input type="checkbox" data-check-size> <span>I have reviewed the size guide, selected my jacket and trouser sizes, and understand that standard sizing may require alterations. Complimentary fit alterations are available locally in Edmonton, within Fitelier’s alterations policy.</span></label>'
