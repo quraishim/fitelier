@@ -47,7 +47,7 @@
       +'<p>CAD · Taxes and any applicable delivery charges are calculated during secure checkout. Order details and your final total will be displayed before payment.</p></div>';
   }
   function empty(){
-    return '<div class="fitelier-empty-bag"><h2>Your bag is empty.</h2><p>Explore a considered selection of fabrics, then choose your jacket and trouser sizes.</p><a href="#/catalogue/suits" class="button">Explore suits ↗</a></div>';
+    return '<div class="fitelier-empty-bag"><h2>Your bag is empty.</h2><p>Explore a considered selection of fabrics, then choose your jacket and trouser sizes.</p><a href="#/collection" class="button">Explore collections ↗</a></div>';
   }
   function bagPage(){
     const bag=read();
