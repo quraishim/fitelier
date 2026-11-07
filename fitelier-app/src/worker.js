@@ -73,7 +73,7 @@ function validateSquareCart(body){
       quantity:String(row.qty),
       variation_name:'Jacket EU '+row.jacket+' / Trousers EU '+row.trousers,
       note:'Fitelier made-to-order suit. Size selection: jacket EU '+row.jacket+', trousers EU '+row.trousers+'.',
-      base_price_money:{amount:89500,currency:'CAD'}
+      base_price_money:{amount:68500,currency:'CAD'}
     });
   }
   return items;

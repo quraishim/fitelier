@@ -1,7 +1,7 @@
 /* Fitelier bag and checkout; the Square payment redirect is enabled only by a configured server. */
 (function () {
   "use strict";
-  const KEY="fitelier.shopping.bag.v1",unitCents=89500,allowedSizes=new Set([44,46,48,50,52,54,56,58,60]);
+  const KEY="fitelier.shopping.bag.v1",unitCents=68500,allowedSizes=new Set([44,46,48,50,52,54,56,58,60]);
   let memory=[],lastAttempt=null,checkoutBusy=false;
   const products=()=>window.FitelierSuits?.products||[];
   const money=cents=>new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD",maximumFractionDigits:2}).format(cents/100);
