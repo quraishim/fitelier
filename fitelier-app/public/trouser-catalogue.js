@@ -2,9 +2,9 @@
 (function(){
 const base="/assets/trousers/";
 const products=[
-{slug:"chocolate-brown",name:"Chocolate Brown Wool Trousers",ref:"227748",weight:"260–270 g/m",season:"Four Seasons",super:"Super 110s"},
 {slug:"charcoal",name:"Charcoal Wool Trousers",ref:"227704",weight:"260–270 g/m",season:"Four Seasons",super:"Super 110s"},
 {slug:"navy",name:"Navy Wool Trousers",ref:"227730",weight:"260–270 g/m",season:"Four Seasons",super:"Super 110s"},
+{slug:"chocolate-brown",name:"Chocolate Brown Wool Trousers",ref:"227748",weight:"260–270 g/m",season:"Four Seasons",super:"Super 110s"},
 {slug:"black",name:"Black Wool Trousers",ref:"227796",weight:"370 g/m",season:"Fall / Winter",super:""},
 {slug:"off-white",name:"Off-White Pleated Wool Trousers",ref:"226746",weight:"270 g/m",season:"Four Seasons",super:"Super 110s",pleated:true},
 {slug:"mid-grey",name:"Mid-Grey Pleated Wool Trousers",ref:"226749",weight:"260 g/m",season:"Four Seasons",super:"Super 110s",pleated:true}];
