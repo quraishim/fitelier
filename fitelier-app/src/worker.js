@@ -100,14 +100,14 @@ async function squareCheckout(request,env){
         order:{
           location_id:env.SQUARE_LOCATION_ID,
           line_items:items,
-          pricing_options:{auto_apply_taxes:true}
+          pricing_options:{auto_apply_taxes:false}
         },
         checkout_options:{
           ask_for_shipping_address:true,
           allow_tipping:false,
           merchant_support_email:'info@fitelier.ca'
         },
-        payment_note:'Made-to-order garments; jacket and trouser sizes appear in line-item details.'
+        payment_note:'Complimentary personal delivery within Edmonton, arranged with a Fitelier advisor after inspection. No GST charged. Jacket and trouser sizes appear in line-item details.'
       })
     });
     if(!response.ok){console.error('square_checkout_failed',{status:response.status});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}
