@@ -15,3 +15,23 @@ body:not(.fitelier-home):not(.builder-page) #main { padding-top:78px; }
 /* Brand identity: standalone mark is always the circular cursive F. */
 .monogram:has(> img[src="/fitelier-monogram.svg"]){border:0;background:transparent;overflow:visible}
 .monogram > img[src="/fitelier-monogram.svg"]{display:block;width:100%;height:100%;object-fit:contain}
+
+/* Consultation booking layout on phones. */
+@media(max-width:700px){
+  .appointment-page{padding:28px 6% 44px;grid-template-columns:minmax(0,1fr);gap:28px}
+  .appointment-page .appointment-intro{min-width:0}
+  .appointment-page .appointment-intro>.eyebrow{font-size:10px;line-height:1.5;letter-spacing:.16em;margin:0 0 14px}
+  .appointment-page .appointment-intro h1{font-size:clamp(42px,12vw,56px);line-height:1.04;margin:0 0 18px}
+  .appointment-page .appointment-intro h1 br{display:block}
+  .appointment-page .appointment-intro>p:not(.eyebrow):not(.fineprint){font-size:15px;line-height:1.65;margin:0}
+  .appointment-page .appointment-panel{padding-top:0;min-width:0}
+  .appointment-page .appointment-panel>.eyebrow{font-size:10px;line-height:1.5;letter-spacing:.16em;margin:0 0 12px}
+  .appointment-page .appointment-panel>h2{font-size:36px;line-height:1.1;max-width:15ch;margin:0 0 16px}
+  .appointment-page .appointment-panel>p:not(.eyebrow):not(.fineprint){font-size:15px;line-height:1.65;margin:0 0 20px}
+  .appointment-page .appointment-panel>.button{box-sizing:border-box;width:100%;min-height:52px;padding:15px 20px;margin:0;line-height:1.4}
+  .appointment-page .appointment-panel>.fineprint{font-size:12px;line-height:1.6;margin:14px 0 0}
+  .appointment-page .appointment-panel>.suit-guidance{margin:28px 0 0;padding:24px 0 0;border-top:1px solid var(--line)}
+  .appointment-page .suit-guidance h2{font-size:30px;line-height:1.15;margin:0 0 14px}
+  .appointment-page .suit-guidance p{font-size:14px;line-height:1.65;margin:0 0 16px}
+  .appointment-page .suit-guidance .text-link{display:inline-block;font-size:14px;margin:0;overflow-wrap:anywhere}
+}
