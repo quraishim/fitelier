@@ -50,3 +50,16 @@
 .approach-service-copy p,.approach-mtm-copy p{font-size:16px;line-height:1.7}
 .approach-mtm-copy{margin-top:20px}
 }
+
+/* Keep the MTM introduction balanced and close to its numbered steps. */
+.process .mtm-heading{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:start;gap:clamp(28px,7vw,110px);margin-bottom:34px}
+.process .mtm-heading h2{margin:14px 0 0}
+.process .approach-mtm-copy{margin:0;max-width:none}
+.process .approach-mtm-copy p{font-size:17px;line-height:1.7;margin:0 0 16px;color:var(--muted)}
+.process .approach-mtm-copy p:last-child{margin-bottom:0}
+.process .step-no{padding-bottom:18px;margin-bottom:20px}
+@media(max-width:700px){
+.process .mtm-heading{grid-template-columns:minmax(0,1fr);gap:22px;margin-bottom:28px}
+.process .approach-mtm-copy p{font-size:16px;line-height:1.7}
+.process .step-no{font-size:31px;padding-bottom:14px;margin-bottom:16px}
+}
