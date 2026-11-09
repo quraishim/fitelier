@@ -25,3 +25,10 @@
 #mobile-menu .menu-catalogues-link { display: flex; align-items: center; justify-content: space-between; text-decoration: none; cursor: pointer; }
 #mobile-menu .menu-catalogues-link span { font-size: .8em; opacity: .65; transition: transform .25s ease; }
 #mobile-menu .menu-catalogues-link:hover span, #mobile-menu .menu-catalogues-link:focus-visible span { transform: translate(3px,-3px); }
+
+/* Place the service heading just beneath the central wordmark. */
+.hero-service-heading{font:400 clamp(18px,2vw,26px)/1.4 Quiet,Arial,sans-serif;color:#f3e7d4;text-align:center}
+.fitelier-home .hero-v3-side>.hero-service-heading{position:absolute;top:calc(44% + 64px);left:50%;transform:translateX(-50%);width:min(850px,90vw);margin:0;font:400 clamp(12px,1.05vw,15px)/1.6 Quiet,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;text-align:center;color:#f3e7d4;text-shadow:0 2px 14px #0009}
+@media(max-width:700px){
+  .fitelier-home .hero-v3-side>.hero-service-heading{top:calc(44% + 42px);width:88vw;font-size:11px;letter-spacing:.1em;line-height:1.7;text-wrap:balance}
+}
