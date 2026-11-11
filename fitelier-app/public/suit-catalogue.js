@@ -85,7 +85,7 @@
       +'<div class="suit-gallery-thumbnails" role="group" aria-label="Choose photograph">'+pics.map(function(x,i){return '<button type="button" aria-label="'+x[1]+'" data-suit-photo="'+i+'" class="'+(i===0?'is-active':'')+'" aria-pressed="'+(i===0?'true':'false')+'"><img src="'+image(p,x[0])+'" alt=""></button>';}).join('')+'</div></div>'
       +'<div class="suit-product-details"><p class="eyebrow">'+esc(p.season)+' / MADE TO ORDER</p><h1>'+esc(p.name)+'</h1><p class="suit-product-intro">'+esc(p.description)+'</p>'
       +window.FitelierOptions.options("suit",p.weight,p.slug.replace(/-wool$/, ""))
-      +'<div class="suit-sizing"><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div>'
+      +'<div class="suit-sizing" id="suit-ensemble"><label class="suit-size-select">Ensemble<select data-suit-ensemble><option value="2pc">Two-piece suit</option><option value="3pc"'+(new URLSearchParams(location.hash.split("?")[1]).get("ensemble")==="3pc"?' selected':'')+'>Three-piece suit</option></select></label><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div><div data-waistcoat-sizing hidden>'+window.FitelierOptions.sizePicker('Waistcoat','data-waistcoat-size')+'</div>'
       +'<button type="button" class="suit-sizeguide-trigger" data-suit-open>Unsure about your size? ↗</button><p>Jacket and trouser sizes may be selected separately. Standard sizing may require alterations.</p></div>'
       +'<button type="button" class="button suit-add-to-bag" data-suit-add="'+esc(p.slug)+'">Add to bag <span aria-hidden="true">↗</span></button><p class="suit-add-feedback" role="status" aria-live="polite" data-suit-add-feedback></p>'
       +'<p class="suit-order-note">Made to order and final sale. Complimentary fit alterations for Edmonton clients are subject to our alterations policy.</p><aside class="three-piece-option" aria-label="Three-piece suit option" data-three-piece></aside>'
@@ -146,11 +146,33 @@
       }
     }
     const addButton=document.querySelector('[data-suit-add]');
-    if(addButton){addButton.addEventListener('click',function(){
+    if(addButton){
+      const page = addButton.closest('section');
+      const ensemble = page.querySelector('[data-suit-ensemble]');
+      const waistcoatSizing = page.querySelector('[data-waistcoat-sizing]');
+      const waistcoatSize = page.querySelector('[data-waistcoat-size]');
+      function updateEnsemble(){
+        waistcoatSizing.hidden = ensemble.value !== '3pc';
+        page.querySelector('[data-garment-cloth]').dispatchEvent(new Event('change',{bubbles:true}));
+      }
+      ensemble.addEventListener('change',updateEnsemble);
+      page.querySelector('[data-three-piece]').addEventListener('click',event=>{
+        if(!event.target.closest('[data-complete-ensemble]')) return;
+        ensemble.value = '3pc';
+        updateEnsemble();
+        ensemble.focus();
+        ensemble.scrollIntoView({block:'center'});
+      });
+      waistcoatSizing.hidden = ensemble.value !== '3pc';
+      if (ensemble.value === '3pc') requestAnimationFrame(()=>{
+        if (ensemble.isConnected) ensemble.scrollIntoView({block:'center'});
+      });
+      addButton.addEventListener('click',function(){
       const select=Array.from(document.querySelectorAll('.suit-size-separates select'));
       const feedback=document.querySelector('[data-suit-add-feedback]');
       if(select.some(function(el){return !el.value;})){feedback.textContent='Please choose both jacket and trouser sizes.';select.find(function(el){return !el.value;})?.focus();return;}
-      const ok=window.FitelierShop?.add(addButton.dataset.suitAdd,Number(select[0].value),Number(select[1].value),document.querySelector("[data-garment-cloth]").value,document.querySelector("[data-garment-canvas]").value);
+      if(ensemble.value==='3pc'&&!waistcoatSize.value){feedback.textContent='Please choose a waistcoat size.';waistcoatSize.focus();return;}
+      const ok=window.FitelierShop?.add(addButton.dataset.suitAdd,Number(select[0].value),Number(select[1].value),document.querySelector("[data-garment-cloth]").value,document.querySelector("[data-garment-canvas]").value,ensemble.value,Number(waistcoatSize.value));
       feedback.innerHTML=ok?'Added to your bag. <a href="#/bag">View bag ↗</a>':'Your bag could not be updated. Please try again.';
     });}
     const dialog=document.getElementById("suit-size-dialog");

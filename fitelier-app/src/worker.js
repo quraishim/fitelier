@@ -49,11 +49,43 @@ async function consultations(request,env){
 
 /* Square hosted checkout: secrets remain server-side. Prices and item names are
    always determined here, never trusted from the browser. */
-const SQUARE_SUIT_NAMES={
-  'charcoal-wool':'Charcoal Wool Suit',
-  'navy-wool':'Navy Wool Suit',
-  'brown-wool':'Chocolate Brown Wool Suit',
-  'black-wool':'Black Wool Suit'
+const SQUARE_PRODUCTS = {
+  suit: {
+    'charcoal-wool':'Charcoal Wool Suit',
+    'navy-wool':'Navy Wool Suit',
+    'brown-wool':'Chocolate Brown Wool Suit',
+    'black-wool':'Black Wool Suit'
+  },
+  trouser: {
+    charcoal:'Charcoal Wool Trousers',
+    navy:'Navy Wool Trousers',
+    'chocolate-brown':'Chocolate Brown Wool Trousers',
+    black:'Black Wool Trousers',
+    'off-white':'Off-White Pleated Wool Trousers',
+    'mid-grey':'Mid-Grey Pleated Wool Trousers'
+  },
+  waistcoat: {
+    charcoal:'Charcoal Wool Waistcoat',
+    navy:'Navy Wool Waistcoat',
+    brown:'Chocolate Brown Wool Waistcoat',
+    black:'Black Wool Waistcoat'
+  },
+  jacket: {
+    'navy-hopsack':'Navy Hopsack Jacket',
+    'cerulean-houndstooth':'Cerulean Houndstooth Jacket',
+    'taupe-pow':'Taupe Prince of Wales Jacket',
+    'denim-wool-silk-linen':'Denim-Effect Double-Breasted Jacket'
+  }
+};
+const SQUARE_FIXED_PRICES = {
+  'navy-hopsack': 79500,
+  'cerulean-houndstooth': 79500,
+  'taupe-pow': 79500,
+  'denim-wool-silk-linen': 84500,
+};
+const SQUARE_CLOTH_PRICES = {
+  essentials:{name:'Fitelier Essentials',suit:69500,threePiece:79500,trouser:19500,waistcoat:22500},
+  vbc:{name:'VBC Perennial',suit:119500,threePiece:149500,trouser:36500,waistcoat:41500}
 };
 const SQUARE_SIZES=new Set([44,46,48,50,52,54,56,58,60]);
 const squareReady=env=>env.SQUARE_CHECKOUT_ENABLED==='true'
@@ -65,21 +97,38 @@ function validateSquareCart(body){
   let total=0;
   const items=[];
   for(const row of body.items){
-    if(!row||typeof row.slug!=='string'||!Object.hasOwn(SQUARE_SUIT_NAMES,row.slug))return null;
-    if(!SQUARE_SIZES.has(row.jacket)||!SQUARE_SIZES.has(row.trousers)||!Number.isInteger(row.qty)||row.qty<1||row.qty>5)return null;
+    if (!row || typeof row.slug !== 'string' || !Number.isInteger(row.qty) || row.qty<1 || row.qty>5) return null;
+    const kind = row.kind ?? 'suit';
+    if (typeof kind !== 'string' || !Object.hasOwn(SQUARE_PRODUCTS,kind) || !Object.hasOwn(SQUARE_PRODUCTS[kind],row.slug)) return null;
+    const fixedPrice = Object.hasOwn(SQUARE_FIXED_PRICES,row.slug) ? SQUARE_FIXED_PRICES[row.slug] : null;
+    if (fixedPrice === null && (kind === 'jacket' || ['off-white','mid-grey'].includes(row.slug))) return null;
     const cloth = row.cloth ?? 'vbc';
     const canvas = row.canvas ?? 'half';
-    const clothPrices = {essentials:69500,vbc:119500};
-    if (!Object.hasOwn(clothPrices,cloth) || !['half','full'].includes(canvas)) return null;
-    const clothName = cloth === 'vbc' ? 'VBC Perennial' : 'Fitelier Essentials';
-    const canvasName = canvas === 'full' ? 'Full canvas' : 'Half canvas';
-    const amount = clothPrices[cloth] + (canvas === 'full' ? 22000 : 0);
-    total+=row.qty;if(total>20)return null;
+    if (typeof cloth !== 'string' || !Object.hasOwn(SQUARE_CLOTH_PRICES,cloth) || !['half','full'].includes(canvas)) return null;
+    if (!['jacket','suit'].includes(kind) && canvas === 'full') return null;
+    const details = kind === 'jacket' ? ['Brown Aaron Naples'] : fixedPrice === null ? [SQUARE_CLOTH_PRICES[cloth].name] : [];
+    if (kind === 'suit' || kind === 'jacket') details.push(canvas === 'full' ? 'Full canvas' : 'Half canvas');
+    let priceKey = kind;
+    if (kind === 'suit') {
+      const ensemble = row.ensemble ?? '2pc';
+      if (!['2pc','3pc'].includes(ensemble) || !SQUARE_SIZES.has(row.jacket) || !SQUARE_SIZES.has(row.trousers)) return null;
+      details.push('Jacket EU '+row.jacket,'Trousers EU '+row.trousers);
+      if (ensemble === '3pc') {
+        if (!SQUARE_SIZES.has(row.waistcoat)) return null;
+        details.push('Waistcoat EU '+row.waistcoat);
+        priceKey = 'threePiece';
+      }
+    } else {
+      if (!SQUARE_SIZES.has(row.size)) return null;
+      details.push('EU '+row.size);
+    }
+    const amount = (fixedPrice ?? SQUARE_CLOTH_PRICES[cloth][priceKey]) + (canvas === 'full' ? 22000 : 0);
+    total += row.qty;
+    if (total > 20) return null;
     items.push({
-      name:SQUARE_SUIT_NAMES[row.slug],
+      name:SQUARE_PRODUCTS[kind][row.slug],
       quantity:String(row.qty),
-      variation_name:clothName+' / '+canvasName+' / Jacket EU '+row.jacket+' / Trousers EU '+row.trousers,
-      note:clothName+' / '+canvasName+'. Jacket EU '+row.jacket+', trousers EU '+row.trousers+'.',
+      variation_name:details.join(' / '),
       base_price_money:{amount,currency:'CAD'}
     });
   }
@@ -103,7 +152,7 @@ async function squareCheckout(request,env){
       headers:{'Square-Version':'2026-09-16','Authorization':'Bearer '+env.SQUARE_ACCESS_TOKEN,'Content-Type':'application/json'},
       body:JSON.stringify({
         idempotency_key:key,
-        description:'Fitelier made-to-order suit selection',
+        description:'Fitelier made-to-order garment selection',
         order:{
           location_id:env.SQUARE_LOCATION_ID,
           line_items:items,
@@ -114,7 +163,7 @@ async function squareCheckout(request,env){
           allow_tipping:false,
           merchant_support_email:'info@fitelier.ca'
         },
-        payment_note:'Complimentary personal delivery within Edmonton, arranged with a Fitelier advisor after inspection. No GST charged. Jacket and trouser sizes appear in line-item details.'
+        payment_note:'Complimentary personal delivery within Edmonton, arranged with a Fitelier advisor after inspection. No GST charged. Garment sizes appear in line-item details.'
       })
     });
     if(!response.ok){console.error('square_checkout_failed',{status:response.status});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}

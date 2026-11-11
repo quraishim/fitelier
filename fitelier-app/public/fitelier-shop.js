@@ -3,26 +3,69 @@
   "use strict";
   const KEY="fitelier.shopping.bag.v1",allowedSizes=new Set([44,46,48,50,52,54,56,58,60]);
   let memory=[],lastAttempt=null,checkoutBusy=false;
-  const products=()=>window.FitelierSuits?.products||[];
+  const product = item => {
+    const groups = {suit:window.FitelierSuits?.products,trouser:window.FitelierTrousers?.products,waistcoat:window.FitelierWaistcoats?.products};
+    if (item.kind === 'jacket') {
+      const names = {'navy-hopsack':'Navy Hopsack Jacket','cerulean-houndstooth':'Cerulean Houndstooth Jacket','taupe-pow':'Taupe Prince of Wales Jacket','denim-wool-silk-linen':'Denim-Effect Double-Breasted Jacket'};
+      return Object.hasOwn(names,item.slug) ? {name:names[item.slug]} : undefined;
+    }
+    return groups[item.kind]?.find(p=>p.slug===item.slug);
+  };
   const money=cents=>new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD",maximumFractionDigits:2}).format(cents/100);
   const esc=value=>String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const unitCents = item => window.FitelierOptions.suitPrice(item.cloth, item.canvas) * 100;
-  const variant = item => window.FitelierOptions.cloths[item.cloth].name + " · " + window.FitelierOptions.canvasName(item.canvas);
-  const itemKey = item => [item.slug,item.jacket,item.trousers,item.cloth,item.canvas].join("|");
-  const productLink = item => "#/suit/" + item.slug + "?cloth=" + item.cloth + "&amp;canvas=" + item.canvas;
+  const unitCents = item => window.FitelierOptions.priceFor(item) * 100;
+  const variant = item => [
+    item.ensemble === '3pc' ? 'Three-piece suit' : null,
+    item.kind === 'jacket' ? 'Brown Aaron Naples' : null,
+    window.FitelierOptions.cloths[item.cloth]?.name,
+    item.canvas ? window.FitelierOptions.canvasName(item.canvas) : null,
+  ].filter(Boolean).join(' · ');
+  const sizing = item => item.kind === 'suit'
+    ? ['Jacket EU '+item.jacket,'Trousers EU '+item.trousers,item.waistcoat ? 'Waistcoat EU '+item.waistcoat : null].filter(Boolean).join(' · ')
+    : 'EU '+item.size;
+  const itemKey = item => [item.kind,item.slug,item.ensemble,item.jacket,item.trousers,item.waistcoat,item.size,item.cloth,item.canvas].join("|");
+  const productLink = item => '#/'+item.kind+'/'+item.slug+'?'+esc(new URLSearchParams(Object.fromEntries(
+    Object.entries({cloth:item.cloth,canvas:item.canvas,ensemble:item.ensemble}).filter(([,value])=>value)
+  )));
+  function normalizeItem(row) {
+    if (!row) return null;
+    const kind = row.kind ?? 'suit';
+    const qty = Number(row.qty);
+    if (!['suit','jacket','trouser','waistcoat'].includes(kind) || !Number.isInteger(qty) || qty<1 || qty>5) return null;
+    const item = {kind,slug:row.slug,qty};
+    if (!product(item)) return null;
+    const isFixed = Object.hasOwn(window.FitelierOptions.fixedPrices,item.slug);
+    if (!isFixed && kind !== 'jacket') {
+      item.cloth = row.cloth ?? 'vbc';
+      if (typeof item.cloth !== 'string' || !Object.hasOwn(window.FitelierOptions.cloths,item.cloth)) return null;
+    }
+    if (kind === 'suit' || kind === 'jacket') {
+      item.canvas = row.canvas ?? 'half';
+      if (!['half','full'].includes(item.canvas)) return null;
+    }
+    if (kind === 'suit') {
+      item.ensemble = row.ensemble ?? '2pc';
+      item.jacket = Number(row.jacket);
+      item.trousers = Number(row.trousers);
+      if (!['2pc','3pc'].includes(item.ensemble) || !allowedSizes.has(item.jacket) || !allowedSizes.has(item.trousers)) return null;
+      if (item.ensemble === '3pc') {
+        item.waistcoat = Number(row.waistcoat);
+        if (!allowedSizes.has(item.waistcoat)) return null;
+      }
+    } else {
+      item.size = Number(row.size);
+      if (!allowedSizes.has(item.size)) return null;
+    }
+    return window.FitelierOptions.priceFor(item) === null ? null : item;
+  }
   function normalize(data){
-    if(!Array.isArray(data))return [];
+    if (!Array.isArray(data)) return [];
     const cleaned=[];
-    for(const row of data.slice(0,24)){
-      if(!row||!products().some(p=>p.slug===row.slug))continue;
-      const jacket=Number(row.jacket),trousers=Number(row.trousers),qty=Number(row.qty);
-      if(!allowedSizes.has(jacket)||!allowedSizes.has(trousers)||!Number.isInteger(qty)||qty<1||qty>5)continue;
-      const cloth = row.cloth ?? "vbc";
-      const canvas = row.canvas ?? "half";
-      if (!Object.hasOwn(window.FitelierOptions.cloths, cloth) || !["half","full"].includes(canvas)) continue;
-      const item = {slug:row.slug,jacket,trousers,cloth,canvas,qty};
+    for (const row of data.slice(0,24)) {
+      const item = normalizeItem(row);
+      if (!item) continue;
       const exists=cleaned.find(existing=>itemKey(existing)===itemKey(item));
-      if(exists)exists.qty=Math.min(5,exists.qty+qty);
+      if(exists)exists.qty=Math.min(5,exists.qty+item.qty);
       else cleaned.push(item);
     }
     return cleaned.slice(0,8);
@@ -31,37 +74,52 @@
   function save(rows){memory=normalize(rows);lastAttempt=null;try{localStorage.setItem(KEY,JSON.stringify(memory));}catch{}badge();return memory;}
   function quantity(){return read().reduce((sum,x)=>sum+x.qty,0);}
   function badge(){document.querySelectorAll(".fitelier-bag-count").forEach(el=>{const n=quantity();el.textContent=String(n);el.hidden=n===0;});}
-  function add(slug,jacket,trousers,cloth,canvas){
-    if(!Object.hasOwn(window.FitelierOptions.cloths,cloth)||!["half","full"].includes(canvas)||!products().some(x=>x.slug===slug)||!allowedSizes.has(jacket)||!allowedSizes.has(trousers))return false;
-    const item={slug,jacket,trousers,cloth,canvas,qty:1};
+  function addItem(selection){
+    const item = normalizeItem({...selection,qty:1});
+    if (!item || quantity()>=20) return false;
     const bag=read(),found=bag.find(x=>itemKey(x)===itemKey(item));
-    if(found)found.qty=Math.min(5,found.qty+1);else if(bag.length<8)bag.push(item);else return false;
-    save(bag);return true;
+    if(found && found.qty<5) found.qty++;
+    else if(!found && bag.length<8) bag.push(item);
+    else return false;
+    save(bag);
+    return true;
   }
-  function image(item){return "/assets/suit-products/"+item.slug+"-main.webp";}
+  function add(slug,jacket,trousers,cloth,canvas,ensemble,waistcoat){
+    return addItem({kind:'suit',slug,jacket,trousers,cloth,canvas,ensemble,waistcoat});
+  }
+  function image(item){
+    const paths = {
+      suit:['suit-products','main.webp'],
+      trouser:['trousers','main.png'],
+      waistcoat:['waistcoats','front.png'],
+      jacket:['assets',item.slug==='denim-wool-silk-linen'?'full-corrected.webp':'full.webp']
+    };
+    const [folder, suffix] = paths[item.kind];
+    return '/assets/'+folder+'/'+item.slug+'-'+suffix;
+  }
   function detailLine(item){
-    const p=products().find(p=>p.slug===item.slug);
+    const p=product(item);
     if(!p)return "";
     const key=itemKey(item);
     return '<article class="fitelier-bag-item"><a href="'+productLink(item)+'" class="fitelier-bag-photo"><img src="'+image(item)+'" alt="'+esc(p.name)+'"></a>'
       +'<div class="fitelier-bag-description"><h2><a href="'+productLink(item)+'">'+esc(p.name)+'</a></h2><p>'+esc(variant(item))+'</p>'
-      +'<p>Jacket EU '+item.jacket+' · Trousers EU '+item.trousers+'</p><div class="fitelier-bag-controls">'
+      +'<p>'+sizing(item)+'</p><div class="fitelier-bag-controls">'
       +'<label>Quantity <select data-cart-qty="'+esc(key)+'" aria-label="Quantity for '+esc(p.name)+'">'+[1,2,3,4,5].map(n=>'<option value="'+n+'"'+(item.qty===n?' selected':'')+'>'+n+'</option>').join('')+'</select></label>'
       +'<button type="button" data-cart-remove="'+esc(key)+'">Remove</button></div></div>'
       +'<div class="fitelier-bag-item-price">'+money(unitCents(item)*item.qty)+'</div></article>';
   }
   function totals(){
     const n=quantity();
-    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'suit':'suits')+')</span><strong>'+money(read().reduce((sum,item)=>sum+unitCents(item)*item.qty,0))+'</strong></div>'
+    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'item':'items')+')</span><strong>'+money(read().reduce((sum,item)=>sum+unitCents(item)*item.qty,0))+'</strong></div>'
       +'<p>CAD · No GST charged. Complimentary personal delivery within Edmonton, arranged with your Fitelier advisor. Please provide an Edmonton delivery address at Square checkout.</p></div>';
   }
   function empty(){
-    return '<div class="fitelier-empty-bag"><h2>Your bag is empty.</h2><p>Explore a considered selection of fabrics, then choose your jacket and trouser sizes.</p><a href="#/collection" class="button">Explore collections ↗</a></div>';
+    return '<div class="fitelier-empty-bag"><h2>Your bag is empty.</h2><p>Explore a considered selection of fabrics, then choose your sizes.</p><a href="#/collection" class="button">Explore collections ↗</a></div>';
   }
   function bagPage(){
     const bag=read();
     return '<section class="section fitelier-bag-page"><div class="fitelier-bag-heading"><p class="eyebrow">FITELIER / YOUR SELECTION</p><h1>Your bag.</h1></div>'
-      +(bag.length?'<div class="fitelier-bag-layout"><div class="fitelier-bag-items">'+bag.map(detailLine).join('')+'</div><aside class="fitelier-bag-summary"><h2>Order summary</h2>'+totals()+'<a href="#/checkout" class="button">Continue to checkout ↗</a><a href="#/catalogue/suits" class="text-link">Continue browsing</a></aside></div>':empty())
+      +(bag.length?'<div class="fitelier-bag-layout"><div class="fitelier-bag-items">'+bag.map(detailLine).join('')+'</div><aside class="fitelier-bag-summary"><h2>Order summary</h2>'+totals()+'<a href="#/checkout" class="button">Continue to checkout ↗</a><a href="#/collection" class="text-link">Continue browsing</a></aside></div>':empty())
       +'</section>';
   }
   function checkoutPage(){
@@ -70,13 +128,13 @@
       +(bag.length?'<div class="fitelier-checkout-layout"><div class="fitelier-checkout-terms"><h2>Considered in every detail.</h2>'
       +'<p>These garments are made only after you place your order, not drawn from existing stock. Please review your sizes and the terms below before proceeding to Square.</p>'
       +'<label class="fitelier-check"><input type="checkbox" data-check-final> <span>I understand that made-to-order purchases cannot be returned or exchanged for a change of mind, personal preference or incorrect size selection, except where required by law.</span></label>'
-      +'<label class="fitelier-check"><input type="checkbox" data-check-size> <span>I have reviewed the size guide, selected my jacket and trouser sizes, and understand that standard sizing may require alterations. Complimentary fit alterations are available locally in Edmonton, within Fitelier’s alterations policy.</span></label>'
+      +'<label class="fitelier-check"><input type="checkbox" data-check-size> <span>I have reviewed the size guide, selected my garment sizes, and understand that standard sizing may require alterations. Complimentary fit alterations are available locally in Edmonton, within Fitelier’s alterations policy.</span></label>'
       +'<p class="fitelier-checkout-note">Don’t be a stranger. If you’re unsure about fabric, fit, or styling, <a href="#/consultation">talk to one of us</a> before placing your order.</p>'
       +'<h3>Secure payment</h3><p>Your payment will be processed on Square’s secure checkout page. Fitelier does not collect card details on this website.</p>'
       +'<button type="button" class="button fitelier-square-button" data-checkout-square disabled>Connecting Square checkout…</button>'
       +'<p class="fitelier-checkout-status" role="status" aria-live="polite" data-checkout-status>Checking payment availability.</p>'
       +'</div><aside class="fitelier-bag-summary"><h2>Order summary</h2><div class="fitelier-checkout-lines">'
-      +bag.map(item=>{const p=products().find(x=>x.slug===item.slug);return '<div><span>'+esc(p?.name||"Suit")+' × '+item.qty+'<small>'+esc(variant(item))+' · EU '+item.jacket+' jacket / EU '+item.trousers+' trousers</small></span><b>'+money(unitCents(item)*item.qty)+'</b></div>';}).join('')
+            +bag.map(item=>'<div><span>'+esc(product(item).name)+' × '+item.qty+'<small>'+esc([variant(item),sizing(item)].filter(Boolean).join(' · '))+'</small></span><b>'+money(unitCents(item)*item.qty)+'</b></div>').join('')
       +'</div>'+totals()+'<a href="#/bag" class="text-link">Edit your bag</a></aside></div>':empty())+'</section>';
   }
   async function availability(){
@@ -115,10 +173,29 @@
   }
   function bind(){
     badge();
+    const separate = document.querySelector('[data-separate-kind]');
+    if (separate) separate.addEventListener('click',()=>{
+      const page = separate.closest('section');
+      const size = page.querySelector('[data-separate-size]');
+      const feedback = page.querySelector('[data-separate-feedback]');
+      if (!size.value) {
+        feedback.textContent = 'Please choose your size.';
+        size.focus();
+        return;
+      }
+      const added = addItem({
+        kind:separate.dataset.separateKind,
+        slug:separate.dataset.separateSlug,
+        size:Number(size.value),
+        cloth:page.querySelector('[data-garment-cloth]')?.value,
+        canvas:page.querySelector('[data-garment-canvas]')?.value
+      });
+      feedback.innerHTML = added ? 'Added to your bag. <a href="#/bag">View bag ↗</a>' : 'Your bag could not be updated. Please review your bag.';
+    });
     document.querySelectorAll("[data-cart-qty]").forEach(el=>el.addEventListener("change",e=>{
       const key=el.dataset.cartQty;
       const bag=read();const item=bag.find(x=>itemKey(x)===key);
-      if(item){item.qty=Math.max(1,Math.min(5,Number(el.value)||1));save(bag);location.hash="#/bag";refresh();}
+      if(item){item.qty=Math.max(1,Math.min(5,20-quantity()+item.qty,Number(el.value)||1));save(bag);location.hash="#/bag";refresh();}
     }));
     document.querySelectorAll("[data-cart-remove]").forEach(el=>el.addEventListener("click",()=>{
       const key=el.dataset.cartRemove;

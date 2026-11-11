@@ -6,6 +6,23 @@
     vbc: { name: "VBC Perennial", composition: "100% Super 110s wool", mill: "Vitale Barberis Canonico", suit: 1195, trousers: 365, waistcoat: 415, threePiece: 1495 }
   };
   const fullCanvas = 220;
+  const fixedPrices = {
+  'navy-hopsack': 795,
+  'cerulean-houndstooth': 795,
+  'taupe-pow': 795,
+  'denim-wool-silk-linen': 845,
+};
+  const sizes = [44,46,48,50,52,54,56,58,60];
+  const sizePicker = (label, attribute) => `<label class="suit-size-select">${label}<select ${attribute}><option value="">Choose EU size</option>${sizes.map(size => `<option value="${size}">EU ${size}</option>`).join('')}</select></label>`;
+  const purchase = (kind, slug) => `<button type="button" class="button suit-add-to-bag" data-separate-kind="${kind}" data-separate-slug="${slug}">Add to bag <span aria-hidden="true">↗</span></button><p role="status" data-separate-feedback></p>`;
+  function priceFor(item) {
+    const cloth = cloths[item.cloth];
+    if (['off-white','mid-grey'].includes(item.slug) && !Object.hasOwn(fixedPrices,item.slug)) return null;
+    const base = item.kind === 'suit'
+      ? cloth[item.ensemble === '3pc' ? 'threePiece' : 'suit']
+      : fixedPrices[item.slug] ?? cloth?.[item.kind === 'trouser' ? 'trousers' : item.kind];
+    return Number.isFinite(base) ? base + (item.canvas === 'full' ? fullCanvas : 0) : null;
+  }
   const money = amount => '$' + amount.toLocaleString('en-CA') + ' CAD';
   const query = () => new URLSearchParams(location.hash.split('?')[1]);
   const selectedCloth = () => query().get('cloth') === 'vbc' ? 'vbc' : 'essentials';
@@ -41,13 +58,16 @@
     function update() {
       const canvas = canvasSelect?.value || 'half';
       if (garment === 'jacket') {
+        const price = document.querySelector('[data-jacket-price]');
+        if (price) price.textContent = money(priceFor({kind:'jacket',slug:panel.closest('section').dataset.jacketSlug,canvas}));
         const link = document.querySelector('.jacket-product-page .suit-guidance a');
         link.href = '#/consultation?' + new URLSearchParams({garment:'Jacket', canvas, product:document.querySelector('.jacket-product-page h1').textContent});
         return;
       }
       const key = clothSelect.value;
       const cloth = cloths[key];
-      const price = garment === 'suit' ? suitPrice(key, canvas) : cloth[garment];
+      const ensemble = panel.closest('section').querySelector('[data-suit-ensemble]')?.value;
+      const price = garment === 'suit' ? priceFor({kind:'suit',cloth:key,canvas,ensemble}) : cloth[garment];
       panel.querySelector('[data-garment-price]').textContent = money(price);
       const facts = [['Composition', cloth.composition]];
       if (cloth.mill) facts.push(['Mill', cloth.mill]);
@@ -59,14 +79,16 @@
         link.href = '#/consultation?' + new URLSearchParams({garment: garmentName, cloth:key, product:panel.closest('section').querySelector('h1').textContent});
       }
       const threePiece = panel.closest('section').querySelector('[data-three-piece]');
+      const matchingSuit = panel.closest('section').querySelector('[data-matching-suit]');
+      if (matchingSuit) matchingSuit.href = '#/suit/' + matchingSuit.dataset.matchingSuit + '?cloth=' + key + '&ensemble=3pc';
       if (threePiece) {
         const total = cloth.threePiece + (canvas === 'full' ? fullCanvas : 0);
-        threePiece.innerHTML = `<p>Three-piece suit <strong>${money(total)}</strong></p><div class="three-piece-links"><a class="text-link" href="#/waistcoat/${matchingWaistcoat}?cloth=${key}">View matching waistcoat</a><a class="text-link" href="#/consultation?${new URLSearchParams({garment:'Suit', cloth:key, canvas, ensemble:'3pc', product:document.querySelector('.suit-product-page h1').textContent})}">Discuss the ensemble ↗</a></div>`;
+        threePiece.innerHTML = `<p>Three-piece suit <strong>${money(total)}</strong></p><div class="three-piece-links"><a class="text-link" href="#/waistcoat/${matchingWaistcoat}?cloth=${key}">View matching waistcoat</a><button type="button" class="suit-sizeguide-trigger" data-complete-ensemble>Complete the ensemble ↗</button></div>`;
       }
     }
     panel.addEventListener('change', update);
     update();
   }
 
-  window.FitelierOptions = {cloths, money, canvasName, suitPrice, options, bind};
+  window.FitelierOptions = {cloths, money, canvasName, suitPrice, options, bind, sizePicker, purchase, priceFor, fixedPrices};
 })();
