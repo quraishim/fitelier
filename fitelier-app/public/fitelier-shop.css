@@ -5,9 +5,13 @@
 .suit-catalogue .suit-card-photo{mix-blend-mode:darken}
 .suit-product-page{--product-stone:#d2c7b8}
 .suit-product-page .suit-gallery-stage{background:var(--product-stone)}
-.suit-product-page .suit-gallery-stage img{mix-blend-mode:darken}
+.suit-product-page:not(.shirt-product-page) .suit-gallery-stage img{mix-blend-mode:darken}
 .suit-product-page .suit-gallery-thumbnails button{background:var(--product-stone)}
-.suit-product-page .suit-gallery-thumbnails img{mix-blend-mode:darken}
+.suit-product-page:not(.shirt-product-page) .suit-gallery-thumbnails img{mix-blend-mode:darken}
+.shirt-product-page .suit-gallery-stage,
+.shirt-product-page .suit-gallery-thumbnails button{background:#ccc1b2}
+.shirt-product-page .suit-gallery-stage img,
+.shirt-product-page .suit-gallery-thumbnails img{mix-blend-mode:normal}
 .suit-hover-hint,.suit-gallery-thumbnails button span{display:none!important}
 .suit-catalogue .suit-card-price{font-size:13px;color:#3d3329;margin-top:6px;font-weight:600}
 .suit-product-price{font-size:21px;font-weight:500;letter-spacing:.015em;margin:-4px 0 18px}
