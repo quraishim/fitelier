@@ -10,7 +10,7 @@
       ['collar', 'Classic collar and Fitelier label']
     ]
   };
-  const photo = view => '/assets/shirts/' + shirt.slug + '-' + view + '-v2.webp';
+  const photo = view => '/assets/shirts/' + shirt.slug + '-' + view + (view === 'fabric' ? '-v2.webp' : '-v3.webp');
 
   function cataloguePage() {
     return `<section class="section catalogue-store shirt-catalogue">
