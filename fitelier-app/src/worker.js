@@ -78,6 +78,8 @@ const SQUARE_PRODUCTS = {
   }
 };
 const SQUARE_FIXED_PRICES = {
+  'off-white': 26500,
+  'chocolate-brown': 26500,
   'navy-hopsack': 79500,
   'cerulean-houndstooth': 79500,
   'taupe-pow': 79500,
@@ -101,12 +103,13 @@ function validateSquareCart(body){
     const kind = row.kind ?? 'suit';
     if (typeof kind !== 'string' || !Object.hasOwn(SQUARE_PRODUCTS,kind) || !Object.hasOwn(SQUARE_PRODUCTS[kind],row.slug)) return null;
     const fixedPrice = Object.hasOwn(SQUARE_FIXED_PRICES,row.slug) ? SQUARE_FIXED_PRICES[row.slug] : null;
+    if (kind === 'trouser' && row.slug === 'chocolate-brown' && row.cloth != null) return null;
     if (fixedPrice === null && (kind === 'jacket' || ['off-white','mid-grey'].includes(row.slug))) return null;
     const cloth = row.cloth ?? 'vbc';
     const canvas = row.canvas ?? 'half';
     if (typeof cloth !== 'string' || !Object.hasOwn(SQUARE_CLOTH_PRICES,cloth) || !['half','full'].includes(canvas)) return null;
     if (!['jacket','suit'].includes(kind) && canvas === 'full') return null;
-    const details = kind === 'jacket' ? ['Brown Aaron Naples'] : fixedPrice === null ? [SQUARE_CLOTH_PRICES[cloth].name] : [];
+    const details = kind === 'jacket' ? ['Brown Aaron Naples'] : fixedPrice === null ? [SQUARE_CLOTH_PRICES[cloth].name] : ['Brown Aaron'];
     if (kind === 'suit' || kind === 'jacket') details.push(canvas === 'full' ? 'Full canvas' : 'Half canvas');
     let priceKey = kind;
     if (kind === 'suit') {

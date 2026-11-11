@@ -7,6 +7,8 @@
   };
   const fullCanvas = 220;
   const fixedPrices = {
+  'off-white': 265,
+  'chocolate-brown': 265,
   'navy-hopsack': 795,
   'cerulean-houndstooth': 795,
   'taupe-pow': 795,
@@ -49,7 +51,33 @@
     </div>`;
   }
 
+  function guidance(garment) {
+    const labels = {Suit:'this suit', Jacket:'this jacket', Trousers:'these trousers', Waistcoat:'this waistcoat'};
+    return `<div class="suit-guidance"><h2>Looking for something more?</h2><p>If standard sizing isn’t standard for you, you typically require alterations, or you’d prefer a more personal approach, we’ve got you covered. We can work from your measurements and explore fabrics and details beyond this selection.</p><a class="text-link" href="#/consultation?garment=${garment}">Explore ${labels[garment]} with an advisor ↗</a></div>`;
+  }
+
+  function bindGalleryArrows() {
+    const gallery = document.querySelector('.suit-product-page .suit-gallery');
+    if (!gallery) return;
+    const stage = gallery.querySelector('.suit-gallery-stage');
+    const photos = [...gallery.querySelectorAll('.suit-gallery-thumbnails button')];
+    if (!stage || photos.length < 2) return;
+    for (const [direction, label, glyph] of [[-1,'Previous photograph','←'],[1,'Next photograph','→']]) {
+      const arrow = document.createElement('button');
+      arrow.type = 'button';
+      arrow.className = 'product-gallery-arrow '+(direction < 0 ? 'product-gallery-prev' : 'product-gallery-next');
+      arrow.setAttribute('aria-label',label);
+      arrow.textContent = glyph;
+      arrow.addEventListener('click',()=> {
+        const current = photos.findIndex(photo=>photo.getAttribute('aria-pressed') === 'true');
+        photos[(current + direction + photos.length) % photos.length].click();
+      });
+      stage.append(arrow);
+    }
+  }
+
   function bind() {
+    bindGalleryArrows();
     const panel = document.querySelector('[data-garment-options]');
     if (!panel) return;
     const { garmentOptions: garment, weight, matchingWaistcoat } = panel.dataset;
@@ -78,17 +106,15 @@
         const garmentName = garment === 'trousers' ? 'Trousers' : 'Waistcoat';
         link.href = '#/consultation?' + new URLSearchParams({garment: garmentName, cloth:key, product:panel.closest('section').querySelector('h1').textContent});
       }
-      const threePiece = panel.closest('section').querySelector('[data-three-piece]');
+      const matchingWaistcoatLink = panel.closest('section').querySelector('[data-matching-waistcoat-link]');
+      if (matchingWaistcoatLink) matchingWaistcoatLink.href = '#/waistcoat/' + matchingWaistcoat + '?cloth=' + key;
       const matchingSuit = panel.closest('section').querySelector('[data-matching-suit]');
       if (matchingSuit) matchingSuit.href = '#/suit/' + matchingSuit.dataset.matchingSuit + '?cloth=' + key + '&ensemble=3pc';
-      if (threePiece) {
-        const total = cloth.threePiece + (canvas === 'full' ? fullCanvas : 0);
-        threePiece.innerHTML = `<p>Three-piece suit <strong>${money(total)}</strong></p><div class="three-piece-links"><a class="text-link" href="#/waistcoat/${matchingWaistcoat}?cloth=${key}">View matching waistcoat</a><button type="button" class="suit-sizeguide-trigger" data-complete-ensemble>Complete the ensemble ↗</button></div>`;
-      }
+
     }
     panel.addEventListener('change', update);
     update();
   }
 
-  window.FitelierOptions = {cloths, money, canvasName, suitPrice, options, bind, sizePicker, purchase, priceFor, fixedPrices};
+  window.FitelierOptions = {cloths, money, canvasName, suitPrice, options, bind, sizePicker, purchase, priceFor, fixedPrices, guidance};
 })();

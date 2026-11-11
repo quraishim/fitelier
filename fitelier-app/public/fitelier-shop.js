@@ -17,6 +17,7 @@
   const variant = item => [
     item.ensemble === '3pc' ? 'Three-piece suit' : null,
     item.kind === 'jacket' ? 'Brown Aaron Naples' : null,
+    item.kind === 'trouser' && Object.hasOwn(window.FitelierOptions.fixedPrices,item.slug) ? 'Brown Aaron' : null,
     window.FitelierOptions.cloths[item.cloth]?.name,
     item.canvas ? window.FitelierOptions.canvasName(item.canvas) : null,
   ].filter(Boolean).join(' · ');
@@ -35,6 +36,7 @@
     const item = {kind,slug:row.slug,qty};
     if (!product(item)) return null;
     const isFixed = Object.hasOwn(window.FitelierOptions.fixedPrices,item.slug);
+    if (kind === 'trouser' && row.slug === 'chocolate-brown' && row.cloth != null) return null;
     if (!isFixed && kind !== 'jacket') {
       item.cloth = row.cloth ?? 'vbc';
       if (typeof item.cloth !== 'string' || !Object.hasOwn(window.FitelierOptions.cloths,item.cloth)) return null;

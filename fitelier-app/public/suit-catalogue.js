@@ -85,11 +85,11 @@
       +'<div class="suit-gallery-thumbnails" role="group" aria-label="Choose photograph">'+pics.map(function(x,i){return '<button type="button" aria-label="'+x[1]+'" data-suit-photo="'+i+'" class="'+(i===0?'is-active':'')+'" aria-pressed="'+(i===0?'true':'false')+'"><img src="'+image(p,x[0])+'" alt=""></button>';}).join('')+'</div></div>'
       +'<div class="suit-product-details"><p class="eyebrow">'+esc(p.season)+' / MADE TO ORDER</p><h1>'+esc(p.name)+'</h1><p class="suit-product-intro">'+esc(p.description)+'</p>'
       +window.FitelierOptions.options("suit",p.weight,p.slug.replace(/-wool$/, ""))
-      +'<div class="suit-sizing" id="suit-ensemble"><label class="suit-size-select">Ensemble<select data-suit-ensemble><option value="2pc">Two-piece suit</option><option value="3pc"'+(new URLSearchParams(location.hash.split("?")[1]).get("ensemble")==="3pc"?' selected':'')+'>Three-piece suit</option></select></label><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div><div data-waistcoat-sizing hidden>'+window.FitelierOptions.sizePicker('Waistcoat','data-waistcoat-size')+'</div>'
+      +'<div class="suit-sizing" id="suit-ensemble"><label class="suit-size-select">Ensemble<select data-suit-ensemble><option value="2pc">Two-piece suit</option><option value="3pc"'+(new URLSearchParams(location.hash.split("?")[1]).get("ensemble")==="3pc"?' selected':'')+'>Three-piece suit</option></select></label><a class="text-link matching-waistcoat-link" data-matching-waistcoat-link href="#/waistcoat/'+p.slug.replace(/-wool$/, "")+'">View matching waistcoat ↗</a><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div><div data-waistcoat-sizing hidden>'+window.FitelierOptions.sizePicker('Waistcoat','data-waistcoat-size')+'</div>'
       +'<button type="button" class="suit-sizeguide-trigger" data-suit-open>Unsure about your size? ↗</button><p>Jacket and trouser sizes may be selected separately. Standard sizing may require alterations.</p></div>'
       +'<button type="button" class="button suit-add-to-bag" data-suit-add="'+esc(p.slug)+'">Add to bag <span aria-hidden="true">↗</span></button><p class="suit-add-feedback" role="status" aria-live="polite" data-suit-add-feedback></p>'
-      +'<p class="suit-order-note">Made to order and final sale. Complimentary fit alterations for Edmonton clients are subject to our alterations policy.</p><aside class="three-piece-option" aria-label="Three-piece suit option" data-three-piece></aside>'
-      +'<div class="suit-guidance"><h2>Looking for something more?</h2><p>If &quot;standard&quot; sizing isn&#39;t standard for you, you typically require alterations, or you would simply prefer a more personal approach, we got you covered. Fitelier will work from your measurements and consider cloths/details beyond this selection.</p><a class="text-link" href="#/consultation">Explore this suit with an advisor ↗</a></div>'
+      +'<p class="suit-order-note">Made to order and final sale. Complimentary fit alterations for Edmonton clients are subject to our alterations policy.</p>'
+      +window.FitelierOptions.guidance('Suit')
       +'</div></div>'+sizeGuide()+'</section>';
   }
   function bind(){
@@ -156,13 +156,6 @@
         page.querySelector('[data-garment-cloth]').dispatchEvent(new Event('change',{bubbles:true}));
       }
       ensemble.addEventListener('change',updateEnsemble);
-      page.querySelector('[data-three-piece]').addEventListener('click',event=>{
-        if(!event.target.closest('[data-complete-ensemble]')) return;
-        ensemble.value = '3pc';
-        updateEnsemble();
-        ensemble.focus();
-        ensemble.scrollIntoView({block:'center'});
-      });
       waistcoatSizing.hidden = ensemble.value !== '3pc';
       if (ensemble.value === '3pc') requestAnimationFrame(()=>{
         if (ensemble.isConnected) ensemble.scrollIntoView({block:'center'});
