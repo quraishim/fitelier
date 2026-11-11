@@ -87,8 +87,8 @@
       +window.FitelierOptions.options("suit",p.weight,p.slug.replace(/-wool$/, ""))
       +'<div class="suit-sizing"><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div>'
       +'<button type="button" class="suit-sizeguide-trigger" data-suit-open>Unsure about your size? ↗</button><p>Jacket and trouser sizes may be selected separately. Standard sizing may require alterations.</p></div>'
-      +'<div class="suit-order-note"><p>Every suit is produced after the order is placed. Orders are final sale. Standard sizes may require alterations.</p><p>For clients local to Edmonton, Fitelier provides complimentary fit alterations within the scope of our alterations policy.</p></div>'
       +'<button type="button" class="button suit-add-to-bag" data-suit-add="'+esc(p.slug)+'">Add to bag <span aria-hidden="true">↗</span></button><p class="suit-add-feedback" role="status" aria-live="polite" data-suit-add-feedback></p>'
+      +'<p class="suit-order-note">Made to order and final sale. Complimentary fit alterations for Edmonton clients are subject to our alterations policy.</p><aside class="three-piece-option" aria-label="Three-piece suit option" data-three-piece></aside>'
       +'<div class="suit-guidance"><h2>Looking for something more?</h2><p>If &quot;standard&quot; sizing isn&#39;t standard for you, you typically require alterations, or you would simply prefer a more personal approach, we got you covered. Fitelier will work from your measurements and consider cloths/details beyond this selection.</p><a class="text-link" href="#/consultation">Explore this suit with an advisor ↗</a></div>'
       +'</div></div>'+sizeGuide()+'</section>';
   }

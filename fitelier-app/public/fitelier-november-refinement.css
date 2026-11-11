@@ -63,3 +63,34 @@
 .process .approach-mtm-copy p{font-size:16px;line-height:1.7}
 .process .step-no{font-size:31px;padding-bottom:14px;margin-bottom:16px}
 }
+
+/* Product choices and homepage service copy */
+.fitelier-home .hero-side-copy { gap: clamp(16px, 2.4vh, 26px) !important; }
+.fitelier-home .hero-side-copy .hero-description { margin: 0 !important; }
+.home-service-line {
+  margin: 0;
+  padding: 24px 6%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.suit-product-details .garment-options { margin-block: 18px 22px; }
+.garment-options .garment-selects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 185px), 1fr));
+  gap: 12px;
+}
+.garment-options .garment-selects label { min-width: 0; }
+.suit-product-details .garment-options .suit-facts { margin: 14px 0 8px; }
+.suit-product-details .garment-options .suit-facts > div { padding-block: 8px; }
+.garment-options > .fineprint { margin: 8px 0 0; }
+.suit-product-details .suit-sizing { padding-bottom: 12px; }
+.suit-product-details .suit-order-note { margin: 12px 0 0; }
+.three-piece-option { margin-top: 22px; padding: 14px 0; border-block: 1px solid var(--line); }
+.three-piece-option p { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 8px; }
+.three-piece-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+@media (max-width: 700px) {
+  .fitelier-home .hero-side-copy { gap: 16px !important; }
+  .home-service-line { padding-block: 18px; }
+}
