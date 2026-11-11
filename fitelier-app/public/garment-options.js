@@ -43,20 +43,21 @@
     const jacket = garment === 'jacket';
     const suit = garment === 'suit';
     const cloth = selectedCloth();
+    const isThreePiece = query().get('ensemble') === '3pc';
     const canvas = query().get('canvas') === 'full' ? 'full' : 'half';
     return `<div class="garment-options" data-garment-options="${garment}" data-weight="${weight || ''}" data-matching-waistcoat="${waistcoat || ''}">
       ${jacket ? '' : `<p class="suit-product-price" data-garment-price aria-live="polite"></p>`}
       <div class="garment-selects">
       ${suit ? `<label class="suit-size-select">Suit style<select data-suit-ensemble>
         <option value="2pc">Two-piece suit</option>
-        <option value="3pc"${query().get('ensemble') === '3pc' ? ' selected' : ''}>Three-piece suit</option>
+        <option value="3pc"${isThreePiece ? ' selected' : ''}>Three-piece suit</option>
       </select></label>` : ''}
       ${jacket ? '' : `<label class="suit-size-select">Cloth<select data-garment-cloth>
         ${Object.entries(cloths).map(([key, value]) => `<option value="${key}"${key === cloth ? ' selected' : ''}>${value.name}</option>`).join('')}
       </select></label>`}
       ${jacket ? canvasPicker(canvas) : ''}
       </div>
-      ${suit ? `<a class="text-link matching-waistcoat-link" data-matching-waistcoat-link href="#/waistcoat/${waistcoat}?cloth=${cloth}">View matching waistcoat ↗</a>
+      ${suit ? `<a class="text-link matching-waistcoat-link" data-matching-waistcoat-link${isThreePiece ? '' : ' hidden style="display:none"'} href="#/waistcoat/${waistcoat}?cloth=${cloth}">View matching waistcoat ↗</a>
       <details class="suit-configuration-details"${canvas === 'full' ? ' open' : ''}>
         <summary>Cloth &amp; construction details <span data-canvas-summary></span></summary>
         <div class="suit-configuration-content">${canvasPicker(canvas)}${clothFacts}</div>
@@ -122,7 +123,11 @@
         link.href = '#/consultation?' + new URLSearchParams({garment: garmentName, cloth:key, product:panel.closest('section').querySelector('h1').textContent});
       }
       const matchingWaistcoatLink = panel.closest('section').querySelector('[data-matching-waistcoat-link]');
-      if (matchingWaistcoatLink) matchingWaistcoatLink.href = '#/waistcoat/' + matchingWaistcoat + '?cloth=' + key;
+      if (matchingWaistcoatLink) {
+        matchingWaistcoatLink.hidden = ensemble !== '3pc';
+        matchingWaistcoatLink.style.display = matchingWaistcoatLink.hidden ? 'none' : '';
+        matchingWaistcoatLink.href = '#/waistcoat/' + matchingWaistcoat + '?cloth=' + key;
+      }
       const matchingSuit = panel.closest('section').querySelector('[data-matching-suit]');
       if (matchingSuit) matchingSuit.href = '#/suit/' + matchingSuit.dataset.matchingSuit + '?cloth=' + key + '&ensemble=3pc';
 
