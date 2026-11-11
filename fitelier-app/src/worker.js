@@ -49,7 +49,7 @@ async function consultations(request,env){
 
 /* Square hosted checkout: secrets remain server-side. Prices and item names are
    always determined here, never trusted from the browser. */
-const SQUARE_SUIT_PRICES={
+const SQUARE_SUIT_NAMES={
   'charcoal-wool':'Charcoal Wool Suit',
   'navy-wool':'Navy Wool Suit',
   'brown-wool':'Chocolate Brown Wool Suit',
@@ -65,15 +65,22 @@ function validateSquareCart(body){
   let total=0;
   const items=[];
   for(const row of body.items){
-    if(!row||typeof row.slug!=='string'||!Object.hasOwn(SQUARE_SUIT_PRICES,row.slug))return null;
+    if(!row||typeof row.slug!=='string'||!Object.hasOwn(SQUARE_SUIT_NAMES,row.slug))return null;
     if(!SQUARE_SIZES.has(row.jacket)||!SQUARE_SIZES.has(row.trousers)||!Number.isInteger(row.qty)||row.qty<1||row.qty>5)return null;
+    const cloth = row.cloth ?? 'vbc';
+    const canvas = row.canvas ?? 'half';
+    const clothPrices = {essentials:69500,vbc:119500};
+    if (!Object.hasOwn(clothPrices,cloth) || !['half','full'].includes(canvas)) return null;
+    const clothName = cloth === 'vbc' ? 'VBC Perennial' : 'Fitelier Essentials';
+    const canvasName = canvas === 'full' ? 'Full canvas' : 'Half canvas';
+    const amount = clothPrices[cloth] + (canvas === 'full' ? 22000 : 0);
     total+=row.qty;if(total>20)return null;
     items.push({
-      name:SQUARE_SUIT_PRICES[row.slug],
+      name:SQUARE_SUIT_NAMES[row.slug],
       quantity:String(row.qty),
-      variation_name:'Jacket EU '+row.jacket+' / Trousers EU '+row.trousers,
-      note:'Fitelier made-to-order suit. Size selection: jacket EU '+row.jacket+', trousers EU '+row.trousers+'.',
-      base_price_money:{amount:68500,currency:'CAD'}
+      variation_name:clothName+' / '+canvasName+' / Jacket EU '+row.jacket+' / Trousers EU '+row.trousers,
+      note:clothName+' / '+canvasName+'. Jacket EU '+row.jacket+', trousers EU '+row.trousers+'.',
+      base_price_money:{amount,currency:'CAD'}
     });
   }
   return items;

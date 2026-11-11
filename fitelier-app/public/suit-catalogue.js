@@ -37,7 +37,7 @@
       +'<img class="suit-card-photo suit-card-photo--fabric" data-photo-view="fabric" src="'+image(p,"fabric")+'" alt="" aria-hidden="true" loading="eager" decoding="async">'
       +'<img class="suit-card-photo suit-card-photo--lapel" data-photo-view="lapel" src="'+image(p,"lapel")+'" alt="" aria-hidden="true" loading="eager" decoding="async">'
       +'<span class="suit-hover-region" data-hover-region="fabric" aria-hidden="true"></span><span class="suit-hover-region" data-hover-region="lapel" aria-hidden="true"></span></div>'
-      +'<div class="suit-card-copy"><h3>'+esc(p.name)+'</h3><p>'+esc(p.season)+' · '+esc(p.composition)+'</p><p class="suit-card-price">$685 CAD</p></div>'
+      +'<div class="suit-card-copy"><h3>'+esc(p.name)+'</h3><p>'+esc(p.season)+' · '+esc(p.composition)+'</p><p class="suit-card-price">From $695 CAD</p></div>'
       +'</a></article>';
   }
   function cataloguePage(){
@@ -83,8 +83,8 @@
       +'<div class="suit-product-layout"><div class="suit-gallery" aria-label="Product photographs">'
       +'<div class="suit-gallery-stage" tabindex="0" aria-label="Use left and right arrow keys to explore images"><img src="'+image(p,"main")+'" alt="'+esc(p.name)+': full suit view" data-suit-gallery-stage></div>'
       +'<div class="suit-gallery-thumbnails" role="group" aria-label="Choose photograph">'+pics.map(function(x,i){return '<button type="button" aria-label="'+x[1]+'" data-suit-photo="'+i+'" class="'+(i===0?'is-active':'')+'" aria-pressed="'+(i===0?'true':'false')+'"><img src="'+image(p,x[0])+'" alt=""></button>';}).join('')+'</div></div>'
-      +'<div class="suit-product-details"><p class="eyebrow">'+esc(p.season)+' / MADE TO ORDER</p><h1>'+esc(p.name)+'</h1><p class="suit-product-price">$685 CAD</p><p class="suit-product-intro">'+esc(p.description)+'</p>'
-      +'<dl class="suit-facts"><div><dt>Mill</dt><dd>Vitale Barberis Canonico</dd></div><div><dt>Fabric origin</dt><dd>Italy</dd></div><div><dt>Composition</dt><dd>'+esc(p.composition)+'</dd></div><div><dt>Weight</dt><dd>'+esc(p.weight)+'</dd></div></dl>'
+      +'<div class="suit-product-details"><p class="eyebrow">'+esc(p.season)+' / MADE TO ORDER</p><h1>'+esc(p.name)+'</h1><p class="suit-product-intro">'+esc(p.description)+'</p>'
+      +window.FitelierOptions.options("suit",p.weight,p.slug.replace(/-wool$/, ""))
       +'<div class="suit-sizing"><p class="eyebrow">STANDARD SIZING / EU 44–60</p><div class="suit-size-separates">'+selectSizes("Jacket","Jacket")+selectSizes("Trousers","Trouser")+'</div>'
       +'<button type="button" class="suit-sizeguide-trigger" data-suit-open>Unsure about your size? ↗</button><p>Jacket and trouser sizes may be selected separately. Standard sizing may require alterations.</p></div>'
       +'<div class="suit-order-note"><p>Every suit is produced after the order is placed. Orders are final sale. Standard sizes may require alterations.</p><p>For clients local to Edmonton, Fitelier provides complimentary fit alterations within the scope of our alterations policy.</p></div>'
@@ -150,7 +150,7 @@
       const select=Array.from(document.querySelectorAll('.suit-size-separates select'));
       const feedback=document.querySelector('[data-suit-add-feedback]');
       if(select.some(function(el){return !el.value;})){feedback.textContent='Please choose both jacket and trouser sizes.';select.find(function(el){return !el.value;})?.focus();return;}
-      const ok=window.FitelierShop?.add(addButton.dataset.suitAdd,Number(select[0].value),Number(select[1].value));
+      const ok=window.FitelierShop?.add(addButton.dataset.suitAdd,Number(select[0].value),Number(select[1].value),document.querySelector("[data-garment-cloth]").value,document.querySelector("[data-garment-canvas]").value);
       feedback.innerHTML=ok?'Added to your bag. <a href="#/bag">View bag ↗</a>':'Your bag could not be updated. Please try again.';
     });}
     const dialog=document.getElementById("suit-size-dialog");

@@ -1,11 +1,15 @@
 /* Fitelier bag and checkout; the Square payment redirect is enabled only by a configured server. */
 (function () {
   "use strict";
-  const KEY="fitelier.shopping.bag.v1",unitCents=68500,allowedSizes=new Set([44,46,48,50,52,54,56,58,60]);
+  const KEY="fitelier.shopping.bag.v1",allowedSizes=new Set([44,46,48,50,52,54,56,58,60]);
   let memory=[],lastAttempt=null,checkoutBusy=false;
   const products=()=>window.FitelierSuits?.products||[];
   const money=cents=>new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD",maximumFractionDigits:2}).format(cents/100);
   const esc=value=>String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const unitCents = item => window.FitelierOptions.suitPrice(item.cloth, item.canvas) * 100;
+  const variant = item => window.FitelierOptions.cloths[item.cloth].name + " · " + window.FitelierOptions.canvasName(item.canvas);
+  const itemKey = item => [item.slug,item.jacket,item.trousers,item.cloth,item.canvas].join("|");
+  const productLink = item => "#/suit/" + item.slug + "?cloth=" + item.cloth + "&amp;canvas=" + item.canvas;
   function normalize(data){
     if(!Array.isArray(data))return [];
     const cleaned=[];
@@ -13,9 +17,13 @@
       if(!row||!products().some(p=>p.slug===row.slug))continue;
       const jacket=Number(row.jacket),trousers=Number(row.trousers),qty=Number(row.qty);
       if(!allowedSizes.has(jacket)||!allowedSizes.has(trousers)||!Number.isInteger(qty)||qty<1||qty>5)continue;
-      const exists=cleaned.find(item=>item.slug===row.slug&&item.jacket===jacket&&item.trousers===trousers);
+      const cloth = row.cloth ?? "vbc";
+      const canvas = row.canvas ?? "half";
+      if (!Object.hasOwn(window.FitelierOptions.cloths, cloth) || !["half","full"].includes(canvas)) continue;
+      const item = {slug:row.slug,jacket,trousers,cloth,canvas,qty};
+      const exists=cleaned.find(existing=>itemKey(existing)===itemKey(item));
       if(exists)exists.qty=Math.min(5,exists.qty+qty);
-      else cleaned.push({slug:row.slug,jacket,trousers,qty});
+      else cleaned.push(item);
     }
     return cleaned.slice(0,8);
   }
@@ -23,27 +31,28 @@
   function save(rows){memory=normalize(rows);lastAttempt=null;try{localStorage.setItem(KEY,JSON.stringify(memory));}catch{}badge();return memory;}
   function quantity(){return read().reduce((sum,x)=>sum+x.qty,0);}
   function badge(){document.querySelectorAll(".fitelier-bag-count").forEach(el=>{const n=quantity();el.textContent=String(n);el.hidden=n===0;});}
-  function add(slug,jacket,trousers){
-    if(!products().some(x=>x.slug===slug)||!allowedSizes.has(jacket)||!allowedSizes.has(trousers))return false;
-    const bag=read(),found=bag.find(x=>x.slug===slug&&x.jacket===jacket&&x.trousers===trousers);
-    if(found)found.qty=Math.min(5,found.qty+1);else if(bag.length<8)bag.push({slug,jacket,trousers,qty:1});else return false;
+  function add(slug,jacket,trousers,cloth,canvas){
+    if(!Object.hasOwn(window.FitelierOptions.cloths,cloth)||!["half","full"].includes(canvas)||!products().some(x=>x.slug===slug)||!allowedSizes.has(jacket)||!allowedSizes.has(trousers))return false;
+    const item={slug,jacket,trousers,cloth,canvas,qty:1};
+    const bag=read(),found=bag.find(x=>itemKey(x)===itemKey(item));
+    if(found)found.qty=Math.min(5,found.qty+1);else if(bag.length<8)bag.push(item);else return false;
     save(bag);return true;
   }
   function image(item){return "/assets/suit-products/"+item.slug+"-main.webp";}
   function detailLine(item){
     const p=products().find(p=>p.slug===item.slug);
     if(!p)return "";
-    const key=item.slug+"|"+item.jacket+"|"+item.trousers;
-    return '<article class="fitelier-bag-item"><a href="#/suit/'+p.slug+'" class="fitelier-bag-photo"><img src="'+image(item)+'" alt="'+esc(p.name)+'"></a>'
-      +'<div class="fitelier-bag-description"><h2><a href="#/suit/'+p.slug+'">'+esc(p.name)+'</a></h2><p>Made to order · Four Seasons · 100% Wool</p>'
+    const key=itemKey(item);
+    return '<article class="fitelier-bag-item"><a href="'+productLink(item)+'" class="fitelier-bag-photo"><img src="'+image(item)+'" alt="'+esc(p.name)+'"></a>'
+      +'<div class="fitelier-bag-description"><h2><a href="'+productLink(item)+'">'+esc(p.name)+'</a></h2><p>'+esc(variant(item))+'</p>'
       +'<p>Jacket EU '+item.jacket+' · Trousers EU '+item.trousers+'</p><div class="fitelier-bag-controls">'
       +'<label>Quantity <select data-cart-qty="'+esc(key)+'" aria-label="Quantity for '+esc(p.name)+'">'+[1,2,3,4,5].map(n=>'<option value="'+n+'"'+(item.qty===n?' selected':'')+'>'+n+'</option>').join('')+'</select></label>'
       +'<button type="button" data-cart-remove="'+esc(key)+'">Remove</button></div></div>'
-      +'<div class="fitelier-bag-item-price">'+money(unitCents*item.qty)+'</div></article>';
+      +'<div class="fitelier-bag-item-price">'+money(unitCents(item)*item.qty)+'</div></article>';
   }
   function totals(){
     const n=quantity();
-    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'suit':'suits')+')</span><strong>'+money(n*unitCents)+'</strong></div>'
+    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'suit':'suits')+')</span><strong>'+money(read().reduce((sum,item)=>sum+unitCents(item)*item.qty,0))+'</strong></div>'
       +'<p>CAD · No GST charged. Complimentary personal delivery within Edmonton, arranged with your Fitelier advisor. Please provide an Edmonton delivery address at Square checkout.</p></div>';
   }
   function empty(){
@@ -67,10 +76,9 @@
       +'<button type="button" class="button fitelier-square-button" data-checkout-square disabled>Connecting Square checkout…</button>'
       +'<p class="fitelier-checkout-status" role="status" aria-live="polite" data-checkout-status>Checking payment availability.</p>'
       +'</div><aside class="fitelier-bag-summary"><h2>Order summary</h2><div class="fitelier-checkout-lines">'
-      +bag.map(item=>{const p=products().find(x=>x.slug===item.slug);return '<div><span>'+esc(p?.name||"Suit")+' × '+item.qty+'<small>EU '+item.jacket+' jacket / EU '+item.trousers+' trousers</small></span><b>'+money(unitCents*item.qty)+'</b></div>';}).join('')
+      +bag.map(item=>{const p=products().find(x=>x.slug===item.slug);return '<div><span>'+esc(p?.name||"Suit")+' × '+item.qty+'<small>'+esc(variant(item))+' · EU '+item.jacket+' jacket / EU '+item.trousers+' trousers</small></span><b>'+money(unitCents(item)*item.qty)+'</b></div>';}).join('')
       +'</div>'+totals()+'<a href="#/bag" class="text-link">Edit your bag</a></aside></div>':empty())+'</section>';
   }
-  function parseKey(key){const p=String(key).split("|");if(p.length!==3)return null;return {slug:p[0],jacket:Number(p[1]),trousers:Number(p[2])};}
   async function availability(){
     const el=document.querySelector("[data-checkout-status]"),btn=document.querySelector("[data-checkout-square]");
     if(!btn||!el)return;
@@ -108,13 +116,13 @@
   function bind(){
     badge();
     document.querySelectorAll("[data-cart-qty]").forEach(el=>el.addEventListener("change",e=>{
-      const key=parseKey(el.dataset.cartQty);if(!key)return;
-      const bag=read();const item=bag.find(x=>x.slug===key.slug&&x.jacket===key.jacket&&x.trousers===key.trousers);
+      const key=el.dataset.cartQty;
+      const bag=read();const item=bag.find(x=>itemKey(x)===key);
       if(item){item.qty=Math.max(1,Math.min(5,Number(el.value)||1));save(bag);location.hash="#/bag";refresh();}
     }));
     document.querySelectorAll("[data-cart-remove]").forEach(el=>el.addEventListener("click",()=>{
-      const key=parseKey(el.dataset.cartRemove);if(!key)return;
-      save(read().filter(x=>!(x.slug===key.slug&&x.jacket===key.jacket&&x.trousers===key.trousers)));refresh();
+      const key=el.dataset.cartRemove;
+      save(read().filter(x=>itemKey(x)!==key));refresh();
     }));
     const checkoutButton=document.querySelector("[data-checkout-square]");
     if(checkoutButton){availability();checkoutButton.addEventListener("click",()=>beginCheckout(checkoutButton));}

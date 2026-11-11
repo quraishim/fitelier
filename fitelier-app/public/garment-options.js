@@ -1,0 +1,71 @@
+"use strict";
+
+(() => {
+  const cloths = {
+    essentials: { name: "Fitelier Essentials", composition: "100% wool · Super 110s or finer", suit: 695, trousers: 195, waistcoat: 225, threePiece: 795 },
+    vbc: { name: "VBC Perennial", composition: "100% Super 110s wool", mill: "Vitale Barberis Canonico", suit: 1195, trousers: 365, waistcoat: 415, threePiece: 1495 }
+  };
+  const fullCanvas = 220;
+  const money = amount => '$' + amount.toLocaleString('en-CA') + ' CAD';
+  const query = () => new URLSearchParams(location.hash.split('?')[1]);
+  const selectedCloth = () => query().get('cloth') === 'vbc' ? 'vbc' : 'essentials';
+  const canvasName = canvas => canvas === 'full' ? 'Full canvas' : 'Half canvas';
+  const suitPrice = (cloth, canvas) => cloths[cloth].suit + (canvas === 'full' ? fullCanvas : 0);
+
+  function options(garment, weight, waistcoat) {
+    const jacket = garment === 'jacket';
+    const suit = garment === 'suit';
+    const cloth = selectedCloth();
+    const canvas = query().get('canvas') === 'full' ? 'full' : 'half';
+    return `<div class="garment-options" data-garment-options="${garment}" data-weight="${weight || ''}" data-matching-waistcoat="${waistcoat || ''}">
+      ${jacket ? '' : `<p class="suit-product-price" data-garment-price aria-live="polite"></p>
+      <label class="suit-size-select">Cloth<select data-garment-cloth>
+        ${Object.entries(cloths).map(([key, value]) => `<option value="${key}"${key === cloth ? ' selected' : ''}>${value.name}</option>`).join('')}
+      </select></label>`}
+      ${suit || jacket ? `<label class="suit-size-select">Construction<select data-garment-canvas>
+        <option value="half"${canvas === 'half' ? ' selected' : ''}>Half canvas</option>
+        <option value="full"${canvas === 'full' ? ' selected' : ''}>Full canvas (+$220)</option>
+      </select></label>` : ''}
+      ${jacket ? '' : '<dl class="suit-facts" data-cloth-facts></dl><p class="fineprint">Photos illustrate colour and styling. Fabric texture may vary by cloth.</p>'}
+      ${suit ? '<p data-three-piece></p>' : ''}
+    </div>`;
+  }
+
+  function bind() {
+    const panel = document.querySelector('[data-garment-options]');
+    if (!panel) return;
+    const { garmentOptions: garment, weight, matchingWaistcoat } = panel.dataset;
+    const clothSelect = panel.querySelector('[data-garment-cloth]');
+    const canvasSelect = panel.querySelector('[data-garment-canvas]');
+    function update() {
+      const canvas = canvasSelect?.value || 'half';
+      if (garment === 'jacket') {
+        const link = document.querySelector('.jacket-product-page .suit-guidance a');
+        link.href = '#/consultation?' + new URLSearchParams({garment:'Jacket', canvas, product:document.querySelector('.jacket-product-page h1').textContent});
+        return;
+      }
+      const key = clothSelect.value;
+      const cloth = cloths[key];
+      const price = garment === 'suit' ? suitPrice(key, canvas) : cloth[garment];
+      panel.querySelector('[data-garment-price]').textContent = money(price);
+      const facts = [['Cloth collection', cloth.name], ['Composition', cloth.composition]];
+      if (cloth.mill) facts.push(['Mill', cloth.mill]);
+      if (key === 'vbc' && weight) facts.push(['Weight', weight]);
+      panel.querySelector('[data-cloth-facts]').innerHTML = facts.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+      const link = document.querySelector('.trouser-product-page .suit-guidance a, .waistcoat-product-page a[href^="#/consultation"]');
+      if (link) {
+        const garmentName = garment === 'trousers' ? 'Trousers' : 'Waistcoat';
+        link.href = '#/consultation?' + new URLSearchParams({garment: garmentName, cloth:key, product:panel.closest('section').querySelector('h1').textContent});
+      }
+      const threePiece = panel.querySelector('[data-three-piece]');
+      if (threePiece) {
+        const total = cloth.threePiece + (canvas === 'full' ? fullCanvas : 0);
+        threePiece.innerHTML = `Offered as a three-piece ensemble with the matching <a class="text-link" href="#/waistcoat/${matchingWaistcoat}?cloth=${key}">waistcoat</a> · ${money(total)}. <a class="text-link" href="#/consultation?${new URLSearchParams({garment:'Suit', cloth:key, canvas, ensemble:'3pc', product:document.querySelector('.suit-product-page h1').textContent})}">Discuss the ensemble ↗</a>`;
+      }
+    }
+    panel.addEventListener('change', update);
+    update();
+  }
+
+  window.FitelierOptions = {cloths, money, canvasName, suitPrice, options, bind};
+})();
