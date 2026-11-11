@@ -66,7 +66,7 @@
   }
 
   function guidance(garment) {
-    const labels = {Suit:'this suit', Jacket:'this jacket', Trousers:'these trousers', Waistcoat:'this waistcoat'};
+    const labels = {Suit:'this suit', Jacket:'this jacket', Trousers:'these trousers', Waistcoat:'this waistcoat', Shirt:'this shirt'};
     return `<div class="suit-guidance"><h2>Looking for something more?</h2><p>If standard sizing isn’t standard for you, you typically require alterations, or you’d prefer a more personal approach, we’ve got you covered. We can work from your measurements and explore fabrics and details beyond this selection.</p><a class="text-link" href="#/consultation?garment=${garment}">Explore ${labels[garment]} with an advisor ↗</a></div>`;
   }
 

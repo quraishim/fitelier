@@ -164,3 +164,11 @@
 .suit-configurator .suit-size-content > p { margin-top: 8px; }
 .suit-configurator .suit-size-content .suit-add-to-bag { width: 100%; }
 .suit-configurator .suit-add-feedback:empty { display: none; }
+
+/* Shirting catalogue and product photographs */
+.shirt-card { width: min(100%, 360px); margin-bottom: 30px; }
+.shirt-card-photo { aspect-ratio: 4 / 5; background: var(--product-stone, #d2c7b8); }
+.shirt-card-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.shirt-card h2 { font-size: clamp(24px, 3vw, 32px); margin: 0; }
+.shirt-product-page .suit-gallery-stage img { display: block; mix-blend-mode: normal; }
+.shirt-product-page .suit-gallery-thumbnails img { object-fit: contain; }
