@@ -99,18 +99,43 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid #a99a87;
-  background: #f5f0e8;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: #40372b;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1;
+  text-shadow: 0 0 3px #fffaf4, 0 0 5px #fffaf4;
   cursor: pointer;
 }
-.product-gallery-arrow:hover { background: #fffaf4; }
+.product-gallery-arrow:hover { background: #fffaf473; }
 .product-gallery-arrow:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .product-gallery-prev { left: 12px; }
 .product-gallery-next { right: 12px; }
 @media (max-width: 550px) {
   .product-gallery-prev { left: 6px; }
   .product-gallery-next { right: 6px; }
+}
+
+.suit-product-page .suit-size-select { display: block; }
+.suit-product-page .suit-size-select select {
+  margin-top: 3px;
+  min-height: 44px;
+  padding: 8px 4px 8px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #8b7c6a;
+}
+.suit-product-page .suit-size-select select option { background: #f8f5f0; color: #302d29; }
+.suit-product-page .suit-size-select select:focus-visible {
+  outline: 2px solid #6b543c;
+  outline-offset: 2px;
+}
+.suit-product-page [data-waistcoat-sizing] {
+  width: calc((100% - 12px) / 2);
+  margin-top: 14px;
+}
+.suit-product-page .suit-sizing > .eyebrow { margin-top: 4px; }
+@media (max-width: 420px) {
+  .suit-product-page [data-waistcoat-sizing] { width: 100%; }
 }
