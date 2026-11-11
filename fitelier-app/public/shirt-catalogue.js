@@ -10,7 +10,7 @@
       ['collar', 'Classic collar and Fitelier label']
     ]
   };
-  const photo = view => '/assets/shirts/' + shirt.slug + '-' + view + '.webp';
+  const photo = view => '/assets/shirts/' + shirt.slug + '-' + view + '-v2.webp';
 
   function cataloguePage() {
     return `<section class="section catalogue-store shirt-catalogue">
@@ -21,7 +21,7 @@
       </div>
       <article class="suit-card shirt-card">
         <a class="suit-card-link" href="#/shirt/${shirt.slug}">
-          <div class="shirt-card-photo"><img src="${photo('front')}" alt="${shirt.name}, front view" width="1012" height="1350"></div>
+          <div class="shirt-card-photo"><img src="${photo('front')}" alt="${shirt.name}, front view" width="1086" height="1448"></div>
           <div class="suit-card-copy"><h2>${shirt.name}</h2><p>White cotton · Classic collar</p></div>
         </a>
       </article>
@@ -36,7 +36,7 @@
       <div class="suit-product-layout">
         <div class="suit-gallery" aria-label="Shirt photographs">
           <div class="suit-gallery-stage" tabindex="0" aria-label="Use the left and right arrow keys to view photographs">
-            <img data-shirt-stage src="${photo('front')}" alt="${shirt.name}, front view" width="1012" height="1350">
+            <img data-shirt-stage src="${photo('front')}" alt="${shirt.name}, front view" width="1086" height="1448">
           </div>
           <div class="suit-gallery-thumbnails" role="group" aria-label="Choose photograph">
             ${shirt.photos.map(([view,label],i)=>`<button type="button" data-shirt-photo aria-label="${label}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><img src="${photo(view)}" alt=""></button>`).join('')}
