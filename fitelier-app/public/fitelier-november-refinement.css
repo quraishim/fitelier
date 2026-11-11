@@ -67,14 +67,6 @@
 /* Product choices and homepage service copy */
 .fitelier-home .hero-side-copy { gap: clamp(16px, 2.4vh, 26px) !important; }
 .fitelier-home .hero-side-copy .hero-description { margin: 0 !important; }
-.home-service-line {
-  margin: 0;
-  padding: 24px 6%;
-  text-align: center;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--muted);
-}
 .suit-product-details .garment-options { margin-block: 18px 22px; }
 .garment-options .garment-selects {
   display: grid;
@@ -92,5 +84,4 @@
 .three-piece-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 @media (max-width: 700px) {
   .fitelier-home .hero-side-copy { gap: 16px !important; }
-  .home-service-line { padding-block: 18px; }
-}
+  }
