@@ -31,6 +31,14 @@
   const canvasName = canvas => canvas === 'full' ? 'Full canvas' : 'Half canvas';
   const suitPrice = (cloth, canvas) => cloths[cloth].suit + (canvas === 'full' ? fullCanvas : 0);
 
+  const clothFacts = '<dl class="suit-facts" data-cloth-facts></dl><p class="fineprint">Photos illustrate colour and styling. Fabric texture may vary by cloth.</p>';
+  function canvasPicker(canvas) {
+    return `<label class="suit-size-select">Construction<select data-garment-canvas>
+      <option value="half"${canvas === 'half' ? ' selected' : ''}>Half canvas</option>
+      <option value="full"${canvas === 'full' ? ' selected' : ''}>Full canvas (+$220)</option>
+    </select></label>`;
+  }
+
   function options(garment, weight, waistcoat) {
     const jacket = garment === 'jacket';
     const suit = garment === 'suit';
@@ -39,15 +47,20 @@
     return `<div class="garment-options" data-garment-options="${garment}" data-weight="${weight || ''}" data-matching-waistcoat="${waistcoat || ''}">
       ${jacket ? '' : `<p class="suit-product-price" data-garment-price aria-live="polite"></p>`}
       <div class="garment-selects">
+      ${suit ? `<label class="suit-size-select">Suit style<select data-suit-ensemble>
+        <option value="2pc">Two-piece suit</option>
+        <option value="3pc"${query().get('ensemble') === '3pc' ? ' selected' : ''}>Three-piece suit</option>
+      </select></label>` : ''}
       ${jacket ? '' : `<label class="suit-size-select">Cloth<select data-garment-cloth>
         ${Object.entries(cloths).map(([key, value]) => `<option value="${key}"${key === cloth ? ' selected' : ''}>${value.name}</option>`).join('')}
       </select></label>`}
-      ${suit || jacket ? `<label class="suit-size-select">Construction<select data-garment-canvas>
-        <option value="half"${canvas === 'half' ? ' selected' : ''}>Half canvas</option>
-        <option value="full"${canvas === 'full' ? ' selected' : ''}>Full canvas (+$220)</option>
-      </select></label>` : ''}
+      ${jacket ? canvasPicker(canvas) : ''}
       </div>
-      ${jacket ? '' : '<dl class="suit-facts" data-cloth-facts></dl><p class="fineprint">Photos illustrate colour and styling. Fabric texture may vary by cloth.</p>'}
+      ${suit ? `<a class="text-link matching-waistcoat-link" data-matching-waistcoat-link href="#/waistcoat/${waistcoat}?cloth=${cloth}">View matching waistcoat ↗</a>
+      <details class="suit-configuration-details"${canvas === 'full' ? ' open' : ''}>
+        <summary>Cloth &amp; construction details <span data-canvas-summary></span></summary>
+        <div class="suit-configuration-content">${canvasPicker(canvas)}${clothFacts}</div>
+      </details>` : jacket ? '' : clothFacts}
     </div>`;
   }
 
@@ -92,6 +105,8 @@
         link.href = '#/consultation?' + new URLSearchParams({garment:'Jacket', canvas, product:document.querySelector('.jacket-product-page h1').textContent});
         return;
       }
+      const canvasSummary = panel.querySelector('[data-canvas-summary]');
+      if (canvasSummary) canvasSummary.textContent = canvasName(canvas);
       const key = clothSelect.value;
       const cloth = cloths[key];
       const ensemble = panel.closest('section').querySelector('[data-suit-ensemble]')?.value;

@@ -139,3 +139,28 @@
 @media (max-width: 420px) {
   .suit-product-page [data-waistcoat-sizing] { width: 100%; }
 }
+
+/* Suit configuration disclosures */
+.suit-configurator .garment-options { margin-bottom: 0; }
+.suit-configurator .matching-waistcoat-link { display: inline-block; margin: 10px 0 16px; }
+.suit-configurator .suit-configuration-details,
+.suit-configurator .suit-size-disclosure { border-top: 1px solid #a99a87; }
+.suit-configurator .suit-size-disclosure { padding-bottom: 0; }
+.suit-configurator details > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  list-style: none;
+  cursor: pointer;
+}
+.suit-configurator details > summary::-webkit-details-marker { display: none; }
+.suit-configurator details > summary::after { content: "+"; font-size: 20px; }
+.suit-configurator details[open] > summary::after { content: "−"; }
+.suit-configurator details > summary span { margin-left: auto; color: var(--muted); font-size: 13px; text-align: right; }
+.suit-configurator .suit-size-disclosure > summary { font-weight: 600; }
+.suit-configurator .suit-configuration-content,
+.suit-configurator .suit-size-content { padding: 10px 0 16px; }
+.suit-configurator .suit-size-content > p { margin-top: 8px; }
+.suit-configurator .suit-size-content .suit-add-to-bag { width: 100%; }
+.suit-configurator .suit-add-feedback:empty { display: none; }
