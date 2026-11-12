@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/founders-home.css"><script src="/founders-home.js" defer></script><link rel="preload" href="/assets/serif.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/refinement.css"><link rel="stylesheet" href="/atelier.css"><link rel="stylesheet" href="/october-polish.css"><link rel="stylesheet" href="/fitelier-final-touches.css"><link rel="stylesheet" href="/fitelier-november-refinement.css"><link rel="stylesheet" href="/fitelier-founder-details.css"><script src="/catalog.js" defer></script><script src="/garment-options.js" defer></script><script src="/suit-catalogue.js" defer></script><script src="/trouser-catalogue.js" defer></script><script src="/fitelier-shop.js" defer></script><script src="/consultation.js" defer></script><script src="/hero-ui.js" defer></script><script src="/waistcoat-catalogue.js" defer></script><script src="/shirt-catalogue.js" defer></script><script src="/app.js" defer></script>
 <link rel="stylesheet" href="/fitelier-requested-tweaks.css">
 <link rel="stylesheet" href="/fitelier-cloth-update.css"><link rel="stylesheet" href="/fitelier-menu-icon-polish.css"><link rel="stylesheet" href="/fitelier-portrait-blending.css"><link rel="stylesheet" href="/fitelier-page-spacing-and-checkboxes.css"><style id="fitelier-mobile-no-arrows">
-@media (max-width: 767px) {
+@media (max-width: 1024px), (pointer: coarse) {
   .header-cta [aria-hidden="true"],
   .menu-catalogues-link [aria-hidden="true"],
   .hero-sub-actions [aria-hidden="true"],
@@ -25,7 +25,7 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">Menu <span aria-hidden="true">☰</span></button><a href="#/" class="wordmark" aria-label="Fitelier home">FITELIER</a><a class="header-cta" href="#/consultation">Let’s meet <span aria-hidden="true">↗</span></a><a class="portal-link" href="#/bag" aria-label="Shopping bag"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l2 11H3L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M3 13h18"/></svg><span class="fitelier-bag-count" hidden aria-hidden="true">0</span></a></header>
+<header class="site-header"><button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">Menu <span class="menu-icon" aria-hidden="true"></span></button><a href="#/" class="wordmark" aria-label="Fitelier home">FITELIER</a><a class="header-cta" href="#/consultation">Let’s meet <span aria-hidden="true">↗</span></a><a class="portal-link" href="#/bag" aria-label="Shopping bag"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l2 11H3L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M3 13h18"/></svg><span class="fitelier-bag-count" hidden aria-hidden="true">0</span></a></header>
 <div id="fitelier-menu-backdrop" hidden aria-hidden="true"></div><nav id="mobile-menu" aria-label="Main navigation" hidden><a class="menu-heading menu-catalogues-link" href="#/collection" aria-label="View all catalogues">CATALOGUES <span aria-hidden="true">↗</span></a><a href="#/catalogue/suits">Suits</a><a href="#/catalogue/jackets">Jackets</a><a href="#/catalogue/trousers">Trousers</a><a href="#/catalogue/waistcoats">Waistcoats</a><a href="#/catalogue/shirts">Shirts</a><a href="#/catalogue/outerwear">Outerwear</a><div class="menu-divider"></div><a href="#/approach">Our Approach</a><a href="#/about">About Fitelier</a><a href="#/consultation">Book a consultation</a><a href="#/fabrics">Fabric Library</a></nav>
 <main id="main" tabindex="-1">
 <div id="hero-root"><section class="hero-v3"><div class="hero-v3-side"><div class="hero-side-copy"><h1>Made for the way you live.</h1><div class="hero-sub-actions"><a href="#/collection">Wear it your way <span aria-hidden="true">↗</span></a><a href="#/consultation">Book a consultation <span aria-hidden="true">↗</span></a></div></div></div><div class="hero-v3-photo"><img src="/assets/fitelier-hero-nocturne.jpg" alt="Charcoal tailoring emerging from the shadows of a dark stone atelier"></div></section></div>
@@ -34,18 +34,19 @@
 <script>
 /* Keep mobile navigation and calls to action typographically clean. */
 (() => {
-  const mobile = window.matchMedia('(max-width: 767px)');
-  const arrows = /[↗↖↘↙→←↑↓➡⬅➜➔➝➞➤➳➙]/g;
+  const touchLayout = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
+  const arrows = /[↗↖↘↙→←↑↓]/g;
   const originals = new Map();
   let queued = false;
   const observer = new MutationObserver(schedule);
   function update() {
     observer.disconnect();
-    if (mobile.matches) {
+    if (touchLayout.matches) {
+      for (const node of originals.keys()) if (!node.isConnected) originals.delete(node);
       const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       let node;
       while ((node = walker.nextNode())) {
-        if (!node.parentElement || node.parentElement.closest('script,style')) continue;
+        if (!node.parentElement || node.parentElement.closest('script,style,.product-gallery-arrow')) continue;
         if (!arrows.test(node.nodeValue)) { arrows.lastIndex = 0; continue; }
         arrows.lastIndex = 0;
         if (!originals.has(node)) originals.set(node, node.nodeValue);
@@ -67,7 +68,7 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', update, { once: true });
   else update();
-  mobile.addEventListener('change', schedule);
+  touchLayout.addEventListener('change', schedule);
 })();
 </script>
 <script id="fitelier-consultation-route-recovery">
