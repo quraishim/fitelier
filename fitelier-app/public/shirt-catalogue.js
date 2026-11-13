@@ -6,8 +6,7 @@
       slug: 'white-classic',
       name: 'White Cotton Shirt',
       cloth: 'White cotton',
-      intro: 'A crisp white shirt with a classic point collar. Wear it with a tie under a suit or open at the neck with a separate jacket.',
-      versions: {front: '-v4', fabric: '-v2', collar: '-v4'}
+      intro: 'A crisp white shirt with a classic point collar. Wear it with a tie under a suit or open at the neck with a separate jacket.'
     },
     {
       slug: 'powder-blue-classic',
@@ -21,7 +20,10 @@
     ['fabric', 'Cotton fabric close-up'],
     ['collar', 'Classic collar and Fitelier label']
   ];
-  const photo = (shirt, view) => `/assets/shirts/${shirt.slug}-${view}${shirt.versions?.[view] ?? ''}.webp`;
+  function photo(shirt, view) {
+    const version = view !== 'fabric' ? '-matched' : shirt.slug === 'white-classic' ? '-v2' : '';
+    return `/assets/shirts/${shirt.slug}-${view}${version}.webp`;
+  }
 
   function cataloguePage() {
     return `<section class="section catalogue-store shirt-catalogue">
@@ -33,7 +35,9 @@
       <div class="shirt-grid">
       ${shirts.map(shirt => `<article class="suit-card shirt-card">
         <a class="suit-card-link" href="#/shirt/${shirt.slug}">
-          <div class="shirt-card-photo"><img src="${photo(shirt, 'front')}" alt="${shirt.name}, front view" width="1086" height="1448"></div>
+          <div class="shirt-card-photo" data-shirt-preview data-view="front">
+            ${photos.map(([view]) => `<img data-shirt-view="${view}" src="${photo(shirt, view)}" alt="${view === 'front' ? shirt.name + ', front view' : ''}" width="1086" height="1448">`).join('')}
+          </div>
           <div class="suit-card-copy"><h2>${shirt.name}</h2><p>${shirt.cloth} · Classic collar</p></div>
         </a>
       </article>`).join('')}
@@ -72,6 +76,19 @@
   }
 
   function bind() {
+    document.querySelectorAll('[data-shirt-preview]').forEach(preview => {
+      function reset() { preview.dataset.view = 'front'; }
+      preview.addEventListener('pointermove', event => {
+        if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+        const bounds = preview.getBoundingClientRect();
+        const view = event.clientX < bounds.left + bounds.width / 2 ? 'fabric' : 'collar';
+        const detail = preview.querySelector(`[data-shirt-view="${view}"]`);
+        preview.dataset.view = detail.complete && detail.naturalWidth ? view : 'front';
+      });
+      preview.addEventListener('pointerleave', reset);
+      preview.addEventListener('pointercancel', reset);
+    });
+
     const image = document.querySelector('[data-shirt-stage]');
     if (!image) return;
     const shirt = shirts.find(product => product.slug === image.dataset.shirtStage);

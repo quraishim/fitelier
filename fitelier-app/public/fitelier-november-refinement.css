@@ -168,8 +168,29 @@
 /* Shirting catalogue and product photographs */
 .shirt-grid { display: flex; flex-wrap: wrap; column-gap: clamp(16px, 3vw, 40px); }
 .shirt-card { width: min(100%, 360px); margin-bottom: 30px; }
-.shirt-card-photo { aspect-ratio: 4 / 5; background: var(--product-stone, #d2c7b8); }
-.shirt-card-photo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.shirt-card-photo { position: relative; aspect-ratio: 3 / 4; }
+.shirt-card-photo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; visibility: hidden; }
+.shirt-card-photo[data-view="front"] [data-shirt-view="front"],
+.shirt-card-photo[data-view="fabric"] [data-shirt-view="fabric"],
+.shirt-card-photo[data-view="collar"] [data-shirt-view="collar"] { visibility: visible; }
 .shirt-card h2 { font-size: clamp(24px, 3vw, 32px); margin: 0; }
+.shirt-product-page .suit-gallery-stage {
+  width: min(100%, 55svh);
+  margin-inline: auto;
+  aspect-ratio: 3 / 4;
+  background: transparent !important;
+}
 .shirt-product-page .suit-gallery-stage img { display: block; mix-blend-mode: normal; }
-.shirt-product-page .suit-gallery-thumbnails img { object-fit: contain; }
+.shirt-product-page .suit-gallery-thumbnails { width: min(100%, 55svh); margin-inline: auto; }
+.shirt-product-page .suit-gallery-thumbnails img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: transparent;
+}
+.shirt-product-page .suit-gallery-thumbnails button { background: transparent; }
+@media (max-width: 700px) {
+  .shirt-product-page .suit-gallery-stage,
+  .shirt-product-page .suit-gallery-thumbnails { width: 100%; }
+}
