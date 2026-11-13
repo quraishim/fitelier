@@ -8,7 +8,8 @@
   const fullCanvas = 220;
   const fixedPrices = {
   'off-white': 265,
-  'chocolate-brown': 265,
+  'chocolate-brown': 195,
+  'mid-grey': 265,
   'navy-hopsack': 795,
   'cerulean-houndstooth': 795,
   'taupe-pow': 795,

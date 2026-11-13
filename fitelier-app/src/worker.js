@@ -79,7 +79,8 @@ const SQUARE_PRODUCTS = {
 };
 const SQUARE_FIXED_PRICES = {
   'off-white': 26500,
-  'chocolate-brown': 26500,
+  'chocolate-brown': 19500,
+  'mid-grey': 26500,
   'navy-hopsack': 79500,
   'cerulean-houndstooth': 79500,
   'taupe-pow': 79500,
@@ -109,7 +110,7 @@ function validateSquareCart(body){
     const canvas = row.canvas ?? 'half';
     if (typeof cloth !== 'string' || !Object.hasOwn(SQUARE_CLOTH_PRICES,cloth) || !['half','full'].includes(canvas)) return null;
     if (!['jacket','suit'].includes(kind) && canvas === 'full') return null;
-    const details = kind === 'jacket' ? ['Brown Aaron Naples'] : fixedPrice === null ? [SQUARE_CLOTH_PRICES[cloth].name] : ['Brown Aaron'];
+    const details = kind === 'jacket' ? ['Brown Aaron Naples'] : row.slug === 'mid-grey' ? ['Vitale Barberis Canonico'] : fixedPrice === null ? [SQUARE_CLOTH_PRICES[cloth].name] : ['Brown Aaron'];
     if (kind === 'suit' || kind === 'jacket') details.push(canvas === 'full' ? 'Full canvas' : 'Half canvas');
     let priceKey = kind;
     if (kind === 'suit') {

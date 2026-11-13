@@ -17,7 +17,7 @@
   const variant = item => [
     item.ensemble === '3pc' ? 'Three-piece suit' : null,
     item.kind === 'jacket' ? 'Brown Aaron Naples' : null,
-    item.kind === 'trouser' && Object.hasOwn(window.FitelierOptions.fixedPrices,item.slug) ? 'Brown Aaron' : null,
+    item.kind === 'trouser' && Object.hasOwn(window.FitelierOptions.fixedPrices,item.slug) ? (item.slug === 'mid-grey' ? 'Vitale Barberis Canonico' : 'Brown Aaron') : null,
     window.FitelierOptions.cloths[item.cloth]?.name,
     item.canvas ? window.FitelierOptions.canvasName(item.canvas) : null,
   ].filter(Boolean).join(' · ');
