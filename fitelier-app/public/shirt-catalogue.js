@@ -13,6 +13,12 @@
       name: 'Powder Blue Cotton Shirt',
       cloth: 'Powder blue cotton',
       intro: 'A light blue cotton shirt with a classic point collar. Wear it with navy or charcoal tailoring, or open at the neck with a separate jacket.'
+    },
+    {
+      slug: 'powder-blue-bengal-stripe',
+      name: 'Powder Blue Bengal Stripe Shirt',
+      cloth: 'White and powder blue striped cotton',
+      intro: 'A white cotton shirt with powder blue Bengal stripes and a classic point collar.'
     }
   ];
   const photos = [
