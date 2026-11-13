@@ -21,6 +21,7 @@
       intro: 'A white cotton shirt with powder blue Bengal stripes and a classic point collar.'
     }
   ];
+  const price = '$185 CAD';
   const photos = [
     ['front', 'Full shirt'],
     ['fabric', 'Cotton fabric close-up'],
@@ -44,7 +45,7 @@
           <div class="shirt-card-photo" data-shirt-preview data-view="front">
             ${photos.map(([view]) => `<img data-shirt-view="${view}" src="${photo(shirt, view)}" alt="${view === 'front' ? shirt.name + ', front view' : ''}" width="1086" height="1448">`).join('')}
           </div>
-          <div class="suit-card-copy"><h2>${shirt.name}</h2><p>${shirt.cloth} · Classic collar</p></div>
+          <div class="suit-card-copy"><h2>${shirt.name}</h2><p>${shirt.cloth} · Classic collar</p><p class="suit-card-price">${price}</p></div>
         </a>
       </article>`).join('')}
       </div>
@@ -69,6 +70,7 @@
         <div class="suit-product-details">
           <p class="eyebrow">SHIRTING / MADE TO ORDER</p>
           <h1>${shirt.name}</h1>
+          <p class="suit-product-price">${price}</p>
           <p class="suit-product-intro">${shirt.intro}</p>
           <dl class="suit-facts">
             <div><dt>Cloth</dt><dd>${shirt.cloth}</dd></div>
