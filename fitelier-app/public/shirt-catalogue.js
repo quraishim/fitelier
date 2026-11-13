@@ -16,7 +16,7 @@
     },
     {
       slug: 'powder-blue-bengal-stripe',
-      name: 'Powder Blue Bengal Stripe Shirt',
+      name: 'Bengal Stripe Shirt',
       cloth: 'White and powder blue striped cotton',
       intro: 'A white cotton shirt with powder blue Bengal stripes and a classic point collar.'
     }
