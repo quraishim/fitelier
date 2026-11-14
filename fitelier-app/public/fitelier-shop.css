@@ -132,3 +132,5 @@
   animation:none!important;
 }
 .suit-product-page .suit-gallery-stage img.is-detail {object-fit:cover}
+
+.fitelier-bag-editorial{display:block;width:100%;height:64px;object-fit:cover;object-position:center 42%;margin-bottom:16px}

@@ -125,7 +125,7 @@
   function bagPage(){
     const bag=read();
     return '<section class="section fitelier-bag-page"><div class="fitelier-bag-heading"><p class="eyebrow">FITELIER / YOUR SELECTION</p><h1>Your bag.</h1></div>'
-      +(bag.length?'<div class="fitelier-bag-layout"><div class="fitelier-bag-items">'+bag.map(detailLine).join('')+'</div><aside class="fitelier-bag-summary"><h2>Order summary</h2>'+totals()+paymentControls()+'<a href="#/collection" class="text-link">Continue browsing</a></aside></div>':empty())
+      +(bag.length?'<div class="fitelier-bag-layout"><div class="fitelier-bag-items">'+bag.map(detailLine).join('')+'</div><aside class="fitelier-bag-summary"><img class="fitelier-bag-editorial" src="/assets/fitelier-tailoring-placeholder.webp" alt="" width="1536" height="1024"><h2>Order summary</h2>'+totals()+paymentControls()+'<a href="#/collection" class="text-link">Continue browsing</a></aside></div>':empty())
       +'</section>';
   }
   function paymentControls(){
