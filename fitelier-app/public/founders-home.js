@@ -3,6 +3,17 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
  const mix=(a,b,t)=>a+(b-a)*t;
+ function slides(){
+  const photo=document.querySelector('.hero-v3-photo');
+  if(!photo||photo.querySelector('.fitelier-slides'))return;
+  const original=photo.querySelector('img');if(!original)return;
+  const group=document.createElement('div');group.className='fitelier-slides';
+  ['fitelier-tailoring-placeholder.webp','fitelier-hero-nocturne.jpg','fitelier-hero-v3.jpg'].forEach((name,i)=>{
+   const img=document.createElement('img');img.src='/assets/'+name;img.className='fitelier-slide fitelier-slide-'+i;
+   img.alt=['Charcoal wool jacket and fabric swatches on a walnut worktable','Model in dark tailoring','Model in a dark jacket and light trousers'][i];group.append(img);
+  });
+  photo.append(group);original.style.display='none';
+ }
  function measure(){
   const header=document.querySelector('.site-header'),wordmark=header?.querySelector('.wordmark');
   const rect=(wordmark||header)?.getBoundingClientRect();
@@ -34,6 +45,7 @@
   document.body.classList.toggle('fitelier-home',home);
   document.body.classList.toggle('fitelier-scrolled',window.scrollY>8);
   if(!home){if(frame)cancelAnimationFrame(frame);frame=0;logo?.remove();logo=null;metrics=null;lastTime=0;return;}
+  slides();
   if(!logo){
    logo=document.createElement('div');logo.className='fitelier-floating-logo';logo.textContent='FITELIER';logo.setAttribute('aria-hidden','true');
    Object.assign(logo.style,{left:'50%',top:'0px',willChange:'transform',transformOrigin:'center center'});
