@@ -137,3 +137,13 @@ body.fitelier-home:not(.fitelier-scrolled) .site-header .wordmark{opacity:0}
 .about-name-mark .about-name-i-dot{opacity:1}
 .about-name-mark .about-name-final-a{opacity:0;fill:#9a7450}
 .about-name-mark .about-name-rest{opacity:1;fill:#463a2f}
+
+.about-who > .eyebrow,
+.about-name-copy > .eyebrow {
+  font-size: clamp(13px, 1.15vw, 16px);
+  font-weight: 600;
+  color: #5e4934;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.4em;
+}
