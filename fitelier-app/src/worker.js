@@ -138,10 +138,34 @@ function validateSquareCart(body){
   }
   return items;
 }
+const STATIC_STOREFRONT_ORIGIN='https://fitelier-1.onrender.com';
+
+async function squareApi(request,env,path){
+  const origin=request.headers.get('Origin');
+  const fromStaticStorefront=origin===STATIC_STOREFRONT_ORIGIN;
+  const isStatus=path==='/api/square-status';
+  if(request.method==='OPTIONS'){
+    if(!fromStaticStorefront)return json({error:'Origin not allowed.'},403);
+    return new Response(null,{status:204,headers:{
+      'Access-Control-Allow-Origin':origin,
+      'Access-Control-Allow-Methods':isStatus?'GET':'POST',
+      'Access-Control-Allow-Headers':'Content-Type, Idempotency-Key',
+      'Vary':'Origin'
+    }});
+  }
+  const response=isStatus
+    ? (request.method==='GET'?json({ready:squareReady(env)}):json({error:'Method not allowed.'},405))
+    : await squareCheckout(request,env);
+  response.headers.append('Vary','Origin');
+  if(fromStaticStorefront)response.headers.set('Access-Control-Allow-Origin',origin);
+  return response;
+}
+
 async function squareCheckout(request,env){
   if(request.method!=='POST')return json({error:'Method not allowed.'},405);
   if(!squareReady(env))return json({error:'Secure payment setup is not yet available.'},503);
-  if(request.headers.get('Origin')!==new URL(request.url).origin)return json({error:'Please begin checkout on the Fitelier website.'},403);
+  const origin=request.headers.get('Origin');
+  if(origin!==new URL(request.url).origin&&origin!==STATIC_STOREFRONT_ORIGIN)return json({error:'Please begin checkout on the Fitelier website.'},403);
   if(!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'Please submit valid checkout details.'},415);
   const key=request.headers.get('Idempotency-Key');
   if(!key||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(key))return json({error:'Please retry checkout.'},400);
@@ -179,4 +203,4 @@ async function squareCheckout(request,env){
   }catch(e){console.error('square_checkout_unavailable',{message:e.message});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}
 }
 
-export default {async fetch(request,env){const path=new URL(request.url).pathname;if(path==='/api/consultations')return consultations(request,env);if(path==='/api/square-status')return request.method==='GET'?json({ready:squareReady(env)}):json({error:'Method not allowed.'},405);if(path==='/api/square-checkout')return squareCheckout(request,env);if(path.startsWith('/api/'))return json({error:'Not found.'},404);return env.ASSETS.fetch(request)}};
+export default {async fetch(request,env){const path=new URL(request.url).pathname;if(path==='/api/consultations')return consultations(request,env);if(path==='/api/square-status'||path==='/api/square-checkout')return squareApi(request,env,path);if(path.startsWith('/api/'))return json({error:'Not found.'},404);return env.ASSETS.fetch(request)}};

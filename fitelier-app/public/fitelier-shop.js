@@ -133,12 +133,15 @@
       +'<button type="button" class="button fitelier-square-button" data-checkout-square disabled>Continue to secure payment</button>'
       +'<p class="fitelier-checkout-status" role="status" aria-live="polite" data-checkout-status></p>';
   }
+  const squareApiBase=location.origin==='https://fitelier-1.onrender.com'?'https://fitelier.onrender.com':'';
+
   async function availability(){
     const el=document.querySelector("[data-checkout-status]"),btn=document.querySelector("[data-checkout-square]");
     if(!btn||!el)return;
+    el.textContent="Connecting to Square checkout…";
     try{
-      const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),6000);
-      let response;try{response=await fetch("/api/square-status",{signal:ctrl.signal,cache:"no-store"});}finally{clearTimeout(timeout);}
+      const ctrl=new AbortController(),timeout=setTimeout(()=>ctrl.abort(),120000);
+      let response;try{response=await fetch(squareApiBase+"/api/square-status",{signal:ctrl.signal,cache:"no-store"});}finally{clearTimeout(timeout);}
       if(!response.ok)throw Error("Not configured");
       const data=await response.json();
       if(data.ready===true){btn.disabled=checkoutBusy;btn.textContent="Continue securely with Square ↗";el.textContent="";}
@@ -162,7 +165,7 @@
     button.disabled=true;button.textContent="Opening secure checkout…";
     if(!lastAttempt)lastAttempt=crypto.randomUUID();
     try{
-      const response=await fetch("/api/square-checkout",{method:"POST",headers:{"Content-Type":"application/json","Idempotency-Key":lastAttempt},body:JSON.stringify({items,termsAccepted:true})});
+      const response=await fetch(squareApiBase+"/api/square-checkout",{method:"POST",headers:{"Content-Type":"application/json","Idempotency-Key":lastAttempt},body:JSON.stringify({items,termsAccepted:true})});
       const result=await response.json().catch(()=>({}));
       if(!response.ok)throw Error(result.error||"Payment setup is unavailable. Please try again.");
       const dest=new URL(result.url);
