@@ -138,11 +138,15 @@ function validateSquareCart(body){
   }
   return items;
 }
-const STATIC_STOREFRONT_ORIGIN='https://fitelier-1.onrender.com';
+const STATIC_STOREFRONT_ORIGINS=new Set([
+  'https://fitelier-1.onrender.com',
+  'https://fitelier.ca',
+  'https://www.fitelier.ca'
+]);
 
 async function squareApi(request,env,path){
   const origin=request.headers.get('Origin');
-  const fromStaticStorefront=origin===STATIC_STOREFRONT_ORIGIN;
+  const fromStaticStorefront=STATIC_STOREFRONT_ORIGINS.has(origin);
   const isStatus=path==='/api/square-status';
   if(request.method==='OPTIONS'){
     if(!fromStaticStorefront)return json({error:'Origin not allowed.'},403);
@@ -165,7 +169,7 @@ async function squareCheckout(request,env){
   if(request.method!=='POST')return json({error:'Method not allowed.'},405);
   if(!squareReady(env))return json({error:'Secure payment setup is not yet available.'},503);
   const origin=request.headers.get('Origin');
-  if(origin!==new URL(request.url).origin&&origin!==STATIC_STOREFRONT_ORIGIN)return json({error:'Please begin checkout on the Fitelier website.'},403);
+  if(origin!==new URL(request.url).origin&&!STATIC_STOREFRONT_ORIGINS.has(origin))return json({error:'Please begin checkout on the Fitelier website.'},403);
   if(!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'Please submit valid checkout details.'},415);
   const key=request.headers.get('Idempotency-Key');
   if(!key||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(key))return json({error:'Please retry checkout.'},400);

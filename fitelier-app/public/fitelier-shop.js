@@ -133,7 +133,8 @@
       +'<button type="button" class="button fitelier-square-button" data-checkout-square disabled>Continue to secure payment</button>'
       +'<p class="fitelier-checkout-status" role="status" aria-live="polite" data-checkout-status></p>';
   }
-  const squareApiBase=location.origin==='https://fitelier-1.onrender.com'?'https://fitelier.onrender.com':'';
+  const staticStorefrontOrigins=['https://fitelier-1.onrender.com','https://fitelier.ca','https://www.fitelier.ca'];
+  const squareApiBase=staticStorefrontOrigins.includes(location.origin)?'https://fitelier.onrender.com':'';
 
   async function availability(){
     const el=document.querySelector("[data-checkout-status]"),btn=document.querySelector("[data-checkout-square]");
