@@ -160,6 +160,7 @@ async function squareCheckout(request,env){
         order:{
           location_id:env.SQUARE_LOCATION_ID,
           line_items:items,
+          taxes:[{uid:'gst',name:'GST',percentage:'5',type:'ADDITIVE',scope:'ORDER'}],
           pricing_options:{auto_apply_taxes:false}
         },
         checkout_options:{
@@ -167,7 +168,7 @@ async function squareCheckout(request,env){
           allow_tipping:false,
           merchant_support_email:'info@fitelier.ca'
         },
-        payment_note:'Complimentary personal delivery within Edmonton, arranged with a Fitelier advisor after inspection. No GST charged. Garment sizes appear in line-item details.'
+        payment_note:'Complimentary personal delivery within Edmonton, arranged with a Fitelier advisor after inspection. Garment sizes appear in line-item details.'
       })
     });
     if(!response.ok){console.error('square_checkout_failed',{status:response.status});return json({error:'Square checkout is temporarily unavailable. Please try again later.'},502);}

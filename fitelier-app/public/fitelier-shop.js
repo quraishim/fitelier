@@ -112,8 +112,12 @@
   }
   function totals(){
     const n=quantity();
-    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'item':'items')+')</span><strong>'+money(read().reduce((sum,item)=>sum+unitCents(item)*item.qty,0))+'</strong></div>'
-      +'<p>CAD · No GST charged. Complimentary personal delivery within Edmonton, arranged with your Fitelier advisor. Please provide an Edmonton delivery address at Square checkout.</p></div>';
+    const subtotal=read().reduce((sum,item)=>sum+unitCents(item)*item.qty,0);
+    const gst=Math.round(subtotal*5/100);
+    return '<div class="fitelier-bag-totals"><div><span>Subtotal ('+n+' '+(n===1?'item':'items')+')</span><strong>'+money(subtotal)+'</strong></div>'
+      +'<div><span>GST (5%)</span><strong>'+money(gst)+'</strong></div>'
+      +'<div><span>Total (CAD)</span><strong>'+money(subtotal+gst)+'</strong></div>'
+      +'<p>Complimentary personal delivery within Edmonton, arranged with your Fitelier advisor. Please provide an Edmonton delivery address at Square checkout.</p></div>';
   }
   function empty(){
     return '<div class="fitelier-empty-bag"><h2>Your bag is empty.</h2><p>Explore a considered selection of fabrics, then choose your sizes.</p><a href="#/collection" class="button">Explore collections ↗</a></div>';
