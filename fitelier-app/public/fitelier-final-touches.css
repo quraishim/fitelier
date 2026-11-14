@@ -15,7 +15,17 @@ body.fitelier-home .fitelier-floating-logo{z-index:205!important;font-weight:400
 #footer .footer-top nav{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 #footer .footer-top nav .eyebrow{margin:4px 0 12px}
 #footer .footer-top nav a{margin:0;line-height:1.5}
-#footer .footer-promises{justify-content:space-around;gap:22px;padding:29px 5%;flex-wrap:wrap}
+#footer .footer-promises {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: clamp(8px, 1.5vw, 22px);
+  padding: 29px 5%;
+}
+@media (max-width: 700px) {
+  #footer .footer-promises {
+    display: flex;
+  }
+}
 #footer .footer-bottom{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:23px 5%;flex-wrap:wrap}
 @media(max-width:950px){#footer .footer-top{grid-template-columns:1.4fr 1fr;row-gap:45px}#footer .footer-top nav{grid-row:2}.fitelier-home .hero-side-copy{top:56%}}
 @media(max-width:700px){.fitelier-home .hero-side-copy{top:56%;width:90vw!important;gap:12px}.fitelier-home .hero-side-copy h1{font-size:12px!important;letter-spacing:.09em!important}.fitelier-home .hero-sub-actions{gap:17px}.fitelier-home .hero-sub-actions a{font-size:10px}#footer .footer-top{grid-template-columns:1fr 1fr;gap:36px 24px;padding:50px 6%}#footer .footer-top>div:first-child{grid-column:1/-1}#footer .footer-top .footer-details{grid-column:1/-1}#footer .footer-top nav{grid-row:auto}#footer .footer-brand-note{max-width:430px}#footer .footer-promises{gap:9px;padding:24px 6%}}
