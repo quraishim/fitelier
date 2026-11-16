@@ -18,15 +18,6 @@
 .fitelier-home .home-cloth-card h3 { font-family: Editorial, Georgia, serif !important; }
 
 @media (max-width: 700px) {
-  body.fitelier-home .fitelier-floating-logo {
-    position: absolute;
-    top: 38svh !important;
-    transform: translate(-50%, -50%) !important;
-  }
-  body.fitelier-home.fitelier-scrolled .site-header .wordmark {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
   body.fitelier-home .hero-v3-side > .hero-service-heading { top: calc(38svh + 35px); }
   body.fitelier-home .hero-v3-actions {
     flex-direction: column;
@@ -96,15 +87,18 @@
   }
 }
 
-body:not(.fitelier-home):not(.fitelier-scrolled) .site-header {
-  background: #fff !important;
-}
-body:not(.fitelier-home).fitelier-scrolled .site-header {
+body:not(.fitelier-scrolled) .site-header {
   background: transparent !important;
   box-shadow: none !important;
-  backdrop-filter: none;
 }
-
+body.fitelier-scrolled .site-header {
+  background: #fff !important;
+}
+body.fitelier-home.fitelier-logo-docked .site-header .wordmark {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+body.fitelier-home.fitelier-logo-docked .fitelier-floating-logo { visibility: hidden; }
 
 .appointment-page:has(.appointment-book) {
   display: flex;
