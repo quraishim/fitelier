@@ -29,7 +29,9 @@
   const textTop=Math.min(...Array.from(hero.querySelectorAll('.hero-service-heading, .hero-side-copy'),
    element=>element.getBoundingClientRect().top+window.scrollY));
   const start=Math.max(end,Math.min(heroRect.top+window.scrollY+heroRect.height*(innerWidth<=700?.38:.44),textTop-size/2-12));
-  metrics={start,end,scale:parseFloat(getComputedStyle(wordmark).fontSize)/size,distance:clamp(start-end,1,110)};
+  const finalSize=parseFloat(getComputedStyle(wordmark).fontSize);
+  const availableScroll=textTop-end-finalSize/2-12;
+  metrics={start,end,scale:finalSize/size,distance:clamp(availableScroll,1,185)};
   logo.style.fontSize=size+'px';
  }
  function paint(){
