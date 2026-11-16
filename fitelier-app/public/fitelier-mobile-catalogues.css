@@ -138,3 +138,13 @@ body.fitelier-home.fitelier-logo-docked .fitelier-floating-logo { visibility: hi
   .back-to-top-visible .back-to-top.mobile-only { display: grid; }
   .mobile-catalogue-views button { display: grid; place-items: center; min-width: 48px; }
 }
+
+@media (max-width: 700px) {
+  body.fitelier-home .fitelier-floating-logo {
+    background: linear-gradient(to bottom, #29251f var(--mobile-wordmark-dark-edge, 0%), #f6e8ce var(--mobile-wordmark-dark-edge, 0%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+}

@@ -20,7 +20,8 @@
  }
  function measure(){
   const hero=document.querySelector('.hero-v3');
-  const wordmark=document.querySelector('.site-header .wordmark');
+  const header=document.querySelector('.site-header');
+  const wordmark=header?.querySelector('.wordmark');
   const heading=hero?.querySelector('.hero-service-heading');
   if(!heading||!wordmark)return;
   const heroRect=hero.getBoundingClientRect();
@@ -36,7 +37,7 @@
   // Keep the wordmark's lower edge at the same distance from the headline while it shrinks.
   const startBottom=start+size/2;
   const endBottom=end+finalSize/2;
-  metrics={start,end,scale:finalSize/size,distance:Math.max(1,startBottom-endBottom)};
+  metrics={start,end,size,headerBottom:header.getBoundingClientRect().bottom,scale:finalSize/size,distance:Math.max(1,startBottom-endBottom)};
   logo.style.fontSize=size+'px';
  }
  function paint(){
@@ -49,6 +50,11 @@
   const scale=mix(1,metrics.scale,fraction);
   const docked=fraction===1||(reduced.matches&&y>0);
   document.body.classList.toggle('fitelier-logo-docked',docked);
+  if(innerWidth<=700){
+   const logoHeight=metrics.size*scale;
+   const split=y>0?clamp((metrics.headerBottom-position+logoHeight/2)/logoHeight,0,1):0;
+   logo.style.setProperty('--mobile-wordmark-dark-edge',split*100+'%');
+  }
   logo.style.transform='translate3d(-50%,'+position+'px,0) translateY(-50%) scale('+scale+')';
  }
  function schedule(){if(home&&!frame)frame=requestAnimationFrame(paint)}
