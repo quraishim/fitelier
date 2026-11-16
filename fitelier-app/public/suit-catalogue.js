@@ -9,24 +9,7 @@
     {slug:"black-wool",name:"Black Wool Suit",season:"Four Seasons",ref:"227796",weight:"370 g/m",composition:"100% Wool",description:"A classic black wool suit with a clean, minimal presentation."},
 
   ];
-  const sizes=[44,46,48,50,52,54,56,58,60];
-  const jacketSpecs=[
-    ["Centre back",[74.1,75,76,77,78,79,80,81,82]],
-    ["Sleeve length",[62.3,63.3,64.3,65.3,66.3,67.3,68.3,69.3,70.3]],
-    ["½ chest",[48.1,50.1,52,54,56,57.9,60.4,62.8,65.3]],
-    ["½ waist (closed)",[43.1,45,47,49,51,53,55.4,57.9,60.4]],
-    ["½ hip",[48.3,50.3,52.3,54.3,56.2,58.2,60.7,63.2,65.6]],
-    ["Shoulder to shoulder",[42.1,43.1,44.1,45,46,47,48,49,50]]
-  ];
-  const trouserSpecs=[
-    ["½ waist",[40,42,44,46,48,50,52.5,55,57.5]],
-    ["½ seat",[48.1,50,51.8,53.7,55.6,57.4,59.8,62.1,64.5]],
-    ["½ thigh",[30.5,31.6,32.6,33.7,34.8,35.9,37.2,38.5,39.8]],
-    ["½ knee",[20.4,21.2,22,22.8,23.6,24.4,25.1,25.9,26.7]],
-    ["½ hem",[19.5,20,20.5,21,21.5,22,22.5,23,23.5]],
-    ["Inside leg",[81,83,85,86,87,88,89,90,91]],
-    ["Outside leg",[98.4,100.9,103.3,104.8,106.3,107.9,109.4,110.9,112.4]]
-  ];
+  const {eu: sizes, letters, jacket, trousers} = window.FitelierSizeSpec;
   function esc(v){return String(v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function image(p,kind){return base+p.slug+"-"+(kind==="lapel"?"lapel-clean.svg":kind+".webp");}
   function card(p){
@@ -64,10 +47,10 @@
     return '<dialog class="suit-size-dialog" id="suit-size-dialog" aria-labelledby="suit-size-title">'
       +'<div class="suit-dialog-head"><div><p class="eyebrow">FITELIER / SIZE GUIDE</p><h2 id="suit-size-title">Find your fit.</h2></div><button type="button" data-suit-close aria-label="Close size guide">×</button></div>'
       +'<p>Our online sizes run from EU 44–60. Select a sizing system below to view approximate equivalents. The EU size and the finished garment measurements are authoritative.</p>'
-      +'<div class="suit-size-switch" role="group" aria-label="Sizing system"><button type="button" data-sizing="EU" aria-pressed="true">European</button><button type="button" data-sizing="US" aria-pressed="false">American</button><button type="button" data-sizing="Letter" aria-pressed="false">XS–XXXL</button></div>'
+      +'<div class="suit-size-switch" role="group" aria-label="Sizing system"><button type="button" data-sizing="EU" aria-pressed="true">European</button><button type="button" data-sizing="US" aria-pressed="false">US jacket</button><button type="button" data-sizing="Letter" aria-pressed="false">Letter sizes</button></div>'
       +'<div class="suit-size-equivalents" data-suit-equivalents></div>'
-      +guideTable(jacketSpecs,"Jacket")+guideTable(trouserSpecs,"Trousers")
-      +'<p class="suit-guide-disclaimer">These figures are finished garment measurements, not body measurements. ½ measurements are measured flat. US and letter equivalents vary between makers; if sizing is uncertain, we recommend a personal fitting.</p>'
+      +guideTable(jacket.measurements,"Jacket")+guideTable(trousers.measurements,"Trousers")
+      +'<p class="suit-guide-disclaimer">These figures are finished garment measurements, not body measurements. Widths are measured flat. US and letter equivalents vary between makers; if sizing is uncertain, we recommend a personal fitting.</p>'
       +'<a class="text-link" href="#/consultation">Unsure? Ask one of us ↗</a></dialog>';
   }
   function selectSizes(label,type){
@@ -166,7 +149,7 @@
     const dialog=document.getElementById("suit-size-dialog");
     if(dialog){
       const out=dialog.querySelector("[data-suit-equivalents]");
-      const refs={EU:sizes.map(String),US:sizes.map(function(s){return String(s-10);}),Letter:["XS","S","S/M","M","L","L/XL","XL","XXL","XXXL"]};
+      const refs={EU:sizes.map(String),US:jacket.referenceSizes,Letter:letters};
       function setSystem(type){
         out.innerHTML=sizes.map(function(s,i){return '<span><b>'+refs[type][i]+'</b><small>EU '+s+'</small></span>';}).join("");
         dialog.querySelectorAll("[data-sizing]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.sizing===type));});
