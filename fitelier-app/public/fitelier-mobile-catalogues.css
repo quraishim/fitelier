@@ -1,0 +1,97 @@
+.mobile-catalogue-views { display: none; }
+
+.footer-details a[href^="mailto:"] {
+  text-decoration: underline;
+  text-underline-offset: .22em;
+}
+.footer-contact-options summary { cursor: pointer; }
+.footer-contact-options a { margin-inline-start: 14px; }
+
+.appointment-panel .appointment-book {
+  justify-content: center;
+  position: relative;
+  padding-inline: 42px;
+  text-align: center;
+}
+.appointment-book span { position: absolute; right: 20px; }
+
+.fitelier-home .home-cloth-card h3 { font-family: Editorial, Georgia, serif !important; }
+
+@media (max-width: 700px) {
+  body.fitelier-home .fitelier-floating-logo {
+    position: absolute;
+    top: 38svh !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  body.fitelier-home.fitelier-scrolled .site-header .wordmark {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  body.fitelier-home .hero-v3-side > .hero-service-heading { top: calc(38svh + 35px); }
+  body.fitelier-home .hero-v3-actions {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  body.fitelier-home .hero-v3-actions .text-link { align-self: center; }
+
+  .fitelier-home .cloth-section .section-heading {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .fitelier-home .cloth-section .section-heading :is(h2, a) { margin: 0; }
+  .fitelier-home .home-cloth-grid { gap: 24px 14px; }
+  .fitelier-home .home-cloth-card img { height: auto; aspect-ratio: 4 / 5; }
+  .fitelier-home .home-cloth-card h3 { margin: 10px 0 6px !important; }
+  .fitelier-home .home-cloth-card p { margin-bottom: 8px !important; }
+
+  .mobile-catalogue-views {
+    display: flex;
+    width: fit-content;
+    margin: 0 0 18px;
+    border: 1px solid currentColor;
+  }
+  .mobile-catalogue-views button {
+    min-height: 44px;
+    padding: 8px 15px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  .mobile-catalogue-views button[aria-pressed="true"] {
+    background: #3e3429;
+    color: #fff;
+  }
+  #main .mobile-catalogue-grid[data-mobile-view] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px 12px;
+  }
+  #main .mobile-catalogue-grid[data-mobile-view="grid"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mobile-catalogue-grid > article {
+    min-width: 0;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .mobile-catalogue-grid[data-mobile-view="garment"] > article:not([hidden]) {
+    min-height: calc(100svh - 80px);
+    display: grid;
+    align-content: center;
+  }
+  #main .mobile-catalogue-grid > article[hidden] { display: none; }
+  .mobile-catalogue-grid[data-mobile-view="garment"] > article > a { display: block; }
+  .mobile-catalogue-grid[data-mobile-view="garment"] :is(.shirt-card-photo, .suit-card-visual, .waistcoat-card-visual, .trouser-visual) {
+    max-height: 69svh;
+  }
+  .mobile-catalogue-grid[data-mobile-view="grid"] > article :is(h2, h3) {
+    font-size: clamp(17px, 4.2vw, 22px);
+    overflow-wrap: anywhere;
+  }
+}

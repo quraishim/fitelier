@@ -28,6 +28,14 @@
   frame=0;if(!home||!logo||!metrics)return;
   const y=Math.max(0,window.scrollY);
   document.body.classList.toggle('fitelier-scrolled',y>8);
+  if(innerWidth<=700){
+   logo.style.visibility=y>Math.max(0,(document.querySelector('.hero-v3')?.offsetHeight||innerHeight)*.38-105)?'hidden':'visible';
+   logo.style.color='';
+   logo.style.textShadow='';
+   lastTime=0;
+   return;
+  }
+  logo.style.visibility='';
   const target=reduced.matches?Number(y>140):clamp(y/metrics.distance,0,1);
   const elapsed=lastTime?Math.min(time-lastTime,64):16.67;lastTime=time;
   progress=reduced.matches?target:mix(progress,target,1-Math.exp(-elapsed/65));
