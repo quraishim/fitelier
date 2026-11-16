@@ -52,7 +52,6 @@
       +'<button type="button" disabled title="Seasonal collection coming later">Spring / Summer <span>Soon</span></button>'
       +'</div></details></aside><div class="catalogue-products suit-products">'
       +products.map(card).join('')
-      +'<div class="suit-catalogue-note"><p>A starting point, not the whole collection. Our fabric selection and customization options go far beyond what is shown here.</p><a class="text-link" href="#/consultation">Explore the possibilities with an advisor ↗</a></div>'
       +'</div></div><a class="text-link catalogue-back" href="#/collection">← All collections</a></section>';
   }
   function guideTable(rows,title){

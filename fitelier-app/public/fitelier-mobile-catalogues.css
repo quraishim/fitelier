@@ -95,3 +95,52 @@
     overflow-wrap: anywhere;
   }
 }
+
+body:not(.fitelier-home):not(.fitelier-scrolled) .site-header {
+  background: #fff !important;
+}
+body:not(.fitelier-home).fitelier-scrolled .site-header {
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+
+
+.appointment-page:has(.appointment-book) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70svh;
+  padding: clamp(45px, 8vh, 92px) 6%;
+  text-align: center;
+}
+.appointment-page .appointment-panel { width: min(100%, 560px); }
+.appointment-page .appointment-panel h1 { text-wrap: balance; }
+.appointment-page .appointment-book {
+  display: flex;
+  width: min(100%, 360px);
+  margin: 24px auto 14px;
+}
+
+.back-to-top {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+  z-index: 180;
+  display: none;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: #30261d;
+  cursor: pointer;
+}
+.back-to-top svg, .mobile-catalogue-views svg { width: 22px; height: 22px; display: block; }
+.back-to-top-visible .back-to-top:not(.mobile-only) { display: grid; }
+@media (max-width: 700px) {
+  .back-to-top-visible .back-to-top.mobile-only { display: grid; }
+  .mobile-catalogue-views button { display: grid; place-items: center; min-width: 48px; }
+}

@@ -51,7 +51,7 @@
  function refresh(){
   home=!!document.querySelector('#hero-root')&&!location.hash.startsWith('#/motion');
   document.body.classList.toggle('fitelier-home',home);
-  document.body.classList.toggle('fitelier-scrolled',window.scrollY>8);
+  updateHeader();
   if(!home){if(frame)cancelAnimationFrame(frame);frame=0;logo?.remove();logo=null;metrics=null;lastTime=0;return;}
   slides();
   if(!logo){
@@ -63,7 +63,11 @@
   schedule();
  }
  window.FitelierHome={refresh:()=>requestAnimationFrame(refresh)};
- window.addEventListener('scroll',schedule,{passive:true});
+ function updateHeader(){
+  document.body.classList.toggle('fitelier-scrolled',window.scrollY>(home?8:0));
+  document.body.classList.toggle('back-to-top-visible',window.scrollY>240);
+ }
+ window.addEventListener('scroll',()=>{updateHeader();schedule()},{passive:true});
  window.addEventListener('resize',()=>{if(home&&(!metrics||Math.abs(innerWidth-lastWidth)>1)){measure();schedule()}});
  window.addEventListener('hashchange',()=>requestAnimationFrame(refresh));
  document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(refresh));
