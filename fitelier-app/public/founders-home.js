@@ -21,17 +21,22 @@
  function measure(){
   const hero=document.querySelector('.hero-v3');
   const wordmark=document.querySelector('.site-header .wordmark');
-  if(!hero||!wordmark)return;
+  const heading=hero?.querySelector('.hero-service-heading');
+  if(!heading||!wordmark)return;
   const heroRect=hero.getBoundingClientRect();
   const headerRect=wordmark.getBoundingClientRect();
   const size=clamp(innerWidth*.07,45,112);
   const end=headerRect.top+headerRect.height/2;
-  const textTop=Math.min(...Array.from(hero.querySelectorAll('.hero-service-heading, .hero-side-copy'),
-   element=>element.getBoundingClientRect().top+window.scrollY));
+  const headingTop=heading.getBoundingClientRect().top+window.scrollY;
+  const copy=hero.querySelector('.hero-side-copy');
+  const copyTop=copy?copy.getBoundingClientRect().top+window.scrollY:Infinity;
+  const textTop=Math.min(headingTop,copyTop);
   const start=Math.max(end,Math.min(heroRect.top+window.scrollY+heroRect.height*(innerWidth<=700?.38:.44),textTop-size/2-12));
   const finalSize=parseFloat(getComputedStyle(wordmark).fontSize);
-  const availableScroll=textTop-end-finalSize/2-12;
-  metrics={start,end,scale:finalSize/size,distance:clamp(availableScroll,1,185)};
+  // Keep the wordmark's lower edge at the same distance from the headline while it shrinks.
+  const startBottom=start+size/2;
+  const endBottom=end+finalSize/2;
+  metrics={start,end,scale:finalSize/size,distance:Math.max(1,startBottom-endBottom)};
   logo.style.fontSize=size+'px';
  }
  function paint(){
