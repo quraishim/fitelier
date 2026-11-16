@@ -139,12 +139,30 @@ body.fitelier-home.fitelier-logo-docked .fitelier-floating-logo { visibility: hi
   .mobile-catalogue-views button { display: grid; place-items: center; min-width: 48px; }
 }
 
+.fitelier-logo-track { display: contents; }
 @media (max-width: 700px) {
+  .fitelier-logo-track {
+    display: block;
+    position: absolute;
+    inset: var(--wordmark-start, 44svh) 0 0;
+    z-index: 205;
+    pointer-events: none;
+  }
   body.fitelier-home .fitelier-floating-logo {
-    background: linear-gradient(to bottom, #29251f var(--mobile-wordmark-dark-edge, 0%), #f6e8ce var(--mobile-wordmark-dark-edge, 0%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    position: sticky;
+    top: var(--wordmark-end, 44px) !important;
+    left: auto !important;
+    width: max-content;
+    margin-inline: auto;
+    transform: translateY(-100%) scale(var(--wordmark-scale, 1)) !important;
+    transform-origin: bottom center !important;
+    transition: color 120ms linear;
+  }
+  body.fitelier-home .fitelier-floating-logo.over-header {
+    color: #29251f;
     text-shadow: none;
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.fitelier-home .fitelier-floating-logo { transition: none; }
 }

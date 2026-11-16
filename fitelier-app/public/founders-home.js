@@ -1,5 +1,5 @@
 (()=>{
- let logo=null,home=false,frame=0,metrics=null;
+ let logo=null,logoTrack=null,home=false,frame=0,metrics=null;
  const rootSize=new ResizeObserver(()=>{
   if(!home||!logo)return;
   slides();measure();schedule();
@@ -37,8 +37,10 @@
   // Keep the wordmark's lower edge at the same distance from the headline while it shrinks.
   const startBottom=start+size/2;
   const endBottom=end+finalSize/2;
-  metrics={start,end,size,headerBottom:header.getBoundingClientRect().bottom,scale:finalSize/size,distance:Math.max(1,startBottom-endBottom)};
+  metrics={start,end,headerBottom:header.getBoundingClientRect().bottom,scale:finalSize/size,distance:Math.max(1,startBottom-endBottom)};
   logo.style.fontSize=size+'px';
+  logoTrack.style.setProperty('--wordmark-start',startBottom+'px');
+  logoTrack.style.setProperty('--wordmark-end',endBottom+'px');
  }
  function paint(){
   frame=0;if(!home||!logo)return;
@@ -51,9 +53,9 @@
   const docked=fraction===1||(reduced.matches&&y>0);
   document.body.classList.toggle('fitelier-logo-docked',docked);
   if(innerWidth<=700){
-   const logoHeight=metrics.size*scale;
-   const split=y>0?clamp((metrics.headerBottom-position+logoHeight/2)/logoHeight,0,1):0;
-   logo.style.setProperty('--mobile-wordmark-dark-edge',split*100+'%');
+   logo.style.setProperty('--wordmark-scale',scale);
+   logo.classList.toggle('over-header',y>0&&position<=metrics.headerBottom);
+   return;
   }
   logo.style.transform='translate3d(-50%,'+position+'px,0) translateY(-50%) scale('+scale+')';
  }
@@ -63,12 +65,13 @@
   home=!!heroRoot&&!location.hash.startsWith('#/motion');
   document.body.classList.toggle('fitelier-home',home);
   updateHeader();
-  if(!home){rootSize.disconnect();if(frame)cancelAnimationFrame(frame);frame=0;logo?.remove();logo=null;metrics=null;document.body.classList.remove('fitelier-logo-docked');return;}
+  if(!home){rootSize.disconnect();if(frame)cancelAnimationFrame(frame);frame=0;logoTrack?.remove();logoTrack=null;logo=null;metrics=null;document.body.classList.remove('fitelier-logo-docked');return;}
   slides();
   if(!logo){
    logo=document.createElement('div');logo.className='fitelier-floating-logo';logo.textContent='FITELIER';logo.setAttribute('aria-hidden','true');
    Object.assign(logo.style,{left:'50%',top:'0px',willChange:'transform',transformOrigin:'center center'});
-   document.body.append(logo);rootSize.observe(heroRoot);measure();
+   logoTrack=document.createElement('div');logoTrack.className='fitelier-logo-track';
+   logoTrack.append(logo);document.body.append(logoTrack);rootSize.observe(heroRoot);measure();
   }else measure();
   schedule();
  }
