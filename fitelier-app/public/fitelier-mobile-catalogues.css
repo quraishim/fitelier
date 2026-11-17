@@ -101,15 +101,40 @@ body.fitelier-home.fitelier-logo-docked .site-header .wordmark {
 body.fitelier-home.fitelier-logo-docked .fitelier-floating-logo { visibility: hidden; }
 
 .appointment-page:has(.appointment-book) {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-areas: "image booking";
   align-items: center;
+  gap: clamp(32px, 5vw, 80px);
   min-height: 70svh;
   padding: clamp(45px, 8vh, 92px) 6%;
   text-align: center;
 }
-.appointment-page .appointment-panel { width: min(100%, 560px); }
-.appointment-page .appointment-panel h1 { text-wrap: balance; }
+.appointment-page .appointment-panel {
+  grid-area: booking;
+  justify-self: center;
+  width: min(100%, 560px);
+  padding-top: 0;
+}
+.appointment-page .appointment-panel h1 {
+  font-size: clamp(48px, 5.2vw, 80px);
+  text-wrap: balance;
+}
+.appointment-image {
+  grid-area: image;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 760px) {
+  .appointment-page:has(.appointment-book) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "booking" "image";
+    min-height: 0;
+    gap: 32px;
+    padding: 42px 6% 48px;
+  }
+}
 .appointment-page .appointment-book {
   display: flex;
   width: min(100%, 360px);
